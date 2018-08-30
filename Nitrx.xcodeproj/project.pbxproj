@@ -12,6 +12,7 @@
 		22A262B42137D20F00DDFED3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B22137D20F00DDFED3 /* Main.storyboard */; };
 		22A262B62137D21000DDFED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B52137D21000DDFED3 /* Assets.xcassets */; };
 		22A262B92137D21000DDFED3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B72137D21000DDFED3 /* LaunchScreen.storyboard */; };
+		28013BBD01BF83EB38B064A6 /* Pods_Nitrx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,9 @@
 		22A262B52137D21000DDFED3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22A262B82137D21000DDFED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22A262BA2137D21000DDFED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		68D69C219713C4A9DBDEBEED /* Pods-Nitrx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.debug.xcconfig"; sourceTree = "<group>"; };
+		EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.release.xcconfig"; sourceTree = "<group>"; };
+		F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nitrx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28013BBD01BF83EB38B064A6 /* Pods_Nitrx.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +45,8 @@
 			children = (
 				22A262AD2137D20F00DDFED3 /* Nitrx */,
 				22A262AC2137D20F00DDFED3 /* Products */,
+				A19913BC2E50394D15CECE7B /* Pods */,
+				5F0C8D86C82B3AF412A84C29 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +71,23 @@
 			path = Nitrx;
 			sourceTree = "<group>";
 		};
+		5F0C8D86C82B3AF412A84C29 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A19913BC2E50394D15CECE7B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				68D69C219713C4A9DBDEBEED /* Pods-Nitrx.debug.xcconfig */,
+				EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,6 +95,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22A262BD2137D21000DDFED3 /* Build configuration list for PBXNativeTarget "Nitrx" */;
 			buildPhases = (
+				5BA0FBA8E5D0390B2D842671 /* [CP] Check Pods Manifest.lock */,
 				22A262A72137D20F00DDFED3 /* Sources */,
 				22A262A82137D20F00DDFED3 /* Frameworks */,
 				22A262A92137D20F00DDFED3 /* Resources */,
@@ -129,6 +154,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5BA0FBA8E5D0390B2D842671 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Nitrx-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		22A262A72137D20F00DDFED3 /* Sources */ = {
@@ -278,15 +324,13 @@
 		};
 		22A262BE2137D21000DDFED3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68D69C219713C4A9DBDEBEED /* Pods-Nitrx.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Nitrx/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nitrx.Nitrx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -297,15 +341,13 @@
 		};
 		22A262BF2137D21000DDFED3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Nitrx/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nitrx.Nitrx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
