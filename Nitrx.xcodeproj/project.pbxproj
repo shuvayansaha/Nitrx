@@ -8,21 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		22A262AF2137D20F00DDFED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A262AE2137D20F00DDFED3 /* AppDelegate.swift */; };
-		22A262B12137D20F00DDFED3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A262B02137D20F00DDFED3 /* ViewController.swift */; };
-		22A262B42137D20F00DDFED3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B22137D20F00DDFED3 /* Main.storyboard */; };
 		22A262B62137D21000DDFED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B52137D21000DDFED3 /* Assets.xcassets */; };
 		22A262B92137D21000DDFED3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B72137D21000DDFED3 /* LaunchScreen.storyboard */; };
+		22A262C32137D57100DDFED3 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262C22137D57100DDFED3 /* Home.storyboard */; };
+		22A262C52137D57F00DDFED3 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262C42137D57F00DDFED3 /* Dashboard.storyboard */; };
+		22A262C72137D58C00DDFED3 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A262C62137D58C00DDFED3 /* Login.swift */; };
 		28013BBD01BF83EB38B064A6 /* Pods_Nitrx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		22A262AB2137D20F00DDFED3 /* Nitrx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nitrx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22A262AE2137D20F00DDFED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		22A262B02137D20F00DDFED3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		22A262B32137D20F00DDFED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		22A262B52137D21000DDFED3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22A262B82137D21000DDFED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22A262BA2137D21000DDFED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22A262C22137D57100DDFED3 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		22A262C42137D57F00DDFED3 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
+		22A262C62137D58C00DDFED3 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		68D69C219713C4A9DBDEBEED /* Pods-Nitrx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.debug.xcconfig"; sourceTree = "<group>"; };
 		EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.release.xcconfig"; sourceTree = "<group>"; };
 		F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nitrx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,13 +64,30 @@
 			isa = PBXGroup;
 			children = (
 				22A262AE2137D20F00DDFED3 /* AppDelegate.swift */,
-				22A262B02137D20F00DDFED3 /* ViewController.swift */,
-				22A262B22137D20F00DDFED3 /* Main.storyboard */,
+				22A262C02137D54A00DDFED3 /* Home */,
+				22A262C12137D55300DDFED3 /* Dashboard */,
 				22A262B52137D21000DDFED3 /* Assets.xcassets */,
 				22A262B72137D21000DDFED3 /* LaunchScreen.storyboard */,
 				22A262BA2137D21000DDFED3 /* Info.plist */,
 			);
 			path = Nitrx;
+			sourceTree = "<group>";
+		};
+		22A262C02137D54A00DDFED3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				22A262C22137D57100DDFED3 /* Home.storyboard */,
+				22A262C62137D58C00DDFED3 /* Login.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		22A262C12137D55300DDFED3 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				22A262C42137D57F00DDFED3 /* Dashboard.storyboard */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		5F0C8D86C82B3AF412A84C29 /* Frameworks */ = {
@@ -147,9 +166,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22A262C32137D57100DDFED3 /* Home.storyboard in Resources */,
 				22A262B92137D21000DDFED3 /* LaunchScreen.storyboard in Resources */,
 				22A262B62137D21000DDFED3 /* Assets.xcassets in Resources */,
-				22A262B42137D20F00DDFED3 /* Main.storyboard in Resources */,
+				22A262C52137D57F00DDFED3 /* Dashboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,22 +201,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22A262B12137D20F00DDFED3 /* ViewController.swift in Sources */,
 				22A262AF2137D20F00DDFED3 /* AppDelegate.swift in Sources */,
+				22A262C72137D58C00DDFED3 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		22A262B22137D20F00DDFED3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				22A262B32137D20F00DDFED3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		22A262B72137D21000DDFED3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -330,7 +342,10 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Nitrx/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nitrx.Nitrx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -347,7 +362,10 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Nitrx/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nitrx.Nitrx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
