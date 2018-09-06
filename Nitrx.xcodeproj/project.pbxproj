@@ -13,6 +13,8 @@
 		22A262C32137D57100DDFED3 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262C22137D57100DDFED3 /* Home.storyboard */; };
 		22A262C52137D57F00DDFED3 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262C42137D57F00DDFED3 /* Dashboard.storyboard */; };
 		22A262C72137D58C00DDFED3 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A262C62137D58C00DDFED3 /* Login.swift */; };
+		22F8E21A2141031100862E22 /* Entropy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F8E2192141031100862E22 /* Entropy.swift */; };
+		22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F8E21B2141041D00862E22 /* EntropyCell.swift */; };
 		28013BBD01BF83EB38B064A6 /* Pods_Nitrx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +27,8 @@
 		22A262C22137D57100DDFED3 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		22A262C42137D57F00DDFED3 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		22A262C62137D58C00DDFED3 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		22F8E2192141031100862E22 /* Entropy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entropy.swift; sourceTree = "<group>"; };
+		22F8E21B2141041D00862E22 /* EntropyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntropyCell.swift; sourceTree = "<group>"; };
 		68D69C219713C4A9DBDEBEED /* Pods-Nitrx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.debug.xcconfig"; sourceTree = "<group>"; };
 		EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.release.xcconfig"; sourceTree = "<group>"; };
 		F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nitrx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +82,8 @@
 			children = (
 				22A262C22137D57100DDFED3 /* Home.storyboard */,
 				22A262C62137D58C00DDFED3 /* Login.swift */,
+				22F8E2192141031100862E22 /* Entropy.swift */,
+				22F8E21B2141041D00862E22 /* EntropyCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -202,6 +208,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				22A262AF2137D20F00DDFED3 /* AppDelegate.swift in Sources */,
+				22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */,
+				22F8E21A2141031100862E22 /* Entropy.swift in Sources */,
 				22A262C72137D58C00DDFED3 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
