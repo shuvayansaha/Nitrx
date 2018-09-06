@@ -1,3 +1,24 @@
-PODFILE CHECKSUM: 46d16716703595f08c9d094bdfa8af3e7a7f8705
+PODS:
+  - Alamofire (4.6.0)
+  - TextFieldEffects (1.4.0)
+  - TTGSnackbar (1.7.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - TextFieldEffects
+  - TTGSnackbar
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - TextFieldEffects
+    - TTGSnackbar
+
+SPEC CHECKSUMS:
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  TextFieldEffects: 4ee41b5216e674d55fb6ac25107bf1af7629176f
+  TTGSnackbar: 26e9c1f842269d0eeae8c51f7d8cbea669d492f1
+
+PODFILE CHECKSUM: 7e5e79ff05e855354ebd4ddfb62405b32dbc0eeb
 
 COCOAPODS: 1.5.3

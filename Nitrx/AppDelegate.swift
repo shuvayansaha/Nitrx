@@ -2,9 +2,10 @@
 //  AppDelegate.swift
 //  Nitrx
 //
-//  Created by Rplanx on 30/08/18.
+//  Created by Shuvayan Saha on 07/09/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
+
 
 import UIKit
 
@@ -16,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+//        print("First launch, setting UserDefault.")
+//        UserDefaults.standard.set(true, forKey: "launchedBefore")
+        
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "Splash")
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+        
         
         // status bar text color change
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent

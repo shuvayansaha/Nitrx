@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X9j-YV-RV3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3vJ-vS-Z9s">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -24,9 +23,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QXE-dc-TJY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="437.60000000000002" y="-239.73013493253376"/>
+            <point key="canvasLocation" x="1028" y="455"/>
         </scene>
-        <!--Entropy-->
+        <!--Nitrx-->
         <scene sceneID="RNC-hI-if0">
             <objects>
                 <viewController storyboardIdentifier="Entropy" id="SQA-GG-4yB" customClass="Entropy" customModule="Nitrx" customModuleProvider="target" sceneMemberID="viewController">
@@ -93,7 +92,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BZh-Hw-9h3"/>
                     </view>
-                    <navigationItem key="navigationItem" id="RrO-vS-bUk"/>
+                    <navigationItem key="navigationItem" title="Nitrx" id="RrO-vS-bUk"/>
                     <connections>
                         <outlet property="entropyCollection" destination="faj-ev-zlR" id="Se0-o2-eiR"/>
                         <outlet property="progressBar" destination="Hxa-Bn-GLj" id="1Zz-2y-Eh5"/>
@@ -101,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EBy-eZ-brB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2126.25" y="-240.8450704225352"/>
+            <point key="canvasLocation" x="1896" y="-241"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k6o-8F-kzb">
@@ -111,6 +110,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="E9v-yB-Fs6">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -121,5 +123,37 @@
             </objects>
             <point key="canvasLocation" x="1128.75" y="-240.8450704225352"/>
         </scene>
+        <!--Splash-->
+        <scene sceneID="s4Z-Sg-LpA">
+            <objects>
+                <viewController storyboardIdentifier="Splash" id="3vJ-vS-Z9s" customClass="Splash" customModule="Nitrx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rGr-RR-AWE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="Hhq-Cx-Jjm">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.10980392160000001" green="0.12941176469999999" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Hhq-Cx-Jjm" firstAttribute="top" secondItem="rGr-RR-AWE" secondAttribute="top" id="Q0d-U1-Mm9"/>
+                            <constraint firstItem="Hhq-Cx-Jjm" firstAttribute="trailing" secondItem="cuE-Sh-pXU" secondAttribute="trailing" id="Y3W-dj-2YA"/>
+                            <constraint firstAttribute="bottom" secondItem="Hhq-Cx-Jjm" secondAttribute="bottom" id="gfi-G6-6xh"/>
+                            <constraint firstItem="Hhq-Cx-Jjm" firstAttribute="leading" secondItem="cuE-Sh-pXU" secondAttribute="leading" id="jQD-Kb-gYV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cuE-Sh-pXU"/>
+                    </view>
+                    <connections>
+                        <segue destination="X9j-YV-RV3" kind="show" identifier="splashSegue" id="P0q-x7-wLm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OUC-vX-gCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="388" y="-241"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="splash" width="361" height="623"/>
+    </resources>
 </document>

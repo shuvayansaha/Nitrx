@@ -16,6 +16,9 @@
 		22F8E21A2141031100862E22 /* Entropy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F8E2192141031100862E22 /* Entropy.swift */; };
 		22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F8E21B2141041D00862E22 /* EntropyCell.swift */; };
 		28013BBD01BF83EB38B064A6 /* Pods_Nitrx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */; };
+		7E1ABC942141B66F00517E48 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC932141B66F00517E48 /* Extension.swift */; };
+		7E1ABC962141B67500517E48 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC952141B67500517E48 /* Services.swift */; };
+		7E1ABC982141B97A00517E48 /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC972141B97A00517E48 /* Splash.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		22F8E2192141031100862E22 /* Entropy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entropy.swift; sourceTree = "<group>"; };
 		22F8E21B2141041D00862E22 /* EntropyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntropyCell.swift; sourceTree = "<group>"; };
 		68D69C219713C4A9DBDEBEED /* Pods-Nitrx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.debug.xcconfig"; sourceTree = "<group>"; };
+		7E1ABC932141B66F00517E48 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		7E1ABC952141B67500517E48 /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		7E1ABC972141B97A00517E48 /* Splash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
 		EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.release.xcconfig"; sourceTree = "<group>"; };
 		F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nitrx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -68,6 +74,8 @@
 			isa = PBXGroup;
 			children = (
 				22A262AE2137D20F00DDFED3 /* AppDelegate.swift */,
+				7E1ABC952141B67500517E48 /* Services.swift */,
+				7E1ABC932141B66F00517E48 /* Extension.swift */,
 				22A262C02137D54A00DDFED3 /* Home */,
 				22A262C12137D55300DDFED3 /* Dashboard */,
 				22A262B52137D21000DDFED3 /* Assets.xcassets */,
@@ -81,9 +89,10 @@
 			isa = PBXGroup;
 			children = (
 				22A262C22137D57100DDFED3 /* Home.storyboard */,
-				22A262C62137D58C00DDFED3 /* Login.swift */,
+				7E1ABC972141B97A00517E48 /* Splash.swift */,
 				22F8E2192141031100862E22 /* Entropy.swift */,
 				22F8E21B2141041D00862E22 /* EntropyCell.swift */,
+				22A262C62137D58C00DDFED3 /* Login.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -124,6 +133,7 @@
 				22A262A72137D20F00DDFED3 /* Sources */,
 				22A262A82137D20F00DDFED3 /* Frameworks */,
 				22A262A92137D20F00DDFED3 /* Resources */,
+				0496028C0F312A4F67D63358 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -182,6 +192,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0496028C0F312A4F67D63358 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/TTGSnackbar/TTGSnackbar.framework",
+				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTGSnackbar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5BA0FBA8E5D0390B2D842671 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -207,6 +239,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E1ABC982141B97A00517E48 /* Splash.swift in Sources */,
+				7E1ABC942141B66F00517E48 /* Extension.swift in Sources */,
+				7E1ABC962141B67500517E48 /* Services.swift in Sources */,
 				22A262AF2137D20F00DDFED3 /* AppDelegate.swift in Sources */,
 				22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */,
 				22F8E21A2141031100862E22 /* Entropy.swift in Sources */,
@@ -279,7 +314,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -333,7 +368,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -358,7 +393,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -378,7 +413,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

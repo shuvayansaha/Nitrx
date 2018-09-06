@@ -2,9 +2,10 @@
 //  Entropy.swift
 //  Nitrx
 //
-//  Created by Rplanx on 06/09/18.
+//  Created by Shuvayan Saha on 07/09/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
+
 
 import UIKit
 
@@ -68,18 +69,23 @@ class Entropy: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         entropyCollection.delegate = self
         entropyCollection.dataSource = self
         
-
         entropyCollection.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
-
         
         progressBar.setProgress(Float(current), animated: true)
 
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+       
         var colors = [UIColor]()
         colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
         colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
         navigationController?.navigationBar.setGradientBackground(colors: colors)
+       
     }
-
+        
+    
 
     // collectionview
     
@@ -138,18 +144,6 @@ class Entropy: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
 
 
     
-//    class Colors {
-//        var gl:CAGradientLayer!
-//
-//        init() {
-//            let colorTop = UIColor(red: 192.0 / 255.0, green: 38.0 / 255.0, blue: 42.0 / 255.0, alpha: 1.0).cgColor
-//            let colorBottom = UIColor(red: 35.0 / 255.0, green: 2.0 / 255.0, blue: 2.0 / 255.0, alpha: 1.0).cgColor
-//
-//            self.gl = CAGradientLayer()
-//            self.gl.colors = [colorTop, colorBottom]
-//            self.gl.locations = [0.0, 1.0]
-//        }
-//    }
     
     
     
