@@ -69,21 +69,14 @@ class Entropy: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         entropyCollection.delegate = self
         entropyCollection.dataSource = self
         
-        entropyCollection.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap)))
+        entropyCollection.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(tap)))
         
         progressBar.setProgress(Float(current), animated: true)
 
+        
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-       
-        var colors = [UIColor]()
-        colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
-        colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
-        navigationController?.navigationBar.setGradientBackground(colors: colors)
-       
-    }
+
         
     
 
@@ -124,7 +117,7 @@ class Entropy: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         print(indexPath)
     }
     
-    @objc func tap(sender: UITapGestureRecognizer) {
+    @objc func tap(sender: UIPanGestureRecognizer) {
         
         current = current + 0.019
         progressBar.progress = Float(current)
@@ -139,56 +132,40 @@ class Entropy: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             progressBar.setProgress(Float(current), animated: true)
             numberArray = numberArray2
             
+            // MOVED CONTROLLER
+            let storyboard = UIStoryboard(name: "Home", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "PageController") as! PageController
+//            controller.email = self.email.text!
+//            controller.password = self.password.text!
+            
+            self.present(controller, animated: true, completion: nil)
+            
         } else {}
     }
 
 
     
-    
-    
-    
-    
-}
-
-
-
-
-extension UINavigationBar {
-    
-    func setGradientBackground(colors: [UIColor]) {
+    // more info
+    @IBAction func moreInfo(_ sender: UIButton) {
         
-        var updatedFrame = bounds
-        updatedFrame.size.height += self.frame.origin.y
-        let gradientLayer = CAGradientLayer(frame: updatedFrame, colors: colors)
-        
-        setBackgroundImage(gradientLayer.createGradientImage(), for: UIBarMetrics.default)
-    }
-}
+        let data = "By moving your finger, you create random data called entropy, that is used to generate the key pair , associated with new unique Nitrx ID. the key pair consists public key that is distrubuted to your friends and the private key that safely stored ony your phone. Your friends will encript messages to you with your public key. Only the owner of the private key and nobody else is able to decrypt this messages."
 
-extension CAGradientLayer {
-    
-    convenience init(frame: CGRect, colors: [UIColor]) {
-        self.init()
-        self.frame = frame
-        self.colors = []
-        for color in colors {
-            self.colors?.append(color.cgColor)
+        let alertController = UIAlertController(title: "", message: data, preferredStyle: .alert)
+        
+        // Create the actions
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
         }
-        startPoint = CGPoint(x: 0, y: 0)
-        endPoint = CGPoint(x: 0, y: 1)
+      
+        
+        // Add the actions
+        alertController.addAction(okAction)
+        
+        // Present the controller
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    func createGradientImage() -> UIImage? {
-        
-        var image: UIImage? = nil
-        UIGraphicsBeginImageContext(bounds.size)
-        if let context = UIGraphicsGetCurrentContext() {
-            render(in: context)
-            image = UIGraphicsGetImageFromCurrentImageContext()
-        }
-        UIGraphicsEndImageContext()
-        return image
-    }
+    
     
 }
 
@@ -196,33 +173,3 @@ extension CAGradientLayer {
 
 
 
-
-
-
-
-
-
-
-extension MutableCollection {
-    /// Shuffles the contents of this collection.
-    mutating func shuffle() {
-        let c = count
-        guard c > 1 else { return }
-        
-        for (firstUnshuffled, unshuffledCount) in zip(indices, stride(from: c, to: 1, by: -1)) {
-            // Change `Int` in the next line to `IndexDistance` in < Swift 4.1
-            let d: Int = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
-            let i = index(firstUnshuffled, offsetBy: d)
-            swapAt(firstUnshuffled, i)
-        }
-    }
-}
-
-extension Sequence {
-    /// Returns an array with the contents of this sequence, shuffled.
-    func shuffled() -> [Element] {
-        var result = Array(self)
-        result.shuffle()
-        return result
-    }
-}

@@ -17,7 +17,7 @@ extension UIButton {
     func RoundCornerButton() {
       
         //round corner button
-        self.layer.cornerRadius = 14
+        self.layer.cornerRadius = 6
 
     }
 }
@@ -311,5 +311,81 @@ extension UIView {
         layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+}
+
+
+
+extension UINavigationBar {
+    
+    func setGradientBackground(colors: [UIColor]) {
+        
+        var updatedFrame = bounds
+        updatedFrame.size.height += self.frame.origin.y
+        let gradientLayer = CAGradientLayer(frame: updatedFrame, colors: colors)
+        
+        setBackgroundImage(gradientLayer.createGradientImage(), for: UIBarMetrics.default)
+    }
+}
+
+extension CAGradientLayer {
+    
+    convenience init(frame: CGRect, colors: [UIColor]) {
+        self.init()
+        self.frame = frame
+        self.colors = []
+        for color in colors {
+            self.colors?.append(color.cgColor)
+        }
+        startPoint = CGPoint(x: 0, y: 0)
+        endPoint = CGPoint(x: 0, y: 1)
+    }
+    
+    func createGradientImage() -> UIImage? {
+        
+        var image: UIImage? = nil
+        UIGraphicsBeginImageContext(bounds.size)
+        if let context = UIGraphicsGetCurrentContext() {
+            render(in: context)
+            image = UIGraphicsGetImageFromCurrentImageContext()
+        }
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+extension MutableCollection {
+    /// Shuffles the contents of this collection.
+    mutating func shuffle() {
+        let c = count
+        guard c > 1 else { return }
+        
+        for (firstUnshuffled, unshuffledCount) in zip(indices, stride(from: c, to: 1, by: -1)) {
+            // Change `Int` in the next line to `IndexDistance` in < Swift 4.1
+            let d: Int = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
+            let i = index(firstUnshuffled, offsetBy: d)
+            swapAt(firstUnshuffled, i)
+        }
+    }
+}
+
+extension Sequence {
+    /// Returns an array with the contents of this sequence, shuffled.
+    func shuffled() -> [Element] {
+        var result = Array(self)
+        result.shuffle()
+        return result
     }
 }
