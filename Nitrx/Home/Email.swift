@@ -1,19 +1,19 @@
 //
-//  SignUp.swift
+//  Email.swift
 //  Nitrx
 //
-//  Created by Rplanx on 07/09/18.
+//  Created by Shuvayan Saha on 09/09/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class SignUp: UIViewController {
+class Email: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        // Do any additional setup after loading the view.
     }
 
 
