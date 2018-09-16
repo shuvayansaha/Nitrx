@@ -1,35 +1,35 @@
 //
-//  Login.swift
+//  PasswordSetup.swift
 //  Nitrx
 //
-//  Created by Shuvayan Saha on 08/09/18.
+//  Created by Shuvayan Saha on 15/09/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 import TextFieldEffects
 
-class Login: UIViewController, UITextFieldDelegate {
-    
-    @IBOutlet weak var email: HoshiTextField!
-    @IBOutlet weak var password: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var createAccount: UIButton!
+class PasswordSetup: UIViewController, UITextFieldDelegate {
+
+    @IBOutlet weak var password: HoshiTextField!
+    @IBOutlet weak var confirmPassword: HoshiTextField!
+
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var whiteView: UIView!
+    @IBOutlet weak var sendLink: UIButton!
+    @IBOutlet weak var cancel: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        email.delegate = self
-        password.delegate = self
-        
-        loginButton.RoundCornerButton()
-        createAccount.RoundCornerButton()
 
+        password.delegate = self
+        password.delegate = self
+
+        sendLink.RoundCornerButton()
+        
         hideKeyboardWhenTappedAround()
         
-        UITextField.connectFields(fields: [email, password])
+        UITextField.connectFields(fields: [password, confirmPassword])
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         
@@ -37,9 +37,10 @@ class Login: UIViewController, UITextFieldDelegate {
         
     }
     
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
         var colors = [UIColor]()
         colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
         colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
@@ -51,20 +52,10 @@ class Login: UIViewController, UITextFieldDelegate {
     }
     
     
-    // login button
-    @IBAction func login(_ sender: UIButton) {
+    // send link
+    @IBAction func sendLink(_ sender: UIButton) {
         
-        if (email.text!.isBlank) {
-            
-            snackBarFunction(message: "Email field is required.")
-        }
-            
-        else if (email.text!.isEmail == false) {
-            
-            snackBarFunction(message: "The email must be a valid email address.")
-        }
-            
-        else if (password.text!.isBlank) {
+        if (password.text!.isBlank) {
             
             snackBarFunction(message: "Password field is required.")
         }
@@ -74,19 +65,44 @@ class Login: UIViewController, UITextFieldDelegate {
             snackBarFunction(message: "Invalid Password")
         }
             
+        else if (confirmPassword.text!.isBlank) {
+            
+            snackBarFunction(message: "Confirm password field is required.")
+        }
+            
+        else if (confirmPassword.text!.isPassword == false) {
+            
+            snackBarFunction(message: "Invalid Confirm Password")
+        }
+            
+        else if (password.text != confirmPassword.text) {
+            
+            snackBarFunction(message: "Confirm password not match.")
+            
+        }
+            
         else {
-            loginFunction()
+            passwordSetupFunction()
         }
     }
     
-
+    
+    
+    
+    // cancel
+    @IBAction func cancel(_ sender: UIButton) {
+        
+    }
+    
+    
+    
     
     
     // login function
-    func loginFunction() {
+    func passwordSetupFunction() {
         
         let url = baseURL + user_login
-        let parameters = ["email": email.text!, "password": password.text!]
+        let parameters = ["password": password.text!, "confirmPassword": confirmPassword.text!]
         
         httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
             
@@ -137,20 +153,6 @@ class Login: UIViewController, UITextFieldDelegate {
     }
     
     
-    // forgot password
-    @IBAction func forgotPassword(_ sender: UIButton) {
-        
-    }
-    
-
-    // create account
-    @IBAction func createAccount(_ sender: UIButton) {
-        
-        // MOVE CONTROLLER
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Entropy") as! Entropy
-        self.present(controller, animated: true, completion: nil)
-    }
     
     
     
@@ -186,5 +188,7 @@ class Login: UIViewController, UITextFieldDelegate {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
-    
+
+
+
 }
