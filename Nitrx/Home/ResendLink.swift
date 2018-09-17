@@ -84,7 +84,7 @@ class ResendLink: UIViewController, UITextFieldDelegate {
     // login function
     func forgotPasswordFunction() {
         
-        let url = baseURL + user_login
+        let url = baseURL 
         let parameters = ["email": email.text!]
         
         httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
@@ -119,11 +119,11 @@ class ResendLink: UIViewController, UITextFieldDelegate {
                     
                 } else {}
                 
-                if getData.message?.email != nil {
-                    snackBarFunction(message: (getData.message?.email![0])!)
-                } else {
-                    snackBarFunction(message: (getData.message?.english)!)
-                }
+//                if getData.message?.email != nil {
+//                    snackBarFunction(message: (getData.message?.email![0])!)
+//                } else {
+//                    snackBarFunction(message: (getData.message?.english)!)
+//                }
                 
                 
             } catch {

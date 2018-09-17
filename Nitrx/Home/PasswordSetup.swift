@@ -101,7 +101,7 @@ class PasswordSetup: UIViewController, UITextFieldDelegate {
     // login function
     func passwordSetupFunction() {
         
-        let url = baseURL + user_login
+        let url = baseURL 
         let parameters = ["password": password.text!, "confirmPassword": confirmPassword.text!]
         
         httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
@@ -136,11 +136,11 @@ class PasswordSetup: UIViewController, UITextFieldDelegate {
                     
                 } else {}
                 
-                if getData.message?.email != nil {
-                    snackBarFunction(message: (getData.message?.email![0])!)
-                } else {
-                    snackBarFunction(message: (getData.message?.english)!)
-                }
+//                if getData.message?.email != nil {
+//                    snackBarFunction(message: (getData.message?.email![0])!)
+//                } else {
+//                    snackBarFunction(message: (getData.message?.english)!)
+//                }
                 
                 
             } catch {

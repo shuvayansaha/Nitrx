@@ -85,7 +85,7 @@ class Login: UIViewController, UITextFieldDelegate {
     // login function
     func loginFunction() {
         
-        let url = baseURL + user_login
+        let url = baseURL + loginUrl
         let parameters = ["email": email.text!, "password": password.text!]
         
         httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
@@ -120,11 +120,11 @@ class Login: UIViewController, UITextFieldDelegate {
                     
                 } else {}
                 
-                if getData.message?.email != nil {
-                    snackBarFunction(message: (getData.message?.email![0])!)
-                } else {
-                    snackBarFunction(message: (getData.message?.english)!)
-                }
+//                if getData.message?.email != nil {
+//                    snackBarFunction(message: (getData.message?.email![0])!)
+//                } else {
+//                    snackBarFunction(message: (getData.message?.english)!)
+//                }
                 
                 
             } catch {
