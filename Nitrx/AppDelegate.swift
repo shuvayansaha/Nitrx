@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("First launch, setting UserDefault.")
 //        UserDefaults.standard.set(true, forKey: "launchedBefore")
         
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let initialViewController = storyboard.instantiateViewController(withIdentifier: "Splash")
+        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "DashboardTab")
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         
