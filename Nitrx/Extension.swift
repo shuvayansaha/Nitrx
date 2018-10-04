@@ -153,7 +153,7 @@ extension UITextField {
     
     // place holder color extension
     func placeHolderColor() {
-        self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray])
+        self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
     }
 }
 
@@ -183,7 +183,7 @@ func snackBarFunction(message: String) {
 
 extension UIImageView {
     public func maskCircle(anyImage: UIImage) {
-        self.contentMode = UIViewContentMode.scaleToFill
+        self.contentMode = UIView.ContentMode.scaleToFill
         self.layer.cornerRadius = self.frame.height / 2
         self.layer.masksToBounds = false
         self.clipsToBounds = true
@@ -245,7 +245,7 @@ class LoaderAnimation {
 
 
 
-    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
 
     
     func loaderShow(controller: UIViewController) {

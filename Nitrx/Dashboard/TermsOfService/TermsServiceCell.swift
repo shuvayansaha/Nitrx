@@ -1,19 +1,21 @@
 //
-//  HomeColCell.swift
+//  TermsServiceCell.swift
 //  Nitrx
 //
-//  Created by Shuvayan Saha on 17/09/18.
+//  Created by Shuvayan Saha on 22/09/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class HomeColCell: UICollectionViewCell {
-    
+class TermsServiceCell: UICollectionViewCell {
+
     @IBOutlet weak var whiteView: UIView!
+    @IBOutlet weak var label: UILabel!
     
     
-    
+
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -22,6 +24,8 @@ class HomeColCell: UICollectionViewCell {
         whiteView.layer.cornerRadius = 4
         
     }
-  
+    
+
+
 
 }

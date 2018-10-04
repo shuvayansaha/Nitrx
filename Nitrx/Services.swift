@@ -48,7 +48,7 @@ func httpPost(controller: UIViewController, url: String, headerValue1: String, h
     let activityIndicator = UIActivityIndicatorView()
     activityIndicator.center = controller.view.center
     activityIndicator.hidesWhenStopped = true
-    activityIndicator.activityIndicatorViewStyle = .whiteLarge
+    activityIndicator.style = .whiteLarge
     controller.view.addSubview(activityIndicator)
     activityIndicator.startAnimating()
     UIApplication.shared.beginIgnoringInteractionEvents()
@@ -112,7 +112,7 @@ func httpGet(controller: UIViewController, url: String, headerValue: String, hea
     let activityIndicator = UIActivityIndicatorView()
     activityIndicator.center = controller.view.center
     activityIndicator.hidesWhenStopped = true
-    activityIndicator.activityIndicatorViewStyle = .whiteLarge
+    activityIndicator.style = .whiteLarge
     controller.view.addSubview(activityIndicator)
     activityIndicator.startAnimating()
     UIApplication.shared.beginIgnoringInteractionEvents()

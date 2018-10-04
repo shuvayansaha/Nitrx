@@ -70,7 +70,7 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
             return CGSize(width: collectionView.frame.size.width, height: 108)
 
         } else {
-            return UICollectionViewFlowLayoutAutomaticSize
+            return UICollectionViewFlowLayout.automaticSize
         }
     }
     
@@ -115,7 +115,7 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
         
         switch kind {
             
-        case UICollectionElementKindSectionFooter:
+        case UICollectionView.elementKindSectionFooter:
             
             let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "YourIntFooter", for: indexPath) as! YourIntFooter
             

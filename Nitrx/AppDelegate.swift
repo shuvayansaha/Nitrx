@@ -15,15 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         
 //        print("First launch, setting UserDefault.")
 //        UserDefaults.standard.set(true, forKey: "launchedBefore")
         
-        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-        let initialViewController = storyboard.instantiateViewController(withIdentifier: "DashboardTab")
+        let storyboardName = "Dashboard"
+        let withIdentifier = "DashboardTab"
+
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: withIdentifier)
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         

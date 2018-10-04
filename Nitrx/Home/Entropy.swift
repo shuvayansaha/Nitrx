@@ -153,7 +153,7 @@ class Entropy: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         let alertController = UIAlertController(title: "", message: data, preferredStyle: .alert)
         
         // Create the actions
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
             UIAlertAction in
         }
       
