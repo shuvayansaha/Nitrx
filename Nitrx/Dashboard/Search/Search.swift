@@ -11,127 +11,116 @@ import UIKit
 class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var navView: UIView!
-    
+    @IBOutlet weak var cellCol: UICollectionView!
     @IBOutlet weak var colView: UICollectionView!
+    @IBOutlet weak var saerchBar: UISearchBar!
     
-    let segmentvalue = ["Trending", "People", "Food", "Tech", "Film", "Other"]
+    let category = ["Trending", "People", "Food", "Tech", "Film", "Other"]
    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        cellCol.delegate = self
+        cellCol.dataSource = self
         
         colView.delegate = self
         colView.dataSource = self
-
+        
+        let textFieldInsideSearchBar = saerchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.white
     }
 
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
  
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        var colors = [UIColor]()
-        colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
-        colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
-//        navigationController?.navigationBar.setGradientBackground(colors: colors)
-        
-        
-        
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        let red = UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1).cgColor
+        let green = UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1).cgColor
+
         let gradient = CAGradientLayer()
         
-        gradient.frame = view.bounds
-        gradient.colors = colors
+        gradient.frame = navView.bounds
+        gradient.colors = [red, green]
         
         navView.layer.insertSublayer(gradient, at: 0)
     }
     
-    
-    
-    
- 
-    
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
-        return 1
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return 5
-        
+       
+        if collectionView == colView {
+            return category.count
+        } else {
+            return 50
+        }
     }
-    
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if indexPath.row == 0 {
-            return CGSize(width: collectionView.frame.size.width, height: 50)
+        if collectionView == colView {
+            return CGSize(width: collectionView.frame.size.width/3, height: collectionView.frame.size.height)
+      
             
-        } else if indexPath.row == 1 {
-            return CGSize(width: collectionView.frame.size.width, height: 118)
+            if indexPath.row == 0 {
+                return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.width - collectionView.frame.size.width/3)
             
-        } else if indexPath.row == 2 {
-            return CGSize(width: collectionView.frame.size.width, height: 130)
-            
-        } else if indexPath.row == 3 {
-            return CGSize(width: collectionView.frame.size.width, height: 65)
-            
-        } else if indexPath.row == 4 {
-            return CGSize(width: collectionView.frame.size.width, height: 500)
-            
-        } else {
-            return UICollectionViewFlowLayout.automaticSize
-        }
+                
+            } else {
+                
+                return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.width - collectionView.frame.size.width/3)
         
+                
+            }
+            
+           
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row == 0 {
+        if collectionView == colView {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCategory", for: indexPath) as! SearchCategory
+            if indexPath.row == 0 {
+                
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCategoryCell", for: indexPath) as! SearchCategoryCell
+                cell.label.text = category[indexPath.row]
+                return cell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CallSearch2", for: indexPath) as! CallSearch2
+                return cell
+            }
+           
             
-            return cell
             
-        } else if indexPath.row == 1 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "label1", for: indexPath)
-            
-            return cell
-            
-        } else if indexPath.row == 2 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopRated", for: indexPath) as! TopRated
-            
-            return cell
-            
-        } else if indexPath.row == 3 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "label2", for: indexPath)
-            
-            return cell
-            
-        } else if indexPath.row == 4 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCell", for: indexPath) as! SearchCell
-            
-            return cell
-            
+           
         } else {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCell", for: indexPath) as! SearchCell
-            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CallSearch2", for: indexPath) as! CallSearch2
             return cell
-            
         }
-        
     }
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 }

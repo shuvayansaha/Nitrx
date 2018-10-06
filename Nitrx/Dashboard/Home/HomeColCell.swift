@@ -12,7 +12,9 @@ class HomeColCell: UICollectionViewCell {
     
     @IBOutlet weak var whiteView: UIView!
     
-    
+    @IBOutlet weak var follow: UIButton!
+    @IBOutlet weak var rank: UIButton!
+    @IBOutlet weak var link: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,6 +22,11 @@ class HomeColCell: UICollectionViewCell {
         whiteView.layer.borderColor = UIColor.lightGray.cgColor
         whiteView.layer.borderWidth = 0.5
         whiteView.layer.cornerRadius = 4
+        
+        follow.layer.cornerRadius = 4
+        rank.layer.cornerRadius = 4
+        link.layer.cornerRadius = 10
+
         
     }
   
