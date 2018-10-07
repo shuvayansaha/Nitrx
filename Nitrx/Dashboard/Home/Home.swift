@@ -17,10 +17,13 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
 
         homeCol.delegate = self
         homeCol.dataSource = self
+        
+        loadHome()
 
     }
 
 
+  
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -61,6 +64,35 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         return cell
     }
     
+    
+    
+    func loadHome() {
+        
+        let url = baseURL + normal_feeds
+        let parameters = ["user_id": "40"]
+        
+        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                let getData = try JSONDecoder().decode(JSONData.self, from: data)
+                
+
+                //let data = getData.normal_feeds
+                
+                print(getData)
+                
+           
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
     
     
     

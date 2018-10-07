@@ -19,7 +19,7 @@ let baseURL = "http://json.nitrx.com/"
 let loginUrl = "login.php/"
 
 
-
+let normal_feeds = "normal_feeds.php/"
 
 
 
@@ -30,7 +30,43 @@ struct JSONData: Codable {
     let status: Bool?
     let isLoginStatus: Bool?
     let otp_type: String?
+    let dic: [NormalFeeds]?
 }
+
+
+
+
+struct NormalFeeds: Codable {
+    
+    let description: String?
+    let postFile: String?
+    let postText: String?
+    let post_cat_id: String?
+    let post_id: String?
+    let status: String?
+    let username: String?
+    let user_id: String?
+    let website_url: String?
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
