@@ -18,8 +18,41 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         homeCol.delegate = self
         homeCol.dataSource = self
 
+        let searchBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        searchBtn.setImage(UIImage(named: "wallet-white"), for: [])
+        searchBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
+        searchBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let searchButton = UIBarButtonItem(customView: searchBtn)
+        
+        let clipBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        clipBtn.setImage(UIImage(named: "notification"), for: [])
+        clipBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
+        clipBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let clipButton = UIBarButtonItem(customView: clipBtn)
+        
+        let pencilBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        pencilBtn.setImage(UIImage(named: "notification"), for: [])
+        pencilBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
+        pencilBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let pencilButton = UIBarButtonItem(customView: pencilBtn)
+        
+        self.navigationItem.rightBarButtonItems = [pencilButton, clipButton, searchButton]
     }
 
+    @objc func wallet() {
+        print("wallet")
+    
+    }
+    
+    @objc func notification() {
+        print("wallet")
+        
+    }
+    
+    @objc func searchBtnPressed() {
+        print("wallet")
+        
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -38,7 +71,7 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 3
+        return 5
         
     }
     
@@ -53,6 +86,13 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
             return CGSize(width: collectionView.frame.size.width, height: 40)
             
         } else if indexPath.row == 2 {
+            // top rated  cell
+            return CGSize(width: collectionView.frame.size.width, height: 150)
+            
+        } else if indexPath.row == 3 {
+            return CGSize(width: collectionView.frame.size.width, height: 60)
+            
+        } else if indexPath.row == 4 {
             return CGSize(width: collectionView.frame.size.width, height: 400)
             
         } else {
@@ -73,24 +113,45 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
             
         } else if indexPath.row == 1 {
 
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostHeaderCell", for: indexPath) as! ProfileMyPostHeaderCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopRatedHeader", for: indexPath)
             
             return cell
 
         } else if indexPath.row == 2 {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostCell", for: indexPath) as! ProfileMyPostCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopRatedCell", for: indexPath) as! TopRatedCell
             
             return cell
 
+        } else if indexPath.row == 3 {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopRatedHeader2", for: indexPath)
+            
+            return cell
+            
+        } else if indexPath.row == 4 {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostCell", for: indexPath) as! ProfileMyPostCell
+            
+            return cell
+            
         } else {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeColCell", for: indexPath) as! HomeColCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostCell", for: indexPath) as! ProfileMyPostCell
             
             return cell
             
         }
         
     }
+    
+    
+    
+
+   
+    
+    
+    
+    
 
 }
