@@ -6,6 +6,10 @@
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
+/// profile create post
+///  rate
+
+/// search details
 
 import UIKit
 

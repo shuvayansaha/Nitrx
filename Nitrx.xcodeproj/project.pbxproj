@@ -52,6 +52,11 @@
 		7E88AE79214D618500FC994F /* YourIntFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE78214D618500FC994F /* YourIntFooter.swift */; };
 		7E88AE7B214D633100FC994F /* YourIntLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE7A214D633100FC994F /* YourIntLabelCell.swift */; };
 		7EA5BE9F21458AA1002A8E5E /* Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BE9E21458AA1002A8E5E /* Email.swift */; };
+		7EC17329216D23FB00A7BD3E /* ProfileOthersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC17328216D23FB00A7BD3E /* ProfileOthersCell.swift */; };
+		7EC1732B216D242400A7BD3E /* ProfileOthersTopRatedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1732A216D242400A7BD3E /* ProfileOthersTopRatedCell.swift */; };
+		7EC1732D216D245800A7BD3E /* ProfileOthersTopRatedCellChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1732C216D245800A7BD3E /* ProfileOthersTopRatedCellChild.swift */; };
+		7EC1732F216D249200A7BD3E /* ProfileOthersMyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1732E216D249200A7BD3E /* ProfileOthersMyPostCell.swift */; };
+		7EC17331216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC17330216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift */; };
 		7EC2D2DA2155F219009A5E7B /* ProfileColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2D2D92155F219009A5E7B /* ProfileColCell.swift */; };
 		7EDE39D821610BEC00D43F5D /* EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDE39D721610BEC00D43F5D /* EditProfile.swift */; };
 		7EDE39DA21610E5A00D43F5D /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */; };
@@ -111,6 +116,11 @@
 		7E88AE78214D618500FC994F /* YourIntFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntFooter.swift; sourceTree = "<group>"; };
 		7E88AE7A214D633100FC994F /* YourIntLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntLabelCell.swift; sourceTree = "<group>"; };
 		7EA5BE9E21458AA1002A8E5E /* Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Email.swift; sourceTree = "<group>"; };
+		7EC17328216D23FB00A7BD3E /* ProfileOthersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOthersCell.swift; sourceTree = "<group>"; };
+		7EC1732A216D242400A7BD3E /* ProfileOthersTopRatedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOthersTopRatedCell.swift; sourceTree = "<group>"; };
+		7EC1732C216D245800A7BD3E /* ProfileOthersTopRatedCellChild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOthersTopRatedCellChild.swift; sourceTree = "<group>"; };
+		7EC1732E216D249200A7BD3E /* ProfileOthersMyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOthersMyPostCell.swift; sourceTree = "<group>"; };
+		7EC17330216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOthersMyPostCellChild.swift; sourceTree = "<group>"; };
 		7EC2D2D92155F219009A5E7B /* ProfileColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileColCell.swift; sourceTree = "<group>"; };
 		7EDE39D721610BEC00D43F5D /* EditProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfile.swift; sourceTree = "<group>"; };
 		7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
@@ -227,6 +237,11 @@
 			isa = PBXGroup;
 			children = (
 				22B45DB5216CE647000A4578 /* ProfileOthers.swift */,
+				7EC17328216D23FB00A7BD3E /* ProfileOthersCell.swift */,
+				7EC1732A216D242400A7BD3E /* ProfileOthersTopRatedCell.swift */,
+				7EC1732C216D245800A7BD3E /* ProfileOthersTopRatedCellChild.swift */,
+				7EC1732E216D249200A7BD3E /* ProfileOthersMyPostCell.swift */,
+				7EC17330216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift */,
 			);
 			path = "Profile Others";
 			sourceTree = "<group>";
@@ -455,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E88AE73214D592900FC994F /* DashboardNav.swift in Sources */,
+				7EC17331216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift in Sources */,
 				7E88AE6D214D4ED100FC994F /* ResendLink.swift in Sources */,
 				7E1ABC982141B97A00517E48 /* Splash.swift in Sources */,
 				7E1ABC942141B66F00517E48 /* Extension.swift in Sources */,
@@ -470,10 +486,13 @@
 				7E6EB4F22156485400A763BF /* TermsServiceHeaderCell.swift in Sources */,
 				7E6EB4E9215636F100A763BF /* MyProfileChildPostCell.swift in Sources */,
 				7E88AE7B214D633100FC994F /* YourIntLabelCell.swift in Sources */,
+				7EC1732D216D245800A7BD3E /* ProfileOthersTopRatedCellChild.swift in Sources */,
 				2254FD3B216B8D82006A20EB /* TopRatedCell.swift in Sources */,
+				7EC1732F216D249200A7BD3E /* ProfileOthersMyPostCell.swift in Sources */,
 				22A262AF2137D20F00DDFED3 /* AppDelegate.swift in Sources */,
 				7E6EB4EE215643F600A763BF /* TermsServiceCell.swift in Sources */,
 				7EC2D2DA2155F219009A5E7B /* ProfileColCell.swift in Sources */,
+				7EC1732B216D242400A7BD3E /* ProfileOthersTopRatedCell.swift in Sources */,
 				7E7C38C7214EE3B30063F47C /* HomeColCell.swift in Sources */,
 				7E6EB4EB215640F900A763BF /* TermsOfService.swift in Sources */,
 				22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */,
@@ -502,6 +521,7 @@
 				7EE43AF32156B4F4002F8A5A /* PostDetailsNav.swift in Sources */,
 				7E88AE77214D5FE000FC994F /* YourIntButtonCell.swift in Sources */,
 				7E6EB4F421564A3000A763BF /* TermsOfServiceNav.swift in Sources */,
+				7EC17329216D23FB00A7BD3E /* ProfileOthersCell.swift in Sources */,
 				22ED7F50214242A40004BFDA /* HomeNav.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

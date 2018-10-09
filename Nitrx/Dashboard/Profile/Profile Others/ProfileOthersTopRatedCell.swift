@@ -1,14 +1,14 @@
 //
-//  ProfileMyPostCell.swift
+//  ProfileOthersTopRatedCell.swift
 //  Nitrx
 //
-//  Created by Shuvayan Saha on 22/09/18.
+//  Created by Shuvayan Saha on 09/10/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+class ProfileOthersTopRatedCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var colView: UICollectionView!
     
@@ -17,33 +17,35 @@ class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayou
         
         colView.delegate = self
         colView.dataSource = self
-
+        
     }
     
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        
+        return 5
+        
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: collectionView.frame.size.width / 3 - 2, height: collectionView.frame.size.width / 3 - 2)
+        return CGSize(width: collectionView.frame.size.width/3, height: collectionView.frame.size.height)
+        
+        
     }
+    
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyProfileChildPostCell", for: indexPath) as! MyProfileChildPostCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileOthersTopRatedCellChild", for: indexPath) as! ProfileOthersTopRatedCellChild
         
         return cell
         
+        
+        
     }
-    
-    
-    
 }
