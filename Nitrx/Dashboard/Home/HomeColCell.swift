@@ -35,7 +35,7 @@ class HomeColCell: UICollectionViewCell {
         
         follow.layer.cornerRadius = 4
         rank.layer.cornerRadius = 4
-        link.layer.cornerRadius = 10
+        link.layer.cornerRadius = 16
 
         rating1.layer.borderWidth = 1
         rating1.layer.borderColor = UIColor.lightGray.cgColor
@@ -51,7 +51,10 @@ class HomeColCell: UICollectionViewCell {
 
         rating5.layer.borderWidth = 1
         rating5.layer.borderColor = UIColor.lightGray.cgColor
+        
+       
     }
+  
   
     @IBAction func expandPostDetails(_ sender: UIButton) {
         

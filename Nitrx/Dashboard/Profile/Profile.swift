@@ -37,6 +37,13 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         let pencilButton = UIBarButtonItem(customView: pencilBtn)
         
         self.navigationItem.rightBarButtonItems = [pencilButton, clipButton, searchButton]
+        
+//        // navigation bar logo centre
+//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+//        imageView.contentMode = .scaleAspectFit
+//        let image = UIImage(named: "logo")
+//        imageView.image = image
+//        navigationItem.titleView = imageView
     }
 
     @objc func wallet() {

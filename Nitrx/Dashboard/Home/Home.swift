@@ -20,13 +20,33 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         
         loadHome()
 
+        // custom navigation bar right side icon
+        let pencilBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        pencilBtn.setImage(UIImage(named: "notification"), for: [])
+        pencilBtn.addTarget(self, action: #selector(notification), for: UIControl.Event.touchUpInside)
+        pencilBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let pencilButton = UIBarButtonItem(customView: pencilBtn)
+        
+        self.navigationItem.rightBarButtonItems = [pencilButton]
+        
+        // navigation bar logo centre
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        imageView.contentMode = .scaleAspectFit
+        let image = UIImage(named: "logo")
+        imageView.image = image
+        navigationItem.titleView = imageView
     }
 
+    @objc func notification() {
+        print("wallet")
+    }
+    
 
   
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        // navigation bar gradient color
         var colors = [UIColor]()
         colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
         colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
@@ -44,7 +64,6 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 5
- 
     }
     
     
@@ -78,12 +97,10 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
             do {
                 let getData = try JSONDecoder().decode(JSONData.self, from: data)
                 
-
                 //let data = getData.normal_feeds
                 
                 print(getData)
                 
-           
                 
             } catch {
                 print("ERROR")

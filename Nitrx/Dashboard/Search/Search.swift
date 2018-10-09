@@ -30,11 +30,33 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         colView.delegate = self
         colView.dataSource = self
         
-        let searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 20))
+        // custom search bar on navigation bar
+        let searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 100, height: 20))
 
-        searchBar.placeholder = "Saerch"
+        searchBar.placeholder = "Search..."
         let leftNavBarButton = UIBarButtonItem(customView:searchBar)
-        self.navigationItem.leftBarButtonItem = leftNavBarButton
+//        self.navigationItem.leftBarButtonItem = leftNavBarButton
+        
+        // custom navigation bar right side icon
+        let notificationBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        notificationBtn.setImage(UIImage(named: "notification"), for: [])
+        notificationBtn.addTarget(self, action: #selector(notification), for: UIControl.Event.touchUpInside)
+        notificationBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let notificationButton = UIBarButtonItem(customView: notificationBtn)
+        
+        // custom navigation bar right side icon
+        let plusBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        plusBtn.setImage(UIImage(named: "plus"), for: [])
+        plusBtn.addTarget(self, action: #selector(notification), for: UIControl.Event.touchUpInside)
+        plusBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let plusButton = UIBarButtonItem(customView: plusBtn)
+        
+        
+//        self.navigationItem.rightBarButtonItems = [notificationButton]
+        self.navigationItem.leftBarButtonItems = [plusButton, leftNavBarButton, notificationButton]
+
+        
+        
     }
 
     
@@ -45,6 +67,13 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
     }
     
  
+    @objc func notification() {
+        print("wallet")
+    }
+    
+    @objc func plus() {
+        print("wallet")
+    }
 
     
     override func viewDidLayoutSubviews() {
