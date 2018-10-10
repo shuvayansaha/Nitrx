@@ -6,10 +6,8 @@
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
-/// profile create post
 ///  rate
 
-/// search details
 
 import UIKit
 
@@ -26,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("First launch, setting UserDefault.")
 //        UserDefaults.standard.set(true, forKey: "launchedBefore")
         
-        let storyboardName = "Dashboard"
-        let withIdentifier = "DashboardTab"
+        let storyboardName = "Home"
+        let withIdentifier = "Splash"
 
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: withIdentifier)

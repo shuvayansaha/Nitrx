@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol CustomCellDelegate {
+    func buttonPress(row: Int)
+}
 class HomeColCell: UICollectionViewCell {
     
     @IBOutlet weak var whiteView: UIView!
@@ -25,6 +28,9 @@ class HomeColCell: UICollectionViewCell {
     @IBOutlet weak var postDetailsHeight: NSLayoutConstraint!
     
     var showing = false
+    var delegate: CustomCellDelegate?
+
+   
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -78,7 +84,10 @@ class HomeColCell: UICollectionViewCell {
         showing = !showing
     }
     
-    
+    @IBAction func rank(_ sender: UIButton) {
+        
+        delegate?.buttonPress(row: sender.tag)
+    }
     
     
 }

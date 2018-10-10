@@ -31,15 +31,9 @@ class PostDetails: UIViewController, UICollectionViewDelegateFlowLayout, UIColle
 
 
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
-        return 1
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 3
+        return 1
         
     }
     
@@ -47,50 +41,17 @@ class PostDetails: UIViewController, UICollectionViewDelegateFlowLayout, UIColle
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if indexPath.row == 0 {
-            return CGSize(width: collectionView.frame.size.width, height: 950)
-            
-        } else if indexPath.row == 1 {
-            return CGSize(width: collectionView.frame.size.width, height: 66)
-            
-        } else if indexPath.row == 2 {
-            return CGSize(width: collectionView.frame.size.width, height: 66)
-            
-        } else {
-            return UICollectionViewFlowLayout.automaticSize
-        }
-        
+        return CGSize(width: collectionView.frame.size.width, height: 900)
+   
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row == 0 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostDetailsCell", for: indexPath) as! PostDetailsCell
-            
-            return cell
-            
-        } else if indexPath.row == 1 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostDetailsPostButtonCell", for: indexPath) as! PostDetailsPostButtonCell
-            
-            return cell
-            
-        } else if indexPath.row == 2 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostDetailsCancelButtonCell", for: indexPath) as! PostDetailsCancelButtonCell
-            
-            return cell
-            
-        } else {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostDetailsCancelButtonCell", for: indexPath) as! PostDetailsCancelButtonCell
-            
-            return cell
-            
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostDetailsCell", for: indexPath) as! PostDetailsCell
+        
+        return cell
         
     }
     

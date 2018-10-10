@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TermsOfService: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+class TermsOfService: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, CustomCellDelegate {
 
     @IBOutlet weak var colView: UICollectionView!
 
@@ -91,6 +91,9 @@ class TermsOfService: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TermsOfServiceButtonCell", for: indexPath) as! TermsOfServiceButtonCell
             
+            cell.accept.tag = indexPath.row
+            cell.delegate = self
+            
             return cell
             
         } else {
@@ -101,6 +104,19 @@ class TermsOfService: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             
         }
     }
+    
+    func buttonPress(row: Int) {
+
+        // MOVED CONTROLLER
+        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "DashboardNav") as! DashboardNav
+        //            controller.email = self.email.text!
+        //            controller.password = self.password.text!
+        
+        self.present(controller, animated: true, completion: nil)
+    }
+   
+
 }
 
 

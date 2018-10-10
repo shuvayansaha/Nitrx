@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3vJ-vS-Z9s">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3vJ-vS-Z9s">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,14 +30,14 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Hxa-Bn-GLj">
-                                <rect key="frame" x="16" y="120.66666666666667" width="382" height="2.6666666666666714"/>
+                                <rect key="frame" x="16" y="120" width="382" height="2"/>
                                 <color key="tintColor" red="0.0" green="0.98106676339999999" blue="0.57369142770000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="6f1-RD-5YP"/>
                                 </constraints>
                             </progressView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="faj-ev-zlR">
-                                <rect key="frame" x="16" y="138" width="382" height="382"/>
+                                <rect key="frame" x="16" y="137" width="382" height="382"/>
                                 <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="faj-ev-zlR" secondAttribute="height" multiplier="1:1" id="2MH-w8-AJd"/>
@@ -1095,7 +1094,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="fVz-KH-m4T">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="set-pass" translatesAutoresizingMaskIntoConstraints="NO" id="fVz-KH-m4T">
                                                         <rect key="frame" x="166" y="16" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="AMa-7L-z2X"/>
@@ -1212,11 +1211,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="forgotPassword" width="96" height="96"/>
-        <image name="info" width="32" height="32"/>
-        <image name="lock" width="96" height="96"/>
-        <image name="plane" width="96" height="96"/>
+        <image name="forgotPassword" width="74" height="71"/>
+        <image name="info" width="72" height="72"/>
+        <image name="plane" width="74" height="71"/>
         <image name="sayHello" width="195" height="24"/>
+        <image name="set-pass" width="200" height="200"/>
         <image name="splash" width="359" height="580"/>
     </resources>
 </document>

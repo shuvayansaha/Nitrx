@@ -75,7 +75,17 @@ class Login: UIViewController, UITextFieldDelegate {
         }
             
         else {
-            loginFunction()
+//            loginFunction()
+            
+            
+            // MOVED CONTROLLER
+            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
+//            controller.email = self.email.text!
+//            controller.password = self.password.text!
+            
+            self.present(controller, animated: true, completion: nil)
+
         }
     }
     

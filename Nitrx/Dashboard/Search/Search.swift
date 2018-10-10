@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var otherTableView: UITableView!
     @IBOutlet weak var cellCol: UICollectionView!
@@ -20,6 +20,7 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        hideKeyboardWhenTappedAround()
 
         cellCol.delegate = self
         cellCol.dataSource = self
@@ -57,7 +58,10 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
+        searchBar.tintColor = .blue
         
+//        UITextField.appearance(whenContainedInInstancesOf: [type(of: searchController.searchBar)]).tintColor = .black
+
     }
 
     

@@ -194,6 +194,14 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
     @objc func confirmChoices() {
         
         print(selectedCategory)
+        
+        // MOVED CONTROLLER
+        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "DashboardTab") as! DashboardTab
+        //            controller.email = self.email.text!
+        //            controller.password = self.password.text!
+        
+        self.present(controller, animated: true, completion: nil)
     }
     
     

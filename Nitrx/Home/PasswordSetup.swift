@@ -82,7 +82,15 @@ class PasswordSetup: UIViewController, UITextFieldDelegate {
         }
             
         else {
-            passwordSetupFunction()
+//            passwordSetupFunction()
+            
+            // MOVED CONTROLLER
+            let storyboard = UIStoryboard(name: "Home", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
+            //            controller.email = self.email.text!
+            //            controller.password = self.password.text!
+            
+            self.present(controller, animated: true, completion: nil)
         }
     }
     

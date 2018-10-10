@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, CustomCellDelegate {
 
     @IBOutlet weak var homeCol: UICollectionView!
     
@@ -53,6 +53,7 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         navigationController?.navigationBar.setGradientBackground(colors: colors)
     }
     
+    @IBOutlet var ratePopUp: UIView!
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -80,7 +81,45 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeColCell", for: indexPath) as! HomeColCell
         
+        cell.rank.tag = indexPath.row
+        cell.delegate = self
+        
         return cell
+    }
+    
+    func buttonPress(row: Int) {
+        
+        let blurView = UIView(frame: self.view.frame)
+        blurView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.navigationController?.view.addSubview(blurView)
+        blurView.tag = 853
+        ratePopUp.center = blurView.center
+        ratePopUp.alpha = 1
+        
+        blurView.addSubview(ratePopUp)
+        
+        ratePopUp.translatesAutoresizingMaskIntoConstraints = false
+        
+//        ratePopUp.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 64).isActive = true
+//        ratePopUp.bottomAnchor.constraint(equalTo: blurView.bottomAnchor, constant: -84).isActive = true
+//        ratePopUp.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: 32).isActive = true
+//        ratePopUp.trailingAnchor.constraint(equalTo: blurView.trailingAnchor, constant: -32).isActive = true
+        ratePopUp.centerXAnchor.constraint(equalTo: blurView.centerXAnchor).isActive = true
+        ratePopUp.centerYAnchor.constraint(equalTo: blurView.centerYAnchor).isActive = true
+        ratePopUp.heightAnchor.constraint(equalToConstant: 420).isActive = true
+        ratePopUp.widthAnchor.constraint(equalToConstant: 240).isActive = true
+
+        UIView.transition(with: self.view, duration: 5, options: .showHideTransitionViews, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    // close pop up
+    @IBAction func close(_ sender: UIButton) {
+        
+        UIView.transition(with: self.view, duration: 5, options: .showHideTransitionViews, animations: {
+            self.navigationController?.view.viewWithTag(853)?.removeFromSuperview()
+        }, completion: nil)
     }
     
     

@@ -11,6 +11,7 @@ import UIKit
 class TermsOfServiceButtonCell: UICollectionViewCell {
     
     @IBOutlet weak var accept: UIButton!
+    var delegate: CustomCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,5 +20,11 @@ class TermsOfServiceButtonCell: UICollectionViewCell {
         
     }
     
+    // accept button
+    @IBAction func accept(_ sender: UIButton) {
+    
+        delegate?.buttonPress(row: sender.tag)
+
+    }
     
 }
