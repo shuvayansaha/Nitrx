@@ -1,24 +1,24 @@
 //
-//  HomeColCell.swift
+//  SearchDetailsCell.swift
 //  Nitrx
 //
-//  Created by Shuvayan Saha on 17/09/18.
+//  Created by Shuvayan Saha on 10/10/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class HomeColCell: UICollectionViewCell {
+class SearchDetailsCell: UICollectionViewCell {
     
     @IBOutlet weak var whiteView: UIView!
     
     @IBOutlet weak var tableView: UITableView!
-//    @IBOutlet weak var rating1: UIButton!
-//    @IBOutlet weak var rating2: UIButton!
-//    @IBOutlet weak var rating3: UIButton!
-//    @IBOutlet weak var rating4: UIButton!
-//    @IBOutlet weak var rating5: UIButton!
-
+    //    @IBOutlet weak var rating1: UIButton!
+    //    @IBOutlet weak var rating2: UIButton!
+    //    @IBOutlet weak var rating3: UIButton!
+    //    @IBOutlet weak var rating4: UIButton!
+    //    @IBOutlet weak var rating5: UIButton!
+    
     @IBOutlet weak var follow: UIButton!
     @IBOutlet weak var rank: UIButton!
     @IBOutlet weak var link: UIButton!
@@ -36,26 +36,26 @@ class HomeColCell: UICollectionViewCell {
         follow.layer.cornerRadius = 4
         rank.layer.cornerRadius = 4
         link.layer.cornerRadius = 16
-
-//        rating1.layer.borderWidth = 1
-//        rating1.layer.borderColor = UIColor.lightGray.cgColor
-//        
-//        rating2.layer.borderWidth = 1
-//        rating2.layer.borderColor = UIColor.lightGray.cgColor
-//        
-//        rating3.layer.borderWidth = 1
-//        rating3.layer.borderColor = UIColor.lightGray.cgColor
-//        
-//        rating4.layer.borderWidth = 1
-//        rating4.layer.borderColor = UIColor.lightGray.cgColor
-//
-//        rating5.layer.borderWidth = 1
-//        rating5.layer.borderColor = UIColor.lightGray.cgColor
         
-       
+        //        rating1.layer.borderWidth = 1
+        //        rating1.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating2.layer.borderWidth = 1
+        //        rating2.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating3.layer.borderWidth = 1
+        //        rating3.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating4.layer.borderWidth = 1
+        //        rating4.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating5.layer.borderWidth = 1
+        //        rating5.layer.borderColor = UIColor.lightGray.cgColor
+        
+        
     }
-  
-  
+    
+    
     @IBAction func expandPostDetails(_ sender: UIButton) {
         
         show()
@@ -77,8 +77,4 @@ class HomeColCell: UICollectionViewCell {
         }
         showing = !showing
     }
-    
-    
-    
-    
 }

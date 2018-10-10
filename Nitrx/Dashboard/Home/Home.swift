@@ -18,7 +18,7 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         homeCol.delegate = self
         homeCol.dataSource = self
         
-        loadHome()
+//        loadHome()
 
         // custom navigation bar right side icon
         let pencilBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)

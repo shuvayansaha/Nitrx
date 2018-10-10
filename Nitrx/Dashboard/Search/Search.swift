@@ -55,7 +55,8 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
 //        self.navigationItem.rightBarButtonItems = [notificationButton]
         self.navigationItem.leftBarButtonItems = [plusButton, leftNavBarButton, notificationButton]
 
-        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+
         
     }
 

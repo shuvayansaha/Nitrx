@@ -19,7 +19,7 @@ class ProfileOthers: UIViewController, UICollectionViewDelegateFlowLayout, UICol
         homeCol.dataSource = self
         
  
-        
+
         let pencilBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
         pencilBtn.setImage(UIImage(named: "notification"), for: [])
         pencilBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
