@@ -28,6 +28,10 @@
 		7E1ABC942141B66F00517E48 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC932141B66F00517E48 /* Extension.swift */; };
 		7E1ABC962141B67500517E48 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC952141B67500517E48 /* Services.swift */; };
 		7E1ABC982141B97A00517E48 /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC972141B97A00517E48 /* Splash.swift */; };
+		7E2A200321792C1700F484E0 /* InstaTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2A200221792C1700F484E0 /* InstaTableCell.swift */; };
+		7E2A200521792C3600F484E0 /* InstaCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2A200421792C3600F484E0 /* InstaCollectionCell.swift */; };
+		7E2A200721793F8E00F484E0 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2A200621793F8E00F484E0 /* Constant.swift */; };
+		7E2A200B2179621D00F484E0 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2A200A2179621D00F484E0 /* GridLayout.swift */; };
 		7E388F91216A04C700F66939 /* OtherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E388F90216A04C700F66939 /* OtherTableViewCell.swift */; };
 		7E388F93216A09A200F66939 /* Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E388F92216A09A200F66939 /* Add.swift */; };
 		7E6EB4E72156326D00A763BF /* ProfileMyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EB4E62156326D00A763BF /* ProfileMyPostCell.swift */; };
@@ -51,6 +55,7 @@
 		7E88AE77214D5FE000FC994F /* YourIntButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE76214D5FE000FC994F /* YourIntButtonCell.swift */; };
 		7E88AE79214D618500FC994F /* YourIntFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE78214D618500FC994F /* YourIntFooter.swift */; };
 		7E88AE7B214D633100FC994F /* YourIntLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE7A214D633100FC994F /* YourIntLabelCell.swift */; };
+		7E97A9AC2179272E00F746D7 /* Insta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E97A9AB2179272E00F746D7 /* Insta.swift */; };
 		7EA5BE9F21458AA1002A8E5E /* Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BE9E21458AA1002A8E5E /* Email.swift */; };
 		7EBE732A216D996800E8E3C5 /* SearchDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBE7329216D996800E8E3C5 /* SearchDetailsCell.swift */; };
 		7EBE732C216D999B00E8E3C5 /* SearchDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBE732B216D999B00E8E3C5 /* SearchDetails.swift */; };
@@ -92,6 +97,10 @@
 		7E1ABC932141B66F00517E48 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		7E1ABC952141B67500517E48 /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		7E1ABC972141B97A00517E48 /* Splash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
+		7E2A200221792C1700F484E0 /* InstaTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstaTableCell.swift; sourceTree = "<group>"; };
+		7E2A200421792C3600F484E0 /* InstaCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstaCollectionCell.swift; sourceTree = "<group>"; };
+		7E2A200621793F8E00F484E0 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		7E2A200A2179621D00F484E0 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		7E388F90216A04C700F66939 /* OtherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTableViewCell.swift; sourceTree = "<group>"; };
 		7E388F92216A09A200F66939 /* Add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Add.swift; sourceTree = "<group>"; };
 		7E6EB4E62156326D00A763BF /* ProfileMyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMyPostCell.swift; sourceTree = "<group>"; };
@@ -115,6 +124,7 @@
 		7E88AE76214D5FE000FC994F /* YourIntButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntButtonCell.swift; sourceTree = "<group>"; };
 		7E88AE78214D618500FC994F /* YourIntFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntFooter.swift; sourceTree = "<group>"; };
 		7E88AE7A214D633100FC994F /* YourIntLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntLabelCell.swift; sourceTree = "<group>"; };
+		7E97A9AB2179272E00F746D7 /* Insta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insta.swift; sourceTree = "<group>"; };
 		7EA5BE9E21458AA1002A8E5E /* Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Email.swift; sourceTree = "<group>"; };
 		7EBE7329216D996800E8E3C5 /* SearchDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsCell.swift; sourceTree = "<group>"; };
 		7EBE732B216D999B00E8E3C5 /* SearchDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetails.swift; sourceTree = "<group>"; };
@@ -222,6 +232,7 @@
 				22A262C42137D57F00DDFED3 /* Dashboard.storyboard */,
 				7E88AE72214D592900FC994F /* DashboardNav.swift */,
 				7E7C38BB214ED05A0063F47C /* DashboardTab.swift */,
+				7E97A9AA2179270900F746D7 /* InstaNav */,
 				7E6EB4EC2156438600A763BF /* TermsOfService */,
 				7E7C38BD214ED0D90063F47C /* Home */,
 				7E7C38C0214EDE140063F47C /* Search */,
@@ -321,6 +332,18 @@
 				7E88AE78214D618500FC994F /* YourIntFooter.swift */,
 			);
 			path = YourInterests;
+			sourceTree = "<group>";
+		};
+		7E97A9AA2179270900F746D7 /* InstaNav */ = {
+			isa = PBXGroup;
+			children = (
+				7E97A9AB2179272E00F746D7 /* Insta.swift */,
+				7E2A200221792C1700F484E0 /* InstaTableCell.swift */,
+				7E2A200421792C3600F484E0 /* InstaCollectionCell.swift */,
+				7E2A200621793F8E00F484E0 /* Constant.swift */,
+				7E2A200A2179621D00F484E0 /* GridLayout.swift */,
+			);
+			path = InstaNav;
 			sourceTree = "<group>";
 		};
 		7EBE7328216D993200E8E3C5 /* Saerch Details */ = {
@@ -495,6 +518,7 @@
 				7EA5BE9F21458AA1002A8E5E /* Email.swift in Sources */,
 				22ED7F5A21429BDA0004BFDA /* PageController.swift in Sources */,
 				7E6EB4E72156326D00A763BF /* ProfileMyPostCell.swift in Sources */,
+				7E2A200B2179621D00F484E0 /* GridLayout.swift in Sources */,
 				226572362168CE3200C994F1 /* CellSeacrh.swift in Sources */,
 				7EDE39DA21610E5A00D43F5D /* EditProfileCell.swift in Sources */,
 				7E88AE6F214D511000FC994F /* PasswordSetup.swift in Sources */,
@@ -515,6 +539,7 @@
 				7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */,
 				7EEB0B8C21441FCA003EA5C4 /* NickName.swift in Sources */,
 				226572332168A36A00C994F1 /* SearchCategoryCell.swift in Sources */,
+				7E2A200521792C3600F484E0 /* InstaCollectionCell.swift in Sources */,
 				7E7C38BF214ED0F30063F47C /* Home.swift in Sources */,
 				7E88AE79214D618500FC994F /* YourIntFooter.swift in Sources */,
 				22ED7F542142529B0004BFDA /* Login.swift in Sources */,
@@ -523,6 +548,7 @@
 				22B45DB6216CE647000A4578 /* ProfileOthers.swift in Sources */,
 				7E6EB4F02156443000A763BF /* TermsOfServiceButtonCell.swift in Sources */,
 				7E388F93216A09A200F66939 /* Add.swift in Sources */,
+				7E2A200721793F8E00F484E0 /* Constant.swift in Sources */,
 				22ED7F582142805E0004BFDA /* Welcome.swift in Sources */,
 				7E88AE6B214D428100FC994F /* ForgotPassword.swift in Sources */,
 				22F8E21A2141031100862E22 /* Entropy.swift in Sources */,
@@ -534,10 +560,12 @@
 				2254FD3D216B90F1006A20EB /* TopRatedCellChild.swift in Sources */,
 				7EBE732A216D996800E8E3C5 /* SearchDetailsCell.swift in Sources */,
 				7E7C38C2214EDE3A0063F47C /* Search.swift in Sources */,
+				7E97A9AC2179272E00F746D7 /* Insta.swift in Sources */,
 				226572382168F2D800C994F1 /* CallSearch2.swift in Sources */,
 				7E88AE77214D5FE000FC994F /* YourIntButtonCell.swift in Sources */,
 				7E6EB4F421564A3000A763BF /* TermsOfServiceNav.swift in Sources */,
 				7EC17329216D23FB00A7BD3E /* ProfileOthersCell.swift in Sources */,
+				7E2A200321792C1700F484E0 /* InstaTableCell.swift in Sources */,
 				22ED7F50214242A40004BFDA /* HomeNav.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

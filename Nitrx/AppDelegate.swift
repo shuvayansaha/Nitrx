@@ -24,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("First launch, setting UserDefault.")
 //        UserDefaults.standard.set(true, forKey: "launchedBefore")
         
-        let storyboardName = "Home"
-        let withIdentifier = "Splash"
+        let storyboardName = "Dashboard"
+        let withIdentifier = "InstaNav"
 
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: withIdentifier)
