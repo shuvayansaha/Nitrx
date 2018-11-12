@@ -62,6 +62,11 @@ class SearchDetailsCell: UICollectionViewCell {
     }
     
     
+    @IBAction func linkClick(_ sender: UIButton) {
+        print("Tap", link.titleLabel?.text!)
+    }
+    
+    
     func show() {
         if showing {
             postDetailsHeight.constant = 200

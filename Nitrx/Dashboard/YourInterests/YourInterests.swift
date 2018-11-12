@@ -8,11 +8,14 @@
 
 import UIKit
 
+//var selectedCategory = [String]()
+
 class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var interestseCol: UICollectionView!
     
-    let category = ["News", "Technology", "Film", "Arts", "Music", "Home", "Photography"]
+    let category = ["News", "Technology", "Film", "Arts", "Music", "Home", "Photography", "Politics", "News", "Technology", "Film", "Arts", "Music", "Home", "Photography", "Politics"]
+    
     var selectedCategory = [String]()
 
     override func viewDidLoad() {
@@ -89,6 +92,11 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourIntCell", for: indexPath) as! YourIntCell
             
             cell.label.text = category[indexPath.row]
+//            cell.image.image = UIImage(named: category[indexPath.row])?.noir
+            cell.image.image = UIImage(named: category[indexPath.row])
+
+            cell.check.alpha = 0
+            cell.blackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
             
             return cell
             
@@ -137,22 +145,30 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! YourIntCell
         
         if indexPath.section == 1 {
             
-            
-            if cell?.isSelected == true {
-                cell?.backgroundColor = UIColor.orange
+            if cell.isSelected == true {
                 
-//                if indexPath.row > -1 {
-                    selectedCategory.append(category[indexPath.row])
-//                }
+                cell.label.textColor = UIColor.white
+                cell.blackView.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
+                cell.check.alpha = 1
+//                cell.image.image = UIImage(named: category[indexPath.row])
+
+                selectedCategory.append(category[indexPath.row])
                 
             } else {
-                cell?.backgroundColor = UIColor.black
-                selectedCategory.removeSubrange(indexPath.row..<selectedCategory.count)
+                
+                cell.label.textColor = UIColor.black
+                cell.blackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+                cell.check.alpha = 0
+//                cell.image.image = UIImage(named: category[indexPath.row])?.noir
 
+                selectedCategory.removeAll { (element) -> Bool in
+                    element == category[indexPath.row]
+                }
             }
          
             
@@ -160,31 +176,36 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
         
     }
     
-    
-
 
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
+       
+        let cell = collectionView.cellForItem(at: indexPath) as! YourIntCell
         
         if indexPath.section == 1 {
-
-            if cell?.isSelected == true {
-                cell?.backgroundColor = UIColor.orange
-                selectedCategory.append(category[indexPath.row])
-
-
-            } else {
-                cell?.backgroundColor = UIColor.black
+            
+            if cell.isSelected == true {
                 
-//                if indexPath.row > -1 {
-//                    selectedCategory.remove(at: indexPath.row)
-                    
-                    selectedCategory.removeSubrange(indexPath.row..<selectedCategory.count)
+                cell.label.textColor = UIColor.white
+                cell.blackView.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
+                cell.check.alpha = 1
+//                cell.image.image = UIImage(named: category[indexPath.row])
 
-//                }
+                selectedCategory.append(category[indexPath.row])
+                
+            } else {
+            
+                cell.label.textColor = UIColor.black
+                cell.blackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+                cell.check.alpha = 0
+//                cell.image.image = UIImage(named: category[indexPath.row])?.noir
 
+                selectedCategory.removeAll { (element) -> Bool in
+                    element == category[indexPath.row]
+                }
             }
+            
+            
         }
     }
     
@@ -193,18 +214,41 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
     
     @objc func confirmChoices() {
         
-        print(selectedCategory)
+        print("selected Category", selectedCategory)
+
+        if selectedCategory.count > 5 {
+            
+            // MOVED CONTROLLER
+            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "DashboardTab") as! DashboardTab
+            //            controller.email = self.email.text!
+            //            controller.password = self.password.text!
+            
+            self.present(controller, animated: true, completion: nil)
+
+            
+        } else {
+            
+            snackBarFunction(message: "Please seelect minimum 6 categories")
+        }
         
-        // MOVED CONTROLLER
-        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "DashboardTab") as! DashboardTab
-        //            controller.email = self.email.text!
-        //            controller.password = self.password.text!
-        
-        self.present(controller, animated: true, completion: nil)
     }
     
     
 
 
+}
+
+// grayscale image noir extension
+extension UIImage {
+    var noir: UIImage? {
+        let context = CIContext(options: nil)
+        guard let currentFilter = CIFilter(name: "CIPhotoEffectNoir") else { return nil }
+        currentFilter.setValue(CIImage(image: self), forKey: kCIInputImageKey)
+        if let output = currentFilter.outputImage,
+            let cgImage = context.createCGImage(output, from: output.extent) {
+            return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
+        }
+        return nil
+    }
 }

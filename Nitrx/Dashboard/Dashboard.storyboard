@@ -181,18 +181,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="288" height="165"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2D0-F3-Twl">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home" translatesAutoresizingMaskIntoConstraints="NO" id="2D0-F3-Twl">
                                                     <rect key="frame" x="0.0" y="0.0" width="288" height="165"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uU-x5-sdf">
-                                                    <rect key="frame" x="8" y="8" width="280" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="ONz-Ik-ltl"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="zuo-ME-mi6">
                                                     <rect key="frame" x="129" y="67.5" width="30" height="30"/>
                                                     <constraints>
@@ -202,8 +193,16 @@
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UMR-x3-Dbg">
                                                     <rect key="frame" x="0.0" y="0.0" width="288" height="165"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uU-x5-sdf">
+                                                    <rect key="frame" x="8" y="8" width="280" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="ONz-Ik-ltl"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </view>
                                         <constraints>
@@ -949,6 +948,9 @@
                                                             <state key="normal" title="http://www.nitrx.com">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="linkClick:" destination="jtD-uE-NaC" eventType="touchUpInside" id="xq8-Fs-r2g"/>
+                                                            </connections>
                                                         </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link-white" translatesAutoresizingMaskIntoConstraints="NO" id="uyc-uO-nCf">
                                                             <rect key="frame" x="178" y="405" width="21" height="30"/>
@@ -1094,6 +1096,7 @@
                                             <outlet property="follow" destination="zHy-0v-inR" id="SGQ-y8-MR0"/>
                                             <outlet property="link" destination="6Ls-jJ-VH6" id="hMO-Ab-G5p"/>
                                             <outlet property="postDetailsHeight" destination="fc8-c4-h21" id="i2a-ED-sKa"/>
+                                            <outlet property="postText" destination="ckS-Wi-yrh" id="72Q-P7-cqH"/>
                                             <outlet property="rank" destination="lBI-iW-ME1" id="iVQ-xt-N2y"/>
                                             <outlet property="tableView" destination="P3B-ke-MLh" id="cX8-uT-WBo"/>
                                             <outlet property="whiteView" destination="Plm-Q4-WxK" id="Kvc-po-VHT"/>
@@ -1376,6 +1379,7 @@
         <scene sceneID="qc6-d5-kTW">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OdF-Li-ylr" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBarItem key="tabBarItem" title="Home" image="sm-logo-grey" id="ezq-Ul-8QQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YNl-IO-pbu">
@@ -3289,6 +3293,9 @@
                                                             <state key="normal" title="http://www.nitrx.com">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="linkClick:" destination="cOz-93-aRg" eventType="touchUpInside" id="BwK-nW-v8R"/>
+                                                            </connections>
                                                         </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link-white" translatesAutoresizingMaskIntoConstraints="NO" id="BnD-P8-XcR">
                                                             <rect key="frame" x="178" y="405" width="21" height="30"/>
@@ -3487,6 +3494,7 @@
         <image name="3" width="100" height="51"/>
         <image name="4" width="100" height="51"/>
         <image name="5" width="100" height="51"/>
+        <image name="Home" width="500" height="500"/>
         <image name="angel-down" width="200" height="200"/>
         <image name="check" width="72" height="72"/>
         <image name="comment" width="200" height="200"/>

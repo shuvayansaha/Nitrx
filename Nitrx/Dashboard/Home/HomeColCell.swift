@@ -10,6 +10,7 @@ import UIKit
 
 protocol CustomCellDelegate {
     func buttonPress(row: Int)
+    func linkPress(row: Int)
 }
 class HomeColCell: UICollectionViewCell {
     
@@ -26,6 +27,7 @@ class HomeColCell: UICollectionViewCell {
     @IBOutlet weak var rank: UIButton!
     @IBOutlet weak var link: UIButton!
     @IBOutlet weak var postDetailsHeight: NSLayoutConstraint!
+    @IBOutlet weak var postText: UILabel!
     
     var showing = false
     var delegate: CustomCellDelegate?
@@ -65,6 +67,13 @@ class HomeColCell: UICollectionViewCell {
     @IBAction func expandPostDetails(_ sender: UIButton) {
         
         show()
+    }
+    
+    @IBAction func linkClick(_ sender: UIButton) {
+
+        
+        delegate?.linkPress(row: sender.tag)
+
     }
     
     

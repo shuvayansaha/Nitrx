@@ -71,6 +71,7 @@
 		7EE43AF52156B50C002F8A5A /* PostDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF42156B50C002F8A5A /* PostDetails.swift */; };
 		7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */; };
 		7EEB0B8C21441FCA003EA5C4 /* NickName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB0B8B21441FCA003EA5C4 /* NickName.swift */; };
+		7EF73BCA219897220086A4BF /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF73BC9219897210086A4BF /* SignUp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +141,7 @@
 		7EE43AF42156B50C002F8A5A /* PostDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetails.swift; sourceTree = "<group>"; };
 		7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
 		7EEB0B8B21441FCA003EA5C4 /* NickName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickName.swift; sourceTree = "<group>"; };
+		7EF73BC9219897210086A4BF /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.release.xcconfig"; sourceTree = "<group>"; };
 		F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nitrx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -215,6 +217,7 @@
 				22F8E2192141031100862E22 /* Entropy.swift */,
 				22F8E21B2141041D00862E22 /* EntropyCell.swift */,
 				22ED7F532142529B0004BFDA /* Login.swift */,
+				7EF73BC9219897210086A4BF /* SignUp.swift */,
 				7E88AE6A214D428100FC994F /* ForgotPassword.swift */,
 				7E88AE6C214D4ED100FC994F /* ResendLink.swift */,
 				7E88AE6E214D511000FC994F /* PasswordSetup.swift */,
@@ -557,6 +560,7 @@
 				7E88AE71214D589A00FC994F /* YourInterests.swift in Sources */,
 				7EBE732F216D9C8100E8E3C5 /* Message.swift in Sources */,
 				7E88AE75214D5DBD00FC994F /* YourIntCell.swift in Sources */,
+				7EF73BCA219897220086A4BF /* SignUp.swift in Sources */,
 				2254FD3D216B90F1006A20EB /* TopRatedCellChild.swift in Sources */,
 				7EBE732A216D996800E8E3C5 /* SearchDetailsCell.swift in Sources */,
 				7E7C38C2214EDE3A0063F47C /* Search.swift in Sources */,

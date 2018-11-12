@@ -24,14 +24,24 @@ let normal_feeds = "normal_feeds.php/"
 
 
 
-
 struct JSONData: Codable {
-
+    
     let status: Bool?
     let isLoginStatus: Bool?
     let otp_type: String?
     let dic: [NormalFeeds]?
 }
+
+struct LoginData: Codable {
+    
+
+    let user_id: String?
+    let username: String?
+
+    
+}
+
+
 
 
 
@@ -148,7 +158,7 @@ func httpGet(controller: UIViewController, url: String, headerValue: String, hea
     let activityIndicator = UIActivityIndicatorView()
     activityIndicator.center = controller.view.center
     activityIndicator.hidesWhenStopped = true
-    activityIndicator.style = .whiteLarge
+    activityIndicator.style = .gray
     controller.view.addSubview(activityIndicator)
     activityIndicator.startAnimating()
     UIApplication.shared.beginIgnoringInteractionEvents()

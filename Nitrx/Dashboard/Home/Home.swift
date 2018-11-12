@@ -7,18 +7,29 @@
 //
 
 import UIKit
+import WebKit
 
 class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, CustomCellDelegate {
 
     @IBOutlet weak var homeCol: UICollectionView!
     
+    let web = WKWebView()
+    
+    var closeButton = UIBarButtonItem()
+    var imageView = UIImageView()
+    var postArray = [Post]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         homeCol.delegate = self
         homeCol.dataSource = self
         
-//        loadHome()
+        
+        loadHome {
+            self.homeCol.reloadData()
+
+        }
 
         // custom navigation bar right side icon
         let pencilBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
@@ -27,18 +38,46 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         pencilBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let pencilButton = UIBarButtonItem(customView: pencilBtn)
         
+        // custom navigation bar left side icon
+        let closeBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        closeBtn.setImage(UIImage(named: "cross-white"), for: [])
+        closeBtn.addTarget(self, action: #selector(closeWeb), for: UIControl.Event.touchUpInside)
+        closeBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        closeButton = UIBarButtonItem(customView: closeBtn)
+        
         self.navigationItem.rightBarButtonItems = [pencilButton]
         
+        
         // navigation bar logo centre
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         imageView.contentMode = .scaleAspectFit
         let image = UIImage(named: "logo")
         imageView.image = image
         navigationItem.titleView = imageView
+        
+        web.frame  = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        
+        self.navigationController?.navigationBar.isTranslucent = false
+//        self.tabBarController?.tabBar.isTranslucent = false
+
     }
 
     @objc func notification() {
         print("wallet")
+    }
+    
+    @objc func closeWeb() {
+        
+        if let viewWithTag = self.view.viewWithTag(74) {
+            viewWithTag.removeFromSuperview()
+            self.navigationItem.leftBarButtonItems = nil
+            navigationItem.titleView = imageView
+
+
+        } else{
+            print("No!")
+        }
+        
     }
     
 
@@ -64,7 +103,7 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 5
+        return postArray.count
     }
     
     
@@ -82,6 +121,10 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeColCell", for: indexPath) as! HomeColCell
         
         cell.rank.tag = indexPath.row
+        cell.link.tag = indexPath.row
+        
+        cell.postText.text = postArray[indexPath.row].postText
+
         cell.delegate = self
         
         return cell
@@ -114,6 +157,27 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         }, completion: nil)
     }
     
+    func linkPress(row: Int) {
+        
+//        print("Tap", link.titleLabel?.text!)
+        
+        print(row)
+        
+        self.navigationItem.leftBarButtonItems = [closeButton]
+
+        let url = URL(string: "https://www.apple.com/iphone/")
+        web.load(URLRequest(url: url!))
+        web.tag = 74
+        self.view.addSubview(web)
+        
+        let baseUrl = url?.absoluteString
+        
+        self.navigationItem.title = baseUrl
+        navigationItem.titleView = nil
+
+    }
+    
+    
     // close pop up
     @IBAction func close(_ sender: UIButton) {
         
@@ -124,21 +188,41 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
     
     
     
-    func loadHome() {
+    func loadHome(completed: @escaping () -> ()) {
         
         let url = baseURL + normal_feeds
-        let parameters = ["user_id": "40"]
         
-        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
-            
-            print(stringData)
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+        
+//            print(stringData)
             
             do {
-                let getData = try JSONDecoder().decode(JSONData.self, from: data)
                 
-                //let data = getData.normal_feeds
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
                 
-                print(getData)
+                for post in jsonObject! {
+                    
+                    let postDic = post as? [String: Any]
+                    
+                    if postDic != nil {
+                        
+                        let postData = Post()
+                        
+                        if postDic?["postText"] as? String != nil {
+                            
+                            postData.postText = postDic?["postText"] as! String
+
+                        }
+              
+                        self.postArray.append(postData)
+
+                    }
+                }
+                
+                DispatchQueue.main.async {
+
+                    completed()
+                }
                 
                 
             } catch {
@@ -153,5 +237,14 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
     
     
     
+
+}
+
+
+class Post {
+    
+
+    var postText = String()
+
 
 }

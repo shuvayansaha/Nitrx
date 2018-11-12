@@ -9,6 +9,13 @@
 import UIKit
 
 class TermsOfService: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, CustomCellDelegate {
+   
+    func linkPress(row: Int) {
+        
+    }
+    
+
+    
 
     @IBOutlet weak var colView: UICollectionView!
 

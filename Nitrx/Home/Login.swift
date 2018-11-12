@@ -56,23 +56,23 @@ class Login: UIViewController, UITextFieldDelegate {
         
         if (email.text!.isBlank) {
             
-            snackBarFunction(message: "Email field is required.")
+            snackBarFunction(message: "Email or Username field is required.")
         }
             
-        else if (email.text!.isEmail == false) {
-            
-            snackBarFunction(message: "The email must be a valid email address.")
-        }
+//        else if (email.text!.isEmail == false) {
+//
+//            snackBarFunction(message: "The email must be a valid email address.")
+//        }
             
         else if (password.text!.isBlank) {
             
             snackBarFunction(message: "Password field is required.")
         }
             
-        else if (password.text!.isPassword == false) {
-            
-            snackBarFunction(message: "Invalid Password")
-        }
+//        else if (password.text!.isPassword == false) {
+//
+//            snackBarFunction(message: "Invalid Password")
+//        }
             
         else {
 //            loginFunction()
@@ -83,7 +83,7 @@ class Login: UIViewController, UITextFieldDelegate {
             let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
 //            controller.email = self.email.text!
 //            controller.password = self.password.text!
-            
+
             self.present(controller, animated: true, completion: nil)
 
         }
@@ -95,46 +95,52 @@ class Login: UIViewController, UITextFieldDelegate {
     // login function
     func loginFunction() {
         
-        let url = baseURL + loginUrl
-        let parameters = ["email": email.text!, "password": password.text!]
+        let url = baseURL + loginUrl + "?" + "username=" + "\(email.text!)" + "&password=" + "\(password.text!)"
         
-        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
-            
+            print(stringData, statusCode)
+
             do {
-                let getData = try JSONDecoder().decode(JSONData.self, from: data)
+                let getData = try JSONDecoder().decode([LoginData].self, from: data)
                 
-                if getData.isLoginStatus == true {
-                    if getData.otp_type == "email" {
-                        
-                        //                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
-                        
-                    } else {
-                        
-                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
-                        
-                    }
+                print(getData)
+                
+                for i in getData {
                     
-                } else {}
+                    print()
+                }
                 
-//                if getData.message?.email != nil {
-//                    snackBarFunction(message: (getData.message?.email![0])!)
-//                } else {
-//                    snackBarFunction(message: (getData.message?.english)!)
-//                }
+//                if getData.isLoginStatus == true {
+//                    if getData.otp_type == "email" {
+//
+//                        //                        // MOVED CONTROLLER
+//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
+//                        //                        controller.email = self.email.text!
+//                        //                        controller.password = self.password.text!
+//                        //
+//                        //                        self.present(controller, animated: true, completion: nil)
+//
+//                    } else {
+//
+//                        // MOVED CONTROLLER
+//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
+//                        //                        controller.email = self.email.text!
+//                        //                        controller.password = self.password.text!
+//                        //
+//                        //                        self.present(controller, animated: true, completion: nil)
+//
+//                    }
+//
+//                } else {}
+                
+                //                if getData.message?.email != nil {
+                //                    snackBarFunction(message: (getData.message?.email![0])!)
+                //                } else {
+                //                    snackBarFunction(message: (getData.message?.english)!)
+                //                }
                 
                 
             } catch {
@@ -142,8 +148,56 @@ class Login: UIViewController, UITextFieldDelegate {
                 DispatchQueue.main.async {
                     snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
                 }
+
             }
         }
+        
+//        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
+//
+//            print(stringData)
+//
+//            do {
+//                let getData = try JSONDecoder().decode(JSONData.self, from: data)
+//
+//                if getData.isLoginStatus == true {
+//                    if getData.otp_type == "email" {
+//
+//                        //                        // MOVED CONTROLLER
+//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
+//                        //                        controller.email = self.email.text!
+//                        //                        controller.password = self.password.text!
+//                        //
+//                        //                        self.present(controller, animated: true, completion: nil)
+//
+//                    } else {
+//
+//                        // MOVED CONTROLLER
+//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
+//                        //                        controller.email = self.email.text!
+//                        //                        controller.password = self.password.text!
+//                        //
+//                        //                        self.present(controller, animated: true, completion: nil)
+//
+//                    }
+//
+//                } else {}
+//
+////                if getData.message?.email != nil {
+////                    snackBarFunction(message: (getData.message?.email![0])!)
+////                } else {
+////                    snackBarFunction(message: (getData.message?.english)!)
+////                }
+//
+//
+//            } catch {
+//                print("ERROR")
+//                DispatchQueue.main.async {
+//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+//                }
+//            }
+//        }
     }
     
     
@@ -156,10 +210,10 @@ class Login: UIViewController, UITextFieldDelegate {
     // create account
     @IBAction func createAccount(_ sender: UIButton) {
         
-        // MOVE CONTROLLER
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Entropy") as! Entropy
-        self.present(controller, animated: true, completion: nil)
+//        // MOVE CONTROLLER
+//        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//        let controller = storyboard.instantiateViewController(withIdentifier: "Entropy") as! Entropy
+//        self.present(controller, animated: true, completion: nil)
     }
     
     
