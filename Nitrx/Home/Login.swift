@@ -75,16 +75,16 @@ class Login: UIViewController, UITextFieldDelegate {
 //        }
             
         else {
-//            loginFunction()
+            loginFunction()
             
             
-            // MOVED CONTROLLER
-            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
+//            // MOVED CONTROLLER
+//            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+//            let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
 //            controller.email = self.email.text!
 //            controller.password = self.password.text!
-
-            self.present(controller, animated: true, completion: nil)
+//
+//            self.present(controller, animated: true, completion: nil)
 
         }
     }
@@ -102,45 +102,81 @@ class Login: UIViewController, UITextFieldDelegate {
             print(stringData, statusCode)
 
             do {
-                let getData = try JSONDecoder().decode([LoginData].self, from: data)
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
                 
-                print(getData)
                 
-                for i in getData {
+                for post in jsonObject! {
                     
-                    print()
+                    let postDic = post as? [String: Any]
+                    
+                    if postDic != nil {
+                        
+                        if postDic?["login"] != nil {
+                            
+                            let Address = postDic?["Address"] as! String
+                            let DOB = postDic?["DOB"] as! String
+                            let email = postDic?["email"] as! String
+                            let FirstName = postDic?["First-Name"] as! String
+                            let followPrivacy = postDic?["follow-privacy"] as! String
+                            let ImagePath = postDic?["Image-Path"] as! String
+                            let JoinDate = postDic?["Join-Date"] as! String
+                            let LastName = postDic?["Last-Name"] as! String
+                            let login = postDic?["login"] as! String
+                            let qrimage = postDic?["qrimage"] as! String
+                            let status = postDic?["status"] as! String
+                            let UserType = postDic?["User-Type"] as! String
+                            let username = postDic?["username"] as! String
+                            let user_id = postDic?["user_id"] as! String
+                            let verified = postDic?["verified"] as! String
+                            let Wallet = postDic?["Wallet"] as! String
+                            
+                            UserDefaults.standard.set(Address, forKey: "Address")
+                            UserDefaults.standard.set(DOB, forKey: "DOB")
+                            UserDefaults.standard.set(email, forKey: "email")
+                            UserDefaults.standard.set(FirstName, forKey: "FirstName")
+                            UserDefaults.standard.set(followPrivacy, forKey: "followPrivacy")
+                            UserDefaults.standard.set(ImagePath, forKey: "ImagePath")
+                            UserDefaults.standard.set(JoinDate, forKey: "JoinDate")
+                            UserDefaults.standard.set(LastName, forKey: "LastName")
+                            UserDefaults.standard.set(qrimage, forKey: "qrimage")
+                            UserDefaults.standard.set(status, forKey: "status")
+                            UserDefaults.standard.set(UserType, forKey: "UserType")
+                            UserDefaults.standard.set(username, forKey: "username")
+                            UserDefaults.standard.set(user_id, forKey: "user_id")
+                            UserDefaults.standard.set(verified, forKey: "verified")
+                            UserDefaults.standard.set(Wallet, forKey: "Wallet")
+                            
+                            snackBarFunction(message: login)
+                            
+                            // MOVED CONTROLLER
+                            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                            let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
+                            //            controller.email = self.email.text!
+                            //            controller.password = self.password.text!
+                            
+                            self.present(controller, animated: true, completion: nil)
+                            
+                        }
+                        
+                        if postDic?["errors"] != nil {
+                            
+                            let errors = postDic?["errors"] as! [String: Any]
+                            
+                            let error = errors["error_text"] as! String
+                            
+                            snackBarFunction(message: error)
+                            
+                            
+                        }
+                        
+                        
+                        
+                        
+                    }
                 }
                 
-//                if getData.isLoginStatus == true {
-//                    if getData.otp_type == "email" {
-//
-//                        //                        // MOVED CONTROLLER
-//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
-//                        //                        controller.email = self.email.text!
-//                        //                        controller.password = self.password.text!
-//                        //
-//                        //                        self.present(controller, animated: true, completion: nil)
-//
-//                    } else {
-//
-//                        // MOVED CONTROLLER
-//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
-//                        //                        controller.email = self.email.text!
-//                        //                        controller.password = self.password.text!
-//                        //
-//                        //                        self.present(controller, animated: true, completion: nil)
-//
-//                    }
-//
-//                } else {}
                 
-                //                if getData.message?.email != nil {
-                //                    snackBarFunction(message: (getData.message?.email![0])!)
-                //                } else {
-                //                    snackBarFunction(message: (getData.message?.english)!)
-                //                }
+                
                 
                 
             } catch {
@@ -152,52 +188,7 @@ class Login: UIViewController, UITextFieldDelegate {
             }
         }
         
-//        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
-//
-//            print(stringData)
-//
-//            do {
-//                let getData = try JSONDecoder().decode(JSONData.self, from: data)
-//
-//                if getData.isLoginStatus == true {
-//                    if getData.otp_type == "email" {
-//
-//                        //                        // MOVED CONTROLLER
-//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
-//                        //                        controller.email = self.email.text!
-//                        //                        controller.password = self.password.text!
-//                        //
-//                        //                        self.present(controller, animated: true, completion: nil)
-//
-//                    } else {
-//
-//                        // MOVED CONTROLLER
-//                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-//                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
-//                        //                        controller.email = self.email.text!
-//                        //                        controller.password = self.password.text!
-//                        //
-//                        //                        self.present(controller, animated: true, completion: nil)
-//
-//                    }
-//
-//                } else {}
-//
-////                if getData.message?.email != nil {
-////                    snackBarFunction(message: (getData.message?.email![0])!)
-////                } else {
-////                    snackBarFunction(message: (getData.message?.english)!)
-////                }
-//
-//
-//            } catch {
-//                print("ERROR")
-//                DispatchQueue.main.async {
-//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-//                }
-//            }
-//        }
+
     }
     
     

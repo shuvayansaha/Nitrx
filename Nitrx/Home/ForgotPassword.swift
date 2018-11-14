@@ -67,7 +67,6 @@ class ForgotPassword: UIViewController, UITextFieldDelegate {
         else {
             forgotPasswordFunction()
             
-            performSegue(withIdentifier: "ResendLink", sender: nil)
         }
     }
     
@@ -83,49 +82,49 @@ class ForgotPassword: UIViewController, UITextFieldDelegate {
     
     
     
-    // login function
+    // forgot function
     func forgotPasswordFunction() {
         
-        let url = baseURL 
-        let parameters = ["email": email.text!]
+        let url = baseURL + forget_password + "?" + "email=" + "\(email.text!)"
         
-        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
             print(stringData)
             
             do {
-                let getData = try JSONDecoder().decode(JSONData.self, from: data)
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
                 
-                if getData.isLoginStatus == true {
-                    if getData.otp_type == "email" {
+                for post in jsonObject! {
+                    
+                    let postDic = post as? [String: Any]
+                    
+                    if postDic != nil {
                         
-                        //                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
+                        if postDic?["message"] != nil {
+                            
+                            let message = postDic?["message"] as! String
+                            
+                            snackBarFunction(message: message)
+                            
+                            self.performSegue(withIdentifier: "ResendLink", sender: nil)
+                            
+                        }
                         
-                    } else {
+                        if postDic?["error"] != nil {
+                            
+                            let error = postDic?["error"] as! String
+                            
+                            snackBarFunction(message: error)
+                            
+                            
+                        }
                         
-                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
+                        
+                        
                         
                     }
-                    
-                } else {}
+                }
                 
-//                if getData.message?.email != nil {
-//                    snackBarFunction(message: (getData.message?.email![0])!)
-//                } else {
-//                    snackBarFunction(message: (getData.message?.english)!)
-//                }
                 
                 
             } catch {

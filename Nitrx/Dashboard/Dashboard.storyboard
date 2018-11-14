@@ -932,7 +932,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Just riding ariund town" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckS-Wi-yrh">
-                                                            <rect key="frame" x="8" y="379" width="156.5" height="18"/>
+                                                            <rect key="frame" x="8" y="379" width="266" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1078,6 +1078,7 @@
                                                         <constraint firstItem="a3Y-tE-t1u" firstAttribute="top" secondItem="MqC-VV-IwX" secondAttribute="bottom" constant="8" id="sLY-P5-wq5"/>
                                                         <constraint firstItem="zNQ-wj-mLs" firstAttribute="leading" secondItem="Plm-Q4-WxK" secondAttribute="leading" constant="8" id="txB-H4-Vtn"/>
                                                         <constraint firstItem="UuT-Qv-Pis" firstAttribute="top" secondItem="Plm-Q4-WxK" secondAttribute="top" constant="8" id="w7V-sC-vtK"/>
+                                                        <constraint firstItem="fcx-0Y-XyT" firstAttribute="leading" secondItem="ckS-Wi-yrh" secondAttribute="trailing" constant="8" id="wMO-72-CDI"/>
                                                         <constraint firstItem="uyc-uO-nCf" firstAttribute="bottom" secondItem="6Ls-jJ-VH6" secondAttribute="bottom" id="wRc-64-1oC"/>
                                                         <constraint firstItem="020-fu-z5E" firstAttribute="width" secondItem="jpg-Yv-Ivr" secondAttribute="width" multiplier="1.5" id="yTg-90-es6"/>
                                                     </constraints>
@@ -1093,12 +1094,19 @@
                                         </constraints>
                                         <size key="customSize" width="366" height="900"/>
                                         <connections>
+                                            <outlet property="commentCount" destination="YSl-lL-UEc" id="Gr7-yb-wG1"/>
+                                            <outlet property="desText" destination="eRX-bk-Fmp" id="m0a-YC-ej3"/>
                                             <outlet property="follow" destination="zHy-0v-inR" id="SGQ-y8-MR0"/>
                                             <outlet property="link" destination="6Ls-jJ-VH6" id="hMO-Ab-G5p"/>
+                                            <outlet property="nitrxCount" destination="t7Y-TO-bdT" id="otC-nQ-bNf"/>
                                             <outlet property="postDetailsHeight" destination="fc8-c4-h21" id="i2a-ED-sKa"/>
+                                            <outlet property="postFile" destination="MqC-VV-IwX" id="a5B-CA-t6b"/>
                                             <outlet property="postText" destination="ckS-Wi-yrh" id="72Q-P7-cqH"/>
+                                            <outlet property="qrImage" destination="fcx-0Y-XyT" id="bcM-Rb-lF5"/>
                                             <outlet property="rank" destination="lBI-iW-ME1" id="iVQ-xt-N2y"/>
                                             <outlet property="tableView" destination="P3B-ke-MLh" id="cX8-uT-WBo"/>
+                                            <outlet property="username" destination="oqi-RL-Wn5" id="YqI-Fe-cqp"/>
+                                            <outlet property="viewPost" destination="pfL-XF-pOw" id="0rn-al-E1F"/>
                                             <outlet property="whiteView" destination="Plm-Q4-WxK" id="Kvc-po-VHT"/>
                                         </connections>
                                     </collectionViewCell>

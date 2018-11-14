@@ -98,7 +98,7 @@ class SignUp: UIViewController, UITextFieldDelegate {
     // login function
     func signUpFunction() {
         
-        let url = baseURL + loginUrl
+        let url = baseURL + registerUrl
         let parameters = ["email": email.text!, "password": password.text!]
         
         httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in

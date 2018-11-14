@@ -17,22 +17,29 @@ class HomeColCell: UICollectionViewCell {
     @IBOutlet weak var whiteView: UIView!
     
     @IBOutlet weak var tableView: UITableView!
-//    @IBOutlet weak var rating1: UIButton!
-//    @IBOutlet weak var rating2: UIButton!
-//    @IBOutlet weak var rating3: UIButton!
-//    @IBOutlet weak var rating4: UIButton!
-//    @IBOutlet weak var rating5: UIButton!
-
+    //    @IBOutlet weak var rating1: UIButton!
+    //    @IBOutlet weak var rating2: UIButton!
+    //    @IBOutlet weak var rating3: UIButton!
+    //    @IBOutlet weak var rating4: UIButton!
+    //    @IBOutlet weak var rating5: UIButton!
+    
     @IBOutlet weak var follow: UIButton!
     @IBOutlet weak var rank: UIButton!
     @IBOutlet weak var link: UIButton!
     @IBOutlet weak var postDetailsHeight: NSLayoutConstraint!
     @IBOutlet weak var postText: UILabel!
+    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var desText: UILabel!
+    @IBOutlet weak var viewPost: UILabel!
+    @IBOutlet weak var commentCount: UILabel!
+    @IBOutlet weak var nitrxCount: UILabel!
+    @IBOutlet weak var qrImage: UIImageView!
+    @IBOutlet weak var postFile: UIImageView!
     
     var showing = false
     var delegate: CustomCellDelegate?
-
-   
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,36 +51,36 @@ class HomeColCell: UICollectionViewCell {
         follow.layer.cornerRadius = 4
         rank.layer.cornerRadius = 4
         link.layer.cornerRadius = 16
-
-//        rating1.layer.borderWidth = 1
-//        rating1.layer.borderColor = UIColor.lightGray.cgColor
-//        
-//        rating2.layer.borderWidth = 1
-//        rating2.layer.borderColor = UIColor.lightGray.cgColor
-//        
-//        rating3.layer.borderWidth = 1
-//        rating3.layer.borderColor = UIColor.lightGray.cgColor
-//        
-//        rating4.layer.borderWidth = 1
-//        rating4.layer.borderColor = UIColor.lightGray.cgColor
-//
-//        rating5.layer.borderWidth = 1
-//        rating5.layer.borderColor = UIColor.lightGray.cgColor
         
-       
+        //        rating1.layer.borderWidth = 1
+        //        rating1.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating2.layer.borderWidth = 1
+        //        rating2.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating3.layer.borderWidth = 1
+        //        rating3.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating4.layer.borderWidth = 1
+        //        rating4.layer.borderColor = UIColor.lightGray.cgColor
+        //
+        //        rating5.layer.borderWidth = 1
+        //        rating5.layer.borderColor = UIColor.lightGray.cgColor
+        
+        
     }
-  
-  
+    
+    
     @IBAction func expandPostDetails(_ sender: UIButton) {
         
         show()
     }
     
     @IBAction func linkClick(_ sender: UIButton) {
-
+        
         
         delegate?.linkPress(row: sender.tag)
-
+        
     }
     
     

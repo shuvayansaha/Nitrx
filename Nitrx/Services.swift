@@ -17,6 +17,8 @@ import Alamofire
 let baseURL = "http://json.nitrx.com/"
 
 let loginUrl = "login.php/"
+let registerUrl = "register.php/"
+let forget_password = "forget_password.php/"
 
 
 let normal_feeds = "normal_feeds.php/"
@@ -94,7 +96,7 @@ func httpPost(controller: UIViewController, url: String, headerValue1: String, h
     let activityIndicator = UIActivityIndicatorView()
     activityIndicator.center = controller.view.center
     activityIndicator.hidesWhenStopped = true
-    activityIndicator.style = .whiteLarge
+    activityIndicator.style = .gray
     controller.view.addSubview(activityIndicator)
     activityIndicator.startAnimating()
     UIApplication.shared.beginIgnoringInteractionEvents()
