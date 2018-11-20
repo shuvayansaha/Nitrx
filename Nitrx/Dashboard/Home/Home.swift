@@ -151,7 +151,7 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: collectionView.frame.size.width, height: 1000)
+        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
         
     }
     

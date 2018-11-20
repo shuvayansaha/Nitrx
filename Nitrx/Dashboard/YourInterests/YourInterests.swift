@@ -143,6 +143,7 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
     
     
 
+    selectitem
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

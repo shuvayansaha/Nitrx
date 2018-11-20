@@ -217,19 +217,26 @@ extension UIImageView {
         //            return
         //        }
         //
-        URLSession.shared.dataTask(with: url!) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                
-                let imageToCache =  UIImage(data: data)
-                
-                //                if self.imageUrlString == urlString {
-                //                    self.image = imageToCache
-                //                }
-                self.image = imageToCache
-                
-            }
-            }.resume()
+        
+        if url != nil {
+            
+            URLSession.shared.dataTask(with: url!) { data, response, error in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async() {
+                    
+                    let imageToCache =  UIImage(data: data)
+                    
+                    //                if self.imageUrlString == urlString {
+                    //                    self.image = imageToCache
+                    //                }
+                    self.image = imageToCache
+                    
+                }
+                }.resume()
+            
+        }
+        
+
     }
     
     
