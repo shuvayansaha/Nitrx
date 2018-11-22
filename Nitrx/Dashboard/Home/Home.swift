@@ -9,10 +9,11 @@
 import UIKit
 import WebKit
 
-class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, CustomCellDelegate {
+class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate {
     
-    @IBOutlet weak var homeCol: UICollectionView!
-    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var ratePopUp: UIView!
+
     let web = WKWebView()
     
     var closeButton = UIBarButtonItem()
@@ -22,13 +23,13 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        homeCol.delegate = self
-        homeCol.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         
         userDefaultsFunc()
         
         loadHome {
-            self.homeCol.reloadData()
+            self.tableView.reloadData()
             
         }
         
@@ -133,52 +134,51 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
         navigationController?.navigationBar.setGradientBackground(colors: colors)
     }
     
-    @IBOutlet var ratePopUp: UIView!
+    
+//
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//
+//        return 1
+//    }
+//
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//
+//        return postArray.count
+//    }
+//
+//
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
+//
+//    }
     
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
-        return 1
-    }
     
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return postArray.count
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
-        
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeColCell", for: indexPath) as! HomeColCell
-        
-        cell.rank.tag = indexPath.row
-        cell.link.tag = indexPath.row
-        cell.follow.tag = indexPath.row
-        
-        cell.postText.text = postArray[indexPath.row].postText
-        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
-        cell.username.text = postArray[indexPath.row].username
-        cell.desText.text = postArray[indexPath.row].description
-        cell.viewPost.text = String(postArray[indexPath.row].view)
-        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
-        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
-        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
-        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
-        
-        cell.delegate = self
-        
-        return cell
-    }
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeColCell", for: indexPath) as! HomeColCell
+//
+//        cell.rank.tag = indexPath.row
+//        cell.link.tag = indexPath.row
+//        cell.follow.tag = indexPath.row
+//
+//        cell.postText.text = postArray[indexPath.row].postText
+//        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
+//        cell.username.text = postArray[indexPath.row].username
+//        cell.desText.text = postArray[indexPath.row].description
+//        cell.viewPost.text = String(postArray[indexPath.row].view)
+//        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
+//        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
+//        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
+//        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
+//
+//        cell.delegate = self
+//
+//        return cell
+//    }
     
     func buttonPress(row: Int) {
         
@@ -347,6 +347,42 @@ class Home: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionVi
     
     
     
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return postArray.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableCell", for: indexPath) as! HomeTableCell
+            
+        cell.rank.tag = indexPath.row
+        cell.link.tag = indexPath.row
+        cell.follow.tag = indexPath.row
+        
+        cell.postText.text = postArray[indexPath.row].postText
+        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
+        cell.username.text = postArray[indexPath.row].username
+        cell.desText.text = postArray[indexPath.row].description
+        cell.viewPost.text = String(postArray[indexPath.row].view)
+        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
+        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
+        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
+        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
+        
+        cell.delegate = self
+
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 800
+    }
     
 }
 

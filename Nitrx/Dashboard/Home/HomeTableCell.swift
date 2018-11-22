@@ -12,7 +12,7 @@ protocol CustomCellDelegate {
     func buttonPress(row: Int)
     func linkPress(row: Int)
 }
-class HomeColCell: UICollectionViewCell {
+class HomeTableCell: UITableViewCell {
     
     @IBOutlet weak var whiteView: UIView!
     

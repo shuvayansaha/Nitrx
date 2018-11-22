@@ -8,26 +8,17 @@
 
 import UIKit
 
-//var selectedCategory = [String]()
+class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
-
-    @IBOutlet weak var interestseCol: UICollectionView!
-    
-    let category = ["News", "Technology", "Film", "Arts", "Music", "Home", "Photography", "Politics", "News", "Technology", "Film", "Arts", "Music", "Home", "Photography", "Politics"]
-    
-    var selectedCategory = [String]()
+    @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        interestseCol.delegate = self
-        interestseCol.dataSource = self
-        interestseCol.allowsMultipleSelection = true
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-
     
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -39,185 +30,59 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
     }
     
 
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if section == 0 {
-            return 1
-        } else if section == 1 {
-            return category.count
-        } else if section == 2 {
-            return 1
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "label1", for: indexPath)
+            
+            return cell
+            
+        } else if indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "YourIntColView", for: indexPath) as! YourIntColView
+            
+            return cell
+        } else if indexPath.row == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "label2", for: indexPath)
+            
+            return cell
         } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "label2", for: indexPath)
+            
+            return cell
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            
+            return 115
+            
+        } else if indexPath.row == 1 {
+            
+            return 600
+            
+        } else if indexPath.row == 2 {
+            
+            return 180
+            
+        } else {
+            
             return 0
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if indexPath.section == 0 {
-            return CGSize(width: collectionView.frame.size.width, height: 50)
-            
-        } else if indexPath.section == 1 {
-        
-            return CGSize(width: collectionView.frame.size.width / 3 - 8, height: collectionView.frame.size.width / 3 - 8)
-        
-        } else if indexPath.section == 2 {
-            
-            return CGSize(width: collectionView.frame.size.width, height: 108)
 
-        } else {
-            return UICollectionViewFlowLayout.automaticSize
-        }
-    }
-    
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourIntLabelCell", for: indexPath) as! YourIntLabelCell
-            
-            return cell
-            
-        } else if indexPath.section == 1 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourIntCell", for: indexPath) as! YourIntCell
-            
-            cell.label.text = category[indexPath.row]
-//            cell.image.image = UIImage(named: category[indexPath.row])?.noir
-            cell.image.image = UIImage(named: category[indexPath.row])
-
-            cell.check.alpha = 0
-            cell.blackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
-            
-            return cell
-            
-        } else if indexPath.section == 2 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourIntButtonCell", for: indexPath) as! YourIntButtonCell
-            
-            cell.confirmChoices.addTarget(self, action: #selector(confirmChoices), for: .touchUpInside)
-            
-            return cell
-        }
-
-        else {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourIntButtonCell", for: indexPath) as! YourIntButtonCell
-            
-            return cell
-        }
-      
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        switch kind {
-            
-        case UICollectionView.elementKindSectionFooter:
-            
-            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "YourIntFooter", for: indexPath) as! YourIntFooter
-            
-            return footerView
-  
-        default:
-            assert(false, "Unexpected element kind")
-        }
-        
-    }
 
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    @IBAction func confirmChoices(_ sender: UIButton) {
         
-        return CGSize(width: collectionView.frame.width, height: 32)
-    }
-    
-    
-
-    selectitem
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(selectedCategory.count)
         
-        let cell = collectionView.cellForItem(at: indexPath) as! YourIntCell
-        
-        if indexPath.section == 1 {
-            
-            if cell.isSelected == true {
-                
-                cell.label.textColor = UIColor.white
-                cell.blackView.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
-                cell.check.alpha = 1
-//                cell.image.image = UIImage(named: category[indexPath.row])
-
-                selectedCategory.append(category[indexPath.row])
-                
-            } else {
-                
-                cell.label.textColor = UIColor.black
-                cell.blackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
-                cell.check.alpha = 0
-//                cell.image.image = UIImage(named: category[indexPath.row])?.noir
-
-                selectedCategory.removeAll { (element) -> Bool in
-                    element == category[indexPath.row]
-                }
-            }
-         
-            
-        }
-        
-    }
-    
-
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-       
-        let cell = collectionView.cellForItem(at: indexPath) as! YourIntCell
-        
-        if indexPath.section == 1 {
-            
-            if cell.isSelected == true {
-                
-                cell.label.textColor = UIColor.white
-                cell.blackView.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
-                cell.check.alpha = 1
-//                cell.image.image = UIImage(named: category[indexPath.row])
-
-                selectedCategory.append(category[indexPath.row])
-                
-            } else {
-            
-                cell.label.textColor = UIColor.black
-                cell.blackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
-                cell.check.alpha = 0
-//                cell.image.image = UIImage(named: category[indexPath.row])?.noir
-
-                selectedCategory.removeAll { (element) -> Bool in
-                    element == category[indexPath.row]
-                }
-            }
-            
-            
-        }
-    }
-    
-    
-    
-    
-    @objc func confirmChoices() {
-        
-        print("selected Category", selectedCategory)
-
-        if selectedCategory.count > 5 {
+        if selectedCategory.count == 5 {
             
             // MOVED CONTROLLER
             let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
@@ -226,18 +91,21 @@ class YourInterests: UIViewController, UICollectionViewDelegateFlowLayout, UICol
             //            controller.password = self.password.text!
             
             self.present(controller, animated: true, completion: nil)
-
             
         } else {
             
-            snackBarFunction(message: "Please seelect minimum 6 categories")
+            snackBarFunction(message: "Please seelect 5 categories")
         }
+        
         
     }
     
-    
 
+    // back to previous
+    @IBAction func back(_ sender: UIButton) {
+        print("previous")
 
+    }
 }
 
 // grayscale image noir extension

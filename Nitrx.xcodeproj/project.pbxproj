@@ -45,16 +45,13 @@
 		7E7C38BF214ED0F30063F47C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38BE214ED0F30063F47C /* Home.swift */; };
 		7E7C38C2214EDE3A0063F47C /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38C1214EDE3A0063F47C /* Search.swift */; };
 		7E7C38C5214EDF630063F47C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38C4214EDF630063F47C /* Profile.swift */; };
-		7E7C38C7214EE3B30063F47C /* HomeColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38C6214EE3B30063F47C /* HomeColCell.swift */; };
+		7E7C38C7214EE3B30063F47C /* HomeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38C6214EE3B30063F47C /* HomeTableCell.swift */; };
 		7E88AE6B214D428100FC994F /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE6A214D428100FC994F /* ForgotPassword.swift */; };
 		7E88AE6D214D4ED100FC994F /* ResendLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE6C214D4ED100FC994F /* ResendLink.swift */; };
 		7E88AE6F214D511000FC994F /* PasswordSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE6E214D511000FC994F /* PasswordSetup.swift */; };
 		7E88AE71214D589A00FC994F /* YourInterests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE70214D589A00FC994F /* YourInterests.swift */; };
 		7E88AE73214D592900FC994F /* DashboardNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE72214D592900FC994F /* DashboardNav.swift */; };
 		7E88AE75214D5DBD00FC994F /* YourIntCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE74214D5DBD00FC994F /* YourIntCell.swift */; };
-		7E88AE77214D5FE000FC994F /* YourIntButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE76214D5FE000FC994F /* YourIntButtonCell.swift */; };
-		7E88AE79214D618500FC994F /* YourIntFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE78214D618500FC994F /* YourIntFooter.swift */; };
-		7E88AE7B214D633100FC994F /* YourIntLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88AE7A214D633100FC994F /* YourIntLabelCell.swift */; };
 		7E97A9AC2179272E00F746D7 /* Insta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E97A9AB2179272E00F746D7 /* Insta.swift */; };
 		7EA5BE9F21458AA1002A8E5E /* Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BE9E21458AA1002A8E5E /* Email.swift */; };
 		7EBE732A216D996800E8E3C5 /* SearchDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBE7329216D996800E8E3C5 /* SearchDetailsCell.swift */; };
@@ -70,6 +67,7 @@
 		7EDE39DA21610E5A00D43F5D /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */; };
 		7EE43AF52156B50C002F8A5A /* PostDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF42156B50C002F8A5A /* PostDetails.swift */; };
 		7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */; };
+		7EE5431D21A66EDB003EA9C7 /* YourIntColView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE5431C21A66EDB003EA9C7 /* YourIntColView.swift */; };
 		7EEB0B8C21441FCA003EA5C4 /* NickName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB0B8B21441FCA003EA5C4 /* NickName.swift */; };
 		7EF73BCA219897220086A4BF /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF73BC9219897210086A4BF /* SignUp.swift */; };
 /* End PBXBuildFile section */
@@ -115,16 +113,13 @@
 		7E7C38BE214ED0F30063F47C /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		7E7C38C1214EDE3A0063F47C /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		7E7C38C4214EDF630063F47C /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		7E7C38C6214EE3B30063F47C /* HomeColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeColCell.swift; sourceTree = "<group>"; };
+		7E7C38C6214EE3B30063F47C /* HomeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableCell.swift; sourceTree = "<group>"; };
 		7E88AE6A214D428100FC994F /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		7E88AE6C214D4ED100FC994F /* ResendLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendLink.swift; sourceTree = "<group>"; };
 		7E88AE6E214D511000FC994F /* PasswordSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSetup.swift; sourceTree = "<group>"; };
 		7E88AE70214D589A00FC994F /* YourInterests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourInterests.swift; sourceTree = "<group>"; };
 		7E88AE72214D592900FC994F /* DashboardNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNav.swift; sourceTree = "<group>"; };
 		7E88AE74214D5DBD00FC994F /* YourIntCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntCell.swift; sourceTree = "<group>"; };
-		7E88AE76214D5FE000FC994F /* YourIntButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntButtonCell.swift; sourceTree = "<group>"; };
-		7E88AE78214D618500FC994F /* YourIntFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntFooter.swift; sourceTree = "<group>"; };
-		7E88AE7A214D633100FC994F /* YourIntLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntLabelCell.swift; sourceTree = "<group>"; };
 		7E97A9AB2179272E00F746D7 /* Insta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insta.swift; sourceTree = "<group>"; };
 		7EA5BE9E21458AA1002A8E5E /* Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Email.swift; sourceTree = "<group>"; };
 		7EBE7329216D996800E8E3C5 /* SearchDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsCell.swift; sourceTree = "<group>"; };
@@ -140,6 +135,7 @@
 		7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
 		7EE43AF42156B50C002F8A5A /* PostDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetails.swift; sourceTree = "<group>"; };
 		7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
+		7EE5431C21A66EDB003EA9C7 /* YourIntColView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntColView.swift; sourceTree = "<group>"; };
 		7EEB0B8B21441FCA003EA5C4 /* NickName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickName.swift; sourceTree = "<group>"; };
 		7EF73BC9219897210086A4BF /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		EABE77A3DB651157B527646F /* Pods-Nitrx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.release.xcconfig"; sourceTree = "<group>"; };
@@ -293,7 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				7E7C38BE214ED0F30063F47C /* Home.swift */,
-				7E7C38C6214EE3B30063F47C /* HomeColCell.swift */,
+				7E7C38C6214EE3B30063F47C /* HomeTableCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -329,10 +325,8 @@
 			isa = PBXGroup;
 			children = (
 				7E88AE70214D589A00FC994F /* YourInterests.swift */,
-				7E88AE7A214D633100FC994F /* YourIntLabelCell.swift */,
+				7EE5431C21A66EDB003EA9C7 /* YourIntColView.swift */,
 				7E88AE74214D5DBD00FC994F /* YourIntCell.swift */,
-				7E88AE76214D5FE000FC994F /* YourIntButtonCell.swift */,
-				7E88AE78214D618500FC994F /* YourIntFooter.swift */,
 			);
 			path = YourInterests;
 			sourceTree = "<group>";
@@ -528,7 +522,6 @@
 				7E1ABC962141B67500517E48 /* Services.swift in Sources */,
 				7E6EB4F22156485400A763BF /* TermsServiceHeaderCell.swift in Sources */,
 				7E6EB4E9215636F100A763BF /* MyProfileChildPostCell.swift in Sources */,
-				7E88AE7B214D633100FC994F /* YourIntLabelCell.swift in Sources */,
 				7EC1732D216D245800A7BD3E /* ProfileOthersTopRatedCellChild.swift in Sources */,
 				2254FD3B216B8D82006A20EB /* TopRatedCell.swift in Sources */,
 				7EC1732F216D249200A7BD3E /* ProfileOthersMyPostCell.swift in Sources */,
@@ -536,7 +529,8 @@
 				7E6EB4EE215643F600A763BF /* TermsServiceCell.swift in Sources */,
 				7EC2D2DA2155F219009A5E7B /* ProfileColCell.swift in Sources */,
 				7EC1732B216D242400A7BD3E /* ProfileOthersTopRatedCell.swift in Sources */,
-				7E7C38C7214EE3B30063F47C /* HomeColCell.swift in Sources */,
+				7E7C38C7214EE3B30063F47C /* HomeTableCell.swift in Sources */,
+				7EE5431D21A66EDB003EA9C7 /* YourIntColView.swift in Sources */,
 				7E6EB4EB215640F900A763BF /* TermsOfService.swift in Sources */,
 				22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */,
 				7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */,
@@ -544,7 +538,6 @@
 				226572332168A36A00C994F1 /* SearchCategoryCell.swift in Sources */,
 				7E2A200521792C3600F484E0 /* InstaCollectionCell.swift in Sources */,
 				7E7C38BF214ED0F30063F47C /* Home.swift in Sources */,
-				7E88AE79214D618500FC994F /* YourIntFooter.swift in Sources */,
 				22ED7F542142529B0004BFDA /* Login.swift in Sources */,
 				7E7C38C5214EDF630063F47C /* Profile.swift in Sources */,
 				7EDE39D821610BEC00D43F5D /* EditProfile.swift in Sources */,
@@ -566,7 +559,6 @@
 				7E7C38C2214EDE3A0063F47C /* Search.swift in Sources */,
 				7E97A9AC2179272E00F746D7 /* Insta.swift in Sources */,
 				226572382168F2D800C994F1 /* CallSearch2.swift in Sources */,
-				7E88AE77214D5FE000FC994F /* YourIntButtonCell.swift in Sources */,
 				7E6EB4F421564A3000A763BF /* TermsOfServiceNav.swift in Sources */,
 				7EC17329216D23FB00A7BD3E /* ProfileOthersCell.swift in Sources */,
 				7E2A200321792C1700F484E0 /* InstaTableCell.swift in Sources */,

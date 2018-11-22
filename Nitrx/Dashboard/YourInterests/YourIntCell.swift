@@ -14,20 +14,6 @@ class YourIntCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var check: UIImageView!
     @IBOutlet weak var blackView: UIView!
-    //    override var isSelected: Bool{
-//        didSet {
-//            if self.isSelected {
-//                
-//                self.contentView.backgroundColor = UIColor.red
-//
-//            } else {
-//                self.contentView.backgroundColor = UIColor.clear
-//
-//            }
-//        }
-//    }
-//    
-    
     
 
 }
