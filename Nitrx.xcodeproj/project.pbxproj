@@ -25,6 +25,7 @@
 		22F8E21A2141031100862E22 /* Entropy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F8E2192141031100862E22 /* Entropy.swift */; };
 		22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F8E21B2141041D00862E22 /* EntropyCell.swift */; };
 		28013BBD01BF83EB38B064A6 /* Pods_Nitrx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F529BC6CD4D7985CB4D2C65D /* Pods_Nitrx.framework */; };
+		7E0BE4CC21A9A8AD00F7B043 /* SubTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BE4CB21A9A8AD00F7B043 /* SubTableCell.swift */; };
 		7E1ABC942141B66F00517E48 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC932141B66F00517E48 /* Extension.swift */; };
 		7E1ABC962141B67500517E48 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC952141B67500517E48 /* Services.swift */; };
 		7E1ABC982141B97A00517E48 /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1ABC972141B97A00517E48 /* Splash.swift */; };
@@ -65,6 +66,11 @@
 		7EC2D2DA2155F219009A5E7B /* ProfileColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2D2D92155F219009A5E7B /* ProfileColCell.swift */; };
 		7EDE39D821610BEC00D43F5D /* EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDE39D721610BEC00D43F5D /* EditProfile.swift */; };
 		7EDE39DA21610E5A00D43F5D /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */; };
+		7EE1F2FB21AC54EF009D89F7 /* HomeCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F621AC54EE009D89F7 /* HomeCell1.swift */; };
+		7EE1F2FC21AC54EF009D89F7 /* HomeCell5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F721AC54EE009D89F7 /* HomeCell5.swift */; };
+		7EE1F2FD21AC54EF009D89F7 /* HomeCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F821AC54EE009D89F7 /* HomeCell2.swift */; };
+		7EE1F2FE21AC54EF009D89F7 /* HomeCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F921AC54EE009D89F7 /* HomeCell3.swift */; };
+		7EE1F2FF21AC54EF009D89F7 /* HomeCell4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2FA21AC54EF009D89F7 /* HomeCell4.swift */; };
 		7EE43AF52156B50C002F8A5A /* PostDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF42156B50C002F8A5A /* PostDetails.swift */; };
 		7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */; };
 		7EE5431D21A66EDB003EA9C7 /* YourIntColView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE5431C21A66EDB003EA9C7 /* YourIntColView.swift */; };
@@ -93,6 +99,7 @@
 		22F8E2192141031100862E22 /* Entropy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entropy.swift; sourceTree = "<group>"; };
 		22F8E21B2141041D00862E22 /* EntropyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntropyCell.swift; sourceTree = "<group>"; };
 		68D69C219713C4A9DBDEBEED /* Pods-Nitrx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitrx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nitrx/Pods-Nitrx.debug.xcconfig"; sourceTree = "<group>"; };
+		7E0BE4CB21A9A8AD00F7B043 /* SubTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTableCell.swift; sourceTree = "<group>"; };
 		7E1ABC932141B66F00517E48 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		7E1ABC952141B67500517E48 /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		7E1ABC972141B97A00517E48 /* Splash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
@@ -133,6 +140,11 @@
 		7EC2D2D92155F219009A5E7B /* ProfileColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileColCell.swift; sourceTree = "<group>"; };
 		7EDE39D721610BEC00D43F5D /* EditProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfile.swift; sourceTree = "<group>"; };
 		7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
+		7EE1F2F621AC54EE009D89F7 /* HomeCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell1.swift; sourceTree = "<group>"; };
+		7EE1F2F721AC54EE009D89F7 /* HomeCell5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell5.swift; sourceTree = "<group>"; };
+		7EE1F2F821AC54EE009D89F7 /* HomeCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell2.swift; sourceTree = "<group>"; };
+		7EE1F2F921AC54EE009D89F7 /* HomeCell3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell3.swift; sourceTree = "<group>"; };
+		7EE1F2FA21AC54EF009D89F7 /* HomeCell4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell4.swift; sourceTree = "<group>"; };
 		7EE43AF42156B50C002F8A5A /* PostDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetails.swift; sourceTree = "<group>"; };
 		7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
 		7EE5431C21A66EDB003EA9C7 /* YourIntColView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntColView.swift; sourceTree = "<group>"; };
@@ -289,7 +301,13 @@
 			isa = PBXGroup;
 			children = (
 				7E7C38BE214ED0F30063F47C /* Home.swift */,
+				7EE1F2F621AC54EE009D89F7 /* HomeCell1.swift */,
+				7EE1F2F821AC54EE009D89F7 /* HomeCell2.swift */,
+				7EE1F2F921AC54EE009D89F7 /* HomeCell3.swift */,
+				7EE1F2FA21AC54EF009D89F7 /* HomeCell4.swift */,
+				7EE1F2F721AC54EE009D89F7 /* HomeCell5.swift */,
 				7E7C38C6214EE3B30063F47C /* HomeTableCell.swift */,
+				7E0BE4CB21A9A8AD00F7B043 /* SubTableCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -510,9 +528,12 @@
 				7E88AE6D214D4ED100FC994F /* ResendLink.swift in Sources */,
 				7E1ABC982141B97A00517E48 /* Splash.swift in Sources */,
 				7E1ABC942141B66F00517E48 /* Extension.swift in Sources */,
+				7EE1F2FD21AC54EF009D89F7 /* HomeCell2.swift in Sources */,
 				7EE43AF52156B50C002F8A5A /* PostDetails.swift in Sources */,
 				7E7C38BC214ED05A0063F47C /* DashboardTab.swift in Sources */,
 				7EA5BE9F21458AA1002A8E5E /* Email.swift in Sources */,
+				7EE1F2FC21AC54EF009D89F7 /* HomeCell5.swift in Sources */,
+				7EE1F2FB21AC54EF009D89F7 /* HomeCell1.swift in Sources */,
 				22ED7F5A21429BDA0004BFDA /* PageController.swift in Sources */,
 				7E6EB4E72156326D00A763BF /* ProfileMyPostCell.swift in Sources */,
 				7E2A200B2179621D00F484E0 /* GridLayout.swift in Sources */,
@@ -534,12 +555,14 @@
 				7E6EB4EB215640F900A763BF /* TermsOfService.swift in Sources */,
 				22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */,
 				7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */,
+				7E0BE4CC21A9A8AD00F7B043 /* SubTableCell.swift in Sources */,
 				7EEB0B8C21441FCA003EA5C4 /* NickName.swift in Sources */,
 				226572332168A36A00C994F1 /* SearchCategoryCell.swift in Sources */,
 				7E2A200521792C3600F484E0 /* InstaCollectionCell.swift in Sources */,
 				7E7C38BF214ED0F30063F47C /* Home.swift in Sources */,
 				22ED7F542142529B0004BFDA /* Login.swift in Sources */,
 				7E7C38C5214EDF630063F47C /* Profile.swift in Sources */,
+				7EE1F2FF21AC54EF009D89F7 /* HomeCell4.swift in Sources */,
 				7EDE39D821610BEC00D43F5D /* EditProfile.swift in Sources */,
 				22B45DB6216CE647000A4578 /* ProfileOthers.swift in Sources */,
 				7E6EB4F02156443000A763BF /* TermsOfServiceButtonCell.swift in Sources */,
@@ -549,6 +572,7 @@
 				7E88AE6B214D428100FC994F /* ForgotPassword.swift in Sources */,
 				22F8E21A2141031100862E22 /* Entropy.swift in Sources */,
 				7EBE732C216D999B00E8E3C5 /* SearchDetails.swift in Sources */,
+				7EE1F2FE21AC54EF009D89F7 /* HomeCell3.swift in Sources */,
 				7E388F91216A04C700F66939 /* OtherTableViewCell.swift in Sources */,
 				7E88AE71214D589A00FC994F /* YourInterests.swift in Sources */,
 				7EBE732F216D9C8100E8E3C5 /* Message.swift in Sources */,

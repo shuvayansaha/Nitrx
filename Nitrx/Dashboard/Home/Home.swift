@@ -11,7 +11,7 @@ import WebKit
 
 class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var homeTable: UITableView!
     @IBOutlet var ratePopUp: UIView!
 
     let web = WKWebView()
@@ -23,13 +23,13 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        homeTable.delegate = self
+        homeTable.dataSource = self
         
         userDefaultsFunc()
         
         loadHome {
-            self.tableView.reloadData()
+            self.homeTable.reloadData()
             
         }
         
@@ -135,50 +135,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     }
     
     
-//
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//
-//        return 1
-//    }
-//
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//
-//        return postArray.count
-//    }
-//
-//
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
-//
-//    }
-    
-    
-    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeColCell", for: indexPath) as! HomeColCell
-//
-//        cell.rank.tag = indexPath.row
-//        cell.link.tag = indexPath.row
-//        cell.follow.tag = indexPath.row
-//
-//        cell.postText.text = postArray[indexPath.row].postText
-//        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
-//        cell.username.text = postArray[indexPath.row].username
-//        cell.desText.text = postArray[indexPath.row].description
-//        cell.viewPost.text = String(postArray[indexPath.row].view)
-//        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
-//        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
-//        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
-//        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
-//
-//        cell.delegate = self
-//
-//        return cell
-//    }
+
     
     func buttonPress(row: Int) {
         
@@ -347,41 +304,124 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
     
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return postArray.count
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return postArray.count
+        
+        if section == 4 {
+            
+            return 10
+            
+        } else {
+            
+            return 1
+        }
+        
     }
+    
+    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableCell", for: indexPath) as! HomeTableCell
+//
+//        cell.rank.tag = indexPath.row
+//        cell.link.tag = indexPath.row
+//        cell.follow.tag = indexPath.row
+//
+//        cell.postText.text = postArray[indexPath.row].postText
+//        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
+//        cell.username.text = postArray[indexPath.row].username
+////        cell.desText.text = postArray[indexPath.row].description
+//        cell.viewPost.text = String(postArray[indexPath.row].view)
+//        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
+//        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
+//        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
+//        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
+//
+//        cell.delegate = self
+//
+//
+//        return cell
+//
+//    }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableCell", for: indexPath) as! HomeTableCell
+        if indexPath.section == 0 {
             
-        cell.rank.tag = indexPath.row
-        cell.link.tag = indexPath.row
-        cell.follow.tag = indexPath.row
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell1") as! HomeCell1
+            
+            return cell
+            
+        } else if indexPath.section == 1 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell2") as! HomeCell2
+            
+            return cell
+            
+        } else if indexPath.section == 2 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell3") as! HomeCell3
+            
+            return cell
+            
+        } else if indexPath.section == 3 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell4") as! HomeCell4
+            
+            return cell
+            
+        } else if indexPath.section == 4 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell5") as! HomeCell5
+            
+            return cell
+            
+        }  else {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell4") as! HomeCell4
+            
+            return cell
+        }
         
-        cell.postText.text = postArray[indexPath.row].postText
-        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
-        cell.username.text = postArray[indexPath.row].username
-        cell.desText.text = postArray[indexPath.row].description
-        cell.viewPost.text = String(postArray[indexPath.row].view)
-        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
-        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
-        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
-        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
-        
-        cell.delegate = self
-
-        
-        return cell
         
     }
     
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 800
+        
+        if indexPath.section == 0 {
+            
+            return 460
+            
+        } else if indexPath.section == 1 {
+            
+            return UITableView.automaticDimension
+            
+        } else if indexPath.section == 2 {
+            
+            return 30 + 3 + 3
+            
+        } else if indexPath.section == 3 {
+            
+            return 25 + 3 + 3
+            
+        } else if indexPath.section == 4 {
+            
+            return 90
+            
+        } else {
+            
+            return UITableView.automaticDimension
+        }
     }
     
 }

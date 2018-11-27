@@ -5,14 +5,14 @@
 //  Created by Shuvayan Saha on 17/09/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
-
+/*
 import UIKit
 
 protocol CustomCellDelegate {
     func buttonPress(row: Int)
     func linkPress(row: Int)
 }
-class HomeTableCell: UITableViewCell {
+class HomeTableCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var whiteView: UIView!
     
@@ -35,6 +35,7 @@ class HomeTableCell: UITableViewCell {
     @IBOutlet weak var nitrxCount: UILabel!
     @IBOutlet weak var qrImage: UIImageView!
     @IBOutlet weak var postFile: UIImageView!
+    @IBOutlet weak var subTable: UITableView!
     
     var showing = false
     var delegate: CustomCellDelegate?
@@ -67,7 +68,8 @@ class HomeTableCell: UITableViewCell {
         //        rating5.layer.borderWidth = 1
         //        rating5.layer.borderColor = UIColor.lightGray.cgColor
         
-        
+        subTable.delegate = self
+        subTable.dataSource = self
     }
     
     
@@ -106,4 +108,47 @@ class HomeTableCell: UITableViewCell {
     }
     
     
+    
+    // MARK : - Sub Table View Cell
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SubTableCell", for: indexPath) as! SubTableCell
+        
+//        cell.rank.tag = indexPath.row
+//        cell.link.tag = indexPath.row
+//        cell.follow.tag = indexPath.row
+//
+//        cell.postText.text = postArray[indexPath.row].postText
+//        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
+//        cell.username.text = postArray[indexPath.row].username
+//        //        cell.desText.text = postArray[indexPath.row].description
+//        cell.viewPost.text = String(postArray[indexPath.row].view)
+//        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
+//        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
+//        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
+//        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
+//
+//        cell.delegate = self
+        
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    
+    
+    
 }
+
+
+*/
