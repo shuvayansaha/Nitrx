@@ -10,9 +10,14 @@ import UIKit
 
 class HomeCell4: UITableViewCell {
 
+    @IBOutlet weak var whiteView: UIView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        whiteView.addRightBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        whiteView.addLeftBorderWithColor(color: UIColor.lightGray, width: 0.5)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

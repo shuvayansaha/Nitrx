@@ -305,7 +305,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return postArray.count
     }
     
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -314,14 +314,16 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if section == 4 {
-            
-            return 10
-            
-        } else {
-            
-            return 1
-        }
+//        if section == 4 {
+//
+//            return 10
+//
+//        } else {
+//
+//            return 1
+//        }
+        
+        return 5
         
     }
     
@@ -355,31 +357,31 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
+        if indexPath.row == 0 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell1") as! HomeCell1
             
             return cell
             
-        } else if indexPath.section == 1 {
+        } else if indexPath.row == 1 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell2") as! HomeCell2
             
             return cell
             
-        } else if indexPath.section == 2 {
+        } else if indexPath.row == 2 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell3") as! HomeCell3
             
             return cell
             
-        } else if indexPath.section == 3 {
+        } else if indexPath.row == 3 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell4") as! HomeCell4
             
             return cell
             
-        } else if indexPath.section == 4 {
+        } else if indexPath.row == 4 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell5") as! HomeCell5
             
@@ -398,25 +400,25 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if indexPath.section == 0 {
+        if indexPath.row == 0 {
             
-            return 460
+            return 480
             
-        } else if indexPath.section == 1 {
+        } else if indexPath.row == 1 {
             
             return UITableView.automaticDimension
             
-        } else if indexPath.section == 2 {
+        } else if indexPath.row == 2 {
             
             return 30 + 3 + 3
             
-        } else if indexPath.section == 3 {
+        } else if indexPath.row == 3 {
             
             return 25 + 3 + 3
             
-        } else if indexPath.section == 4 {
+        } else if indexPath.row == 4 {
             
-            return 90
+            return 0
             
         } else {
             
@@ -424,6 +426,15 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 15
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 15
+    }
+    
+  
 }
 
 
