@@ -1,22 +1,18 @@
 //
-//  HomeCell4.swift
-//  test2
+//  HomeCell6.swift
+//  Nitrx
 //
-//  Created by Shuvayan Saha on 25/11/18.
-//  Copyright © 2018 Rplanx. All rights reserved.
+//  Created by Shuvayan Saha on 29/11/18.
+//  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class HomeCell4: UITableViewCell {
+class HomeCell6: UITableViewCell {
 
-    @IBOutlet weak var commentCount: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

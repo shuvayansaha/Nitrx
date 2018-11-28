@@ -308,22 +308,11 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         return postArray.count
     }
     
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return postArray.count
-//    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        if section == 4 {
-//
-//            return 10
-//
-//        } else {
-//
-//            return 1
-//        }
-        
-        return 5
+        return 6
         
     }
     
@@ -361,24 +350,40 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell1") as! HomeCell1
             
+            cell.username.text = postArray[indexPath.section].username
+            cell.nitrxCount.text = postArray[indexPath.section].nitrix_count
+            cell.viewCount.text = String(postArray[indexPath.section].view)
+            cell.commentCount.text = String(postArray[indexPath.section].comment_count)
+
+            cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.section].postFile)
+
             return cell
             
         } else if indexPath.row == 1 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell2") as! HomeCell2
             
+            cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.section].qrimage)
+            
+            cell.postText.text = postArray[indexPath.section].postText
+            cell.postLinkButton.setTitle(postArray[indexPath.section].website_url, for: .normal)
+
             return cell
             
         } else if indexPath.row == 2 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell3") as! HomeCell3
             
+            cell.postDescription.text = postArray[indexPath.section].description
+
             return cell
             
         } else if indexPath.row == 3 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell4") as! HomeCell4
             
+            cell.commentCount.text = String(postArray[indexPath.section].comment_count)
+
             return cell
             
         } else if indexPath.row == 4 {
@@ -387,7 +392,13 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
             return cell
             
-        }  else {
+        } else if indexPath.row == 5 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell6") as! HomeCell6
+            
+            return cell
+            
+        } else {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell4") as! HomeCell4
             
@@ -402,7 +413,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
         if indexPath.row == 0 {
             
-            return 480
+            return 16 + 8 + 50 + 8 + 250 + 8 + 30 + 8 + 1 + 3
             
         } else if indexPath.row == 1 {
             
@@ -410,15 +421,19 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
         } else if indexPath.row == 2 {
             
-            return 30 + 3 + 3
-            
+            return UITableView.automaticDimension
+
         } else if indexPath.row == 3 {
             
-            return 25 + 3 + 3
-            
+            return 30 + 3 + 3
+
         } else if indexPath.row == 4 {
             
-            return 0
+            return 3 + 30 + 8 + 21 + 8 + 30 + 8
+
+        } else if indexPath.row == 5 {
+            
+            return 24
             
         } else {
             
@@ -427,12 +442,14 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 15
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 15
+        return 0
     }
+    
+    
     
   
 }

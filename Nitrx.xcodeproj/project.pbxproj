@@ -42,6 +42,7 @@
 		7E6EB4F02156443000A763BF /* TermsOfServiceButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EB4EF2156443000A763BF /* TermsOfServiceButtonCell.swift */; };
 		7E6EB4F22156485400A763BF /* TermsServiceHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EB4F12156485400A763BF /* TermsServiceHeaderCell.swift */; };
 		7E6EB4F421564A3000A763BF /* TermsOfServiceNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EB4F321564A3000A763BF /* TermsOfServiceNav.swift */; };
+		7E728A3121AF23CE003CE716 /* HomeCell6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E728A3021AF23CE003CE716 /* HomeCell6.swift */; };
 		7E7C38BC214ED05A0063F47C /* DashboardTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38BB214ED05A0063F47C /* DashboardTab.swift */; };
 		7E7C38BF214ED0F30063F47C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38BE214ED0F30063F47C /* Home.swift */; };
 		7E7C38C2214EDE3A0063F47C /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7C38C1214EDE3A0063F47C /* Search.swift */; };
@@ -116,6 +117,7 @@
 		7E6EB4EF2156443000A763BF /* TermsOfServiceButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceButtonCell.swift; sourceTree = "<group>"; };
 		7E6EB4F12156485400A763BF /* TermsServiceHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsServiceHeaderCell.swift; sourceTree = "<group>"; };
 		7E6EB4F321564A3000A763BF /* TermsOfServiceNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceNav.swift; sourceTree = "<group>"; };
+		7E728A3021AF23CE003CE716 /* HomeCell6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell6.swift; sourceTree = "<group>"; };
 		7E7C38BB214ED05A0063F47C /* DashboardTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTab.swift; sourceTree = "<group>"; };
 		7E7C38BE214ED0F30063F47C /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		7E7C38C1214EDE3A0063F47C /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				7EE1F2F921AC54EE009D89F7 /* HomeCell3.swift */,
 				7EE1F2FA21AC54EF009D89F7 /* HomeCell4.swift */,
 				7EE1F2F721AC54EE009D89F7 /* HomeCell5.swift */,
+				7E728A3021AF23CE003CE716 /* HomeCell6.swift */,
 				7E7C38C6214EE3B30063F47C /* HomeTableCell.swift */,
 				7E0BE4CB21A9A8AD00F7B043 /* SubTableCell.swift */,
 			);
@@ -553,6 +556,7 @@
 				7E7C38C7214EE3B30063F47C /* HomeTableCell.swift in Sources */,
 				7EE5431D21A66EDB003EA9C7 /* YourIntColView.swift in Sources */,
 				7E6EB4EB215640F900A763BF /* TermsOfService.swift in Sources */,
+				7E728A3121AF23CE003CE716 /* HomeCell6.swift in Sources */,
 				22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */,
 				7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */,
 				7E0BE4CC21A9A8AD00F7B043 /* SubTableCell.swift in Sources */,

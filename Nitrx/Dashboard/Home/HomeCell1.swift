@@ -14,16 +14,23 @@ protocol CustomCellDelegate {
 }
 class HomeCell1: UITableViewCell {
     
-    @IBOutlet weak var whiteView: UIView!
-
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var postedDate: UILabel!
+    @IBOutlet weak var rankButton: UIButton!
+    @IBOutlet weak var postFile: UIImageView!
+    
+    @IBOutlet weak var nitrxCount: UILabel!
+    @IBOutlet weak var viewCount: UILabel!
+    @IBOutlet weak var commentCount: UILabel!
+    @IBOutlet weak var followButton: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        whiteView.addTopBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        whiteView.addRightBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        whiteView.addLeftBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        whiteView.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+   
 
     }
 

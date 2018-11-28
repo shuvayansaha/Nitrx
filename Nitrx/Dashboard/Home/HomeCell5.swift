@@ -10,15 +10,12 @@ import UIKit
 
 class HomeCell5: UITableViewCell {
 
-    @IBOutlet weak var whiteView: UIView!
-
+    @IBOutlet weak var userImage: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
 
-        whiteView.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        whiteView.addRightBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        whiteView.addLeftBorderWithColor(color: UIColor.lightGray, width: 0.5)
 
     }
     
