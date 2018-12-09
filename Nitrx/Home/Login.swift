@@ -11,7 +11,8 @@ import TextFieldEffects
 
 class Login: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var email: HoshiTextField!
+    
+    @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var createAccount: UIButton!
@@ -75,16 +76,8 @@ class Login: UIViewController, UITextFieldDelegate {
 //        }
             
         else {
+            
             loginFunction()
-            
-            
-//            // MOVED CONTROLLER
-//            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-//            let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
-//            controller.email = self.email.text!
-//            controller.password = self.password.text!
-//
-//            self.present(controller, animated: true, completion: nil)
 
         }
     }
@@ -175,10 +168,6 @@ class Login: UIViewController, UITextFieldDelegate {
                     }
                 }
                 
-                
-                
-                
-                
             } catch {
                 print("ERROR")
                 DispatchQueue.main.async {
@@ -193,19 +182,11 @@ class Login: UIViewController, UITextFieldDelegate {
     
     
     // forgot password
-    @IBAction func forgotPassword(_ sender: UIButton) {
-        
-    }
+    @IBAction func forgotPassword(_ sender: UIButton) {}
     
 
     // create account
-    @IBAction func createAccount(_ sender: UIButton) {
-        
-//        // MOVE CONTROLLER
-//        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-//        let controller = storyboard.instantiateViewController(withIdentifier: "Entropy") as! Entropy
-//        self.present(controller, animated: true, completion: nil)
-    }
+    @IBAction func createAccount(_ sender: UIButton) {}
     
     
     

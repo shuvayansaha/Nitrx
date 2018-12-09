@@ -9,7 +9,11 @@
 import UIKit
 import WebKit
 
-class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate {
+class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate, CustomCellRateButtonDelegate {
+   
+    
+
+    
     
     @IBOutlet weak var homeTable: UITableView!
     @IBOutlet var ratePopUp: UIView!
@@ -135,7 +139,32 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     }
     
     
+    func rateButton1Press(row: Int) {
+        print(row)
+        
+        
+        
+    }
+    
+    func rateButton2Press(row: Int) {
+        print(row)
 
+    }
+    
+    func rateButton3Press(row: Int) {
+        print(row)
+
+    }
+    
+    func rateButton4Press(row: Int) {
+        print(row)
+
+    }
+    
+    func rateButton5Press(row: Int) {
+        print(row)
+
+    }
     
     func buttonPress(row: Int) {
         
@@ -182,6 +211,12 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         self.navigationItem.title = baseUrl
         navigationItem.titleView = nil
         
+    }
+    
+    // comment box
+    func commentBox(row: Int) {
+        
+        print(row)
     }
     
     
@@ -389,6 +424,17 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         } else if indexPath.row == 4 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell5") as! HomeCell5
+            cell.delegate = self
+            cell.rateDelegate = self
+
+            cell.clickCommentBox.tag = indexPath.section
+            
+            cell.button1.tag = indexPath.section
+            cell.button2.tag = indexPath.section
+            cell.button3.tag = indexPath.section
+            cell.button4.tag = indexPath.section
+            cell.button5.tag = indexPath.section
+
             
             return cell
             
@@ -451,6 +497,23 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     
+    
+    
+//    func handleKeyboardNotification(notification: NSNotification) {
+//
+//        if let userInfo = notification.userInfo {
+//
+//            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey]
+//            print(keyboardFrame)
+//        }
+//    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+        }
+    }
   
 }
 

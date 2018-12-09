@@ -11,13 +11,18 @@
 
 import UIKit
 import TTGSnackbar
+import Alamofire
 
 // button border extension
 extension UIButton {
     func RoundCornerButton() {
       
         //round corner button
-        self.layer.cornerRadius = 4
+        
+//        self.layer.cornerRadius = 4
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = UIColor.gray.cgColor
+
 
     }
 }
@@ -32,7 +37,19 @@ extension UIView {
     }
 }
 
-
+extension UIViewController {
+    
+    func presentAlertWithAction(title: String, message: String, buttonText: String, completion: @escaping() -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+       
+        alertController.addAction(UIAlertAction(title: buttonText, style: .default, handler: { (action) in
+            completion()
+        }))
+ 
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+}
 
 extension UIViewController {
     
@@ -71,6 +88,37 @@ extension UIViewController {
 
  */
 
+}
+
+// button border each side
+extension UIView {
+    func addTopBorderWithColor(color: UIColor, width: CGFloat) {
+        let border = CALayer()
+        border.backgroundColor = color.cgColor
+        border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: width)
+        self.layer.addSublayer(border)
+    }
+    
+    func addRightBorderWithColor(color: UIColor, width: CGFloat) {
+        let border = CALayer()
+        border.backgroundColor = color.cgColor
+        border.frame = CGRect(x: self.frame.size.width - width, y: 0, width: width, height: self.frame.size.height)
+        self.layer.addSublayer(border)
+    }
+    
+    func addBottomBorderWithColor(color: UIColor, width: CGFloat) {
+        let border = CALayer()
+        border.backgroundColor = color.cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
+        self.layer.addSublayer(border)
+    }
+    
+    func addLeftBorderWithColor(color: UIColor, width: CGFloat) {
+        let border = CALayer()
+        border.backgroundColor = color.cgColor
+        border.frame = CGRect(x: 0, y: 0, width: width, height: self.frame.size.height)
+        self.layer.addSublayer(border)
+    }
 }
 
 
@@ -133,7 +181,6 @@ extension String {
     }
     
 }
-// "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
 
 
 
@@ -396,3 +443,167 @@ extension Sequence {
         return result
     }
 }
+
+
+
+// HTTP POST GLOBAL FUNCTION
+
+func httpPost(controller: UIViewController, url: String, headerValue1: String, headerField1: String, headerValue2: String, headerField2: String, parameters: [String: Any], completionHandler: @escaping (Data, Int, String) -> ()) {
+    
+    let activityIndicator = UIActivityIndicatorView()
+    activityIndicator.center = controller.view.center
+    activityIndicator.hidesWhenStopped = true
+    activityIndicator.style = .gray
+    controller.view.addSubview(activityIndicator)
+    activityIndicator.startAnimating()
+    UIApplication.shared.beginIgnoringInteractionEvents()
+    
+    if Connectivity.isConnectedToInternet() {
+        print("Yes! internet is available.")
+        
+        guard let url = URL(string: url) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue(headerValue1, forHTTPHeaderField: headerField1)
+        request.setValue(headerValue2, forHTTPHeaderField: headerField2)
+        let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+        request.httpBody = jsonData
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error == nil {
+                guard let response = response as? HTTPURLResponse else { return }
+                guard let data = data else { return }
+                let dataString = String(data: data, encoding: .utf8)
+                let stringData = ("String Data: \(dataString!)")
+                let statusCode = response.statusCode
+                
+                DispatchQueue.main.async {
+                    completionHandler(data, statusCode, stringData)
+                    
+                    activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    snackBarFunction(message: (error?.localizedDescription)!)
+                    
+                    activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+            }
+            }.resume()
+        
+    } else {
+        snackBarFunction(message: "No Internet Connection.")
+        
+        activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
+    }
+}
+
+
+// Inter connection checking
+class Connectivity {
+    class func isConnectedToInternet() ->Bool {
+        return NetworkReachabilityManager()!.isReachable
+    }
+}
+
+
+
+// HTTP GET GLOBAL FUNCTION
+
+func httpGet(controller: UIViewController, url: String, headerValue: String, headerField: String, completionHandler: @escaping (Data, Int, String) -> ()) {
+    
+    let activityIndicator = UIActivityIndicatorView()
+    activityIndicator.center = controller.view.center
+    activityIndicator.hidesWhenStopped = true
+    activityIndicator.style = .gray
+    controller.view.addSubview(activityIndicator)
+    activityIndicator.startAnimating()
+    UIApplication.shared.beginIgnoringInteractionEvents()
+    
+    if Connectivity.isConnectedToInternet() {
+        print("Yes! internet is available.")
+        
+        guard let url = URL(string: url) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(headerValue, forHTTPHeaderField: headerField)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            if error == nil {
+                
+                guard let response = response as? HTTPURLResponse else { return }
+                guard let data = data else { return }
+                let dataString = String(data: data, encoding: .utf8)
+                let stringData = ("String Data: \(dataString!)")
+                let statusCode = response.statusCode
+                
+                DispatchQueue.main.async {
+                    completionHandler(data, statusCode, stringData)
+                    
+                    activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+                
+            } else {
+                
+                DispatchQueue.main.async {
+                    snackBarFunction(message: (error?.localizedDescription)!)
+                    
+                    activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+            }
+            }.resume()
+    } else {
+        
+        DispatchQueue.main.async {
+            
+            snackBarFunction(message: "No Internet Connection.")
+            
+            activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
+    }
+    
+    
+}
+
+
+//class Indiacator {
+//
+//    // indicator
+//    func showIndicatorAlert(message: String, controller: UIViewController) {
+//        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+//        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+//        loadingIndicator.hidesWhenStopped = true
+//        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+//        loadingIndicator.startAnimating();
+//        alert.view.addSubview(loadingIndicator)
+//        controller.present(alert, animated: true, completion: nil)
+//    }
+//
+//    func hideIndicatorAlert(controller: UIViewController) {
+//        controller.dismiss(animated: true, completion: nil)
+//    }
+//
+//
+//}
+
+
+
+//class LoaderIndicator {
+//
+//
+//    let alert = UIAlertController(title: "", message: "alert ", preferredStyle: .alert)
+//
+//    func show(controller: UIViewController) {
+//        controller.present(alert, animated: true, completion: nil)
+//    }
+//
+//    func hide() {
+//        alert.dismiss(animated: true, completion: nil)
+//    }
+//}

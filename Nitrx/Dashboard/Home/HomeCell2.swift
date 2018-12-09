@@ -14,7 +14,6 @@ class HomeCell2: UITableViewCell {
     @IBOutlet weak var postLinkButton: UIButton!
     @IBOutlet weak var qrImage: UIImageView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

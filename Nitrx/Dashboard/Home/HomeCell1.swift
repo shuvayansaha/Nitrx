@@ -9,9 +9,24 @@
 import UIKit
 
 protocol CustomCellDelegate {
+    
     func buttonPress(row: Int)
     func linkPress(row: Int)
+    func commentBox(row: Int)
 }
+
+
+protocol CustomCellRateButtonDelegate {
+    
+    func rateButton1Press(row: Int)
+    func rateButton2Press(row: Int)
+    func rateButton3Press(row: Int)
+    func rateButton4Press(row: Int)
+    func rateButton5Press(row: Int)
+
+}
+
+
 class HomeCell1: UITableViewCell {
     
     @IBOutlet weak var userImage: UIImageView!
@@ -24,7 +39,6 @@ class HomeCell1: UITableViewCell {
     @IBOutlet weak var viewCount: UILabel!
     @IBOutlet weak var commentCount: UILabel!
     @IBOutlet weak var followButton: UIButton!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

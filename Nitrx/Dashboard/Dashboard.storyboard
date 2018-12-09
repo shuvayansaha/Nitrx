@@ -3282,19 +3282,19 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65v-Hh-EcP">
-                                                            <rect key="frame" x="9" y="0.0" width="270" height="79"/>
+                                                            <rect key="frame" x="9" y="0.0" width="270" height="89"/>
                                                             <string key="text">In publishing and graphic InMar 2, 2012 - To adapt the space between sections of a grouped table view with more than one sections, you need to implement/override the following four ...Mar 2, 2012 - To adapt the space between sections of a grouped table view with more than one sections, you need to implement/override the following four ...Mar 2, 2012 - To adapt the space between sections of a grouped table view with more than one sections, you need to implement/override the following four ... </string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Fc-GW-6LB">
-                                                            <rect key="frame" x="129" y="82" width="30" height="30"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Fc-GW-6LB">
+                                                            <rect key="frame" x="134" y="92" width="20" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="MGP-xK-ql0"/>
-                                                                <constraint firstAttribute="height" constant="30" id="b3i-DI-Xsf"/>
+                                                                <constraint firstAttribute="width" constant="20" id="MGP-xK-ql0"/>
+                                                                <constraint firstAttribute="height" constant="20" id="b3i-DI-Xsf"/>
                                                             </constraints>
-                                                            <state key="normal" title="&gt;&gt;"/>
+                                                            <state key="normal" image="angel-down"/>
                                                         </button>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVx-WC-2h1">
                                                             <rect key="frame" x="9" y="115" width="270" height="1"/>
@@ -3446,6 +3446,9 @@
                                                             <state key="normal" title="What do you have to say?">
                                                                 <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="clickCommentBox:" destination="Lgu-aP-WE3" eventType="touchUpInside" id="cxl-tm-gHR"/>
+                                                            </connections>
                                                         </button>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b4X-Cs-DJJ">
                                                             <rect key="frame" x="47" y="32.5" width="225" height="0.5"/>
@@ -3465,9 +3468,66 @@
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwM-fe-rXU">
                                                             <rect key="frame" x="9" y="70" width="270" height="30"/>
-                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bnK-nM-sJG">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="54" height="30"/>
+                                                                    <state key="normal" image="avater1"/>
+                                                                    <connections>
+                                                                        <action selector="btn1:" destination="Lgu-aP-WE3" eventType="touchUpInside" id="aLG-rh-rlm"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tR-7h-f32">
+                                                                    <rect key="frame" x="54" y="0.0" width="54" height="30"/>
+                                                                    <state key="normal" image="avater2"/>
+                                                                    <connections>
+                                                                        <action selector="btn2:" destination="Lgu-aP-WE3" eventType="touchUpInside" id="RiB-T2-YTv"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gbd-Y2-KaC">
+                                                                    <rect key="frame" x="162" y="0.0" width="54" height="30"/>
+                                                                    <state key="normal" image="booster"/>
+                                                                    <connections>
+                                                                        <action selector="btn4:" destination="Lgu-aP-WE3" eventType="touchUpInside" id="KF5-W2-kfi"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCy-hF-ZYD">
+                                                                    <rect key="frame" x="216" y="0.0" width="54" height="30"/>
+                                                                    <state key="normal" image="avater3"/>
+                                                                    <connections>
+                                                                        <action selector="btn5:" destination="Lgu-aP-WE3" eventType="touchUpInside" id="223-Cg-Cqw"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZZ-SF-Wfi">
+                                                                    <rect key="frame" x="108" y="0.0" width="54" height="30"/>
+                                                                    <state key="normal" image="car"/>
+                                                                    <connections>
+                                                                        <action selector="btn3:" destination="Lgu-aP-WE3" eventType="touchUpInside" id="da2-PD-ptc"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
+                                                                <constraint firstItem="bnK-nM-sJG" firstAttribute="leading" secondItem="cwM-fe-rXU" secondAttribute="leading" id="4yP-i3-cWg"/>
+                                                                <constraint firstItem="bnK-nM-sJG" firstAttribute="width" secondItem="1tR-7h-f32" secondAttribute="width" id="A2H-TL-vOM"/>
+                                                                <constraint firstAttribute="bottom" secondItem="bZZ-SF-Wfi" secondAttribute="bottom" id="Ba3-Ag-NC6"/>
+                                                                <constraint firstItem="bZZ-SF-Wfi" firstAttribute="top" secondItem="cwM-fe-rXU" secondAttribute="top" id="HCX-Q7-d9D"/>
+                                                                <constraint firstItem="NCy-hF-ZYD" firstAttribute="leading" secondItem="gbd-Y2-KaC" secondAttribute="trailing" id="Nmh-nM-pOb"/>
+                                                                <constraint firstAttribute="bottom" secondItem="NCy-hF-ZYD" secondAttribute="bottom" id="RmP-ZP-yaZ"/>
+                                                                <constraint firstItem="bnK-nM-sJG" firstAttribute="top" secondItem="cwM-fe-rXU" secondAttribute="top" id="VUt-el-95v"/>
+                                                                <constraint firstItem="bZZ-SF-Wfi" firstAttribute="width" secondItem="gbd-Y2-KaC" secondAttribute="width" id="Xcc-Kq-gsH"/>
+                                                                <constraint firstItem="gbd-Y2-KaC" firstAttribute="width" secondItem="NCy-hF-ZYD" secondAttribute="width" id="ZdL-jd-z12"/>
+                                                                <constraint firstItem="1tR-7h-f32" firstAttribute="top" secondItem="cwM-fe-rXU" secondAttribute="top" id="aw2-ks-KFR"/>
+                                                                <constraint firstAttribute="bottom" secondItem="gbd-Y2-KaC" secondAttribute="bottom" id="eFr-A8-97x"/>
+                                                                <constraint firstItem="NCy-hF-ZYD" firstAttribute="top" secondItem="cwM-fe-rXU" secondAttribute="top" id="egW-cm-m40"/>
+                                                                <constraint firstItem="1tR-7h-f32" firstAttribute="width" secondItem="bZZ-SF-Wfi" secondAttribute="width" id="qzg-SK-lDO"/>
+                                                                <constraint firstAttribute="bottom" secondItem="1tR-7h-f32" secondAttribute="bottom" id="rFG-aW-QJX"/>
+                                                                <constraint firstItem="1tR-7h-f32" firstAttribute="leading" secondItem="bnK-nM-sJG" secondAttribute="trailing" id="rHY-59-nak"/>
+                                                                <constraint firstAttribute="bottom" secondItem="bnK-nM-sJG" secondAttribute="bottom" id="smb-v6-XgI"/>
+                                                                <constraint firstItem="gbd-Y2-KaC" firstAttribute="top" secondItem="cwM-fe-rXU" secondAttribute="top" id="spw-zw-qFQ"/>
+                                                                <constraint firstAttribute="trailing" secondItem="NCy-hF-ZYD" secondAttribute="trailing" id="wED-R4-AeB"/>
+                                                                <constraint firstItem="bZZ-SF-Wfi" firstAttribute="leading" secondItem="1tR-7h-f32" secondAttribute="trailing" id="wSS-OR-QiE"/>
                                                                 <constraint firstAttribute="height" constant="30" id="whI-aI-dyF"/>
+                                                                <constraint firstItem="gbd-Y2-KaC" firstAttribute="leading" secondItem="bZZ-SF-Wfi" secondAttribute="trailing" id="yni-XZ-jnU"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -3503,6 +3563,12 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
+                                            <outlet property="button1" destination="bnK-nM-sJG" id="8CX-eu-i6c"/>
+                                            <outlet property="button2" destination="1tR-7h-f32" id="LPa-yy-nO1"/>
+                                            <outlet property="button3" destination="bZZ-SF-Wfi" id="NLx-Fr-yNO"/>
+                                            <outlet property="button4" destination="gbd-Y2-KaC" id="itn-d3-8g0"/>
+                                            <outlet property="button5" destination="NCy-hF-ZYD" id="GUt-Bo-3bD"/>
+                                            <outlet property="clickCommentBox" destination="gGV-aW-9pQ" id="ih6-5r-BkZ"/>
                                             <outlet property="userImage" destination="7GX-n7-eEO" id="6Nh-YK-ECK"/>
                                         </connections>
                                     </tableViewCell>
@@ -3587,6 +3653,11 @@
     <resources>
         <image name="Home" width="500" height="500"/>
         <image name="angel-down" width="200" height="200"/>
+        <image name="avater1" width="30" height="30"/>
+        <image name="avater2" width="30" height="30"/>
+        <image name="avater3" width="30" height="30"/>
+        <image name="booster" width="30" height="30"/>
+        <image name="car" width="30" height="30"/>
         <image name="check" width="72" height="72"/>
         <image name="comment" width="200" height="200"/>
         <image name="image-preview-grey" width="200" height="200"/>

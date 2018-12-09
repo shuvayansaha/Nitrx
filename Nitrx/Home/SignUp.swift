@@ -9,35 +9,98 @@
 import UIKit
 import TextFieldEffects
 
-class SignUp: UIViewController, UITextFieldDelegate {
-
-    @IBOutlet weak var email: HoshiTextField!
+class SignUp: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var gender: UITextField!
     @IBOutlet weak var password: UITextField!
-    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var confirmPassword: UITextField!
+
+    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var createAccount: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var whiteView: UIView!
     
+    let genderArray = ["Male", "Female"]
+
+    var selectedPicker: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        username.delegate = self
         email.delegate = self
+        gender.delegate = self
         password.delegate = self
+        confirmPassword.delegate = self
         
-//        signUpButton.RoundCornerButton()
-//        createAccount.RoundCornerButton()
+        loginButton.RoundCornerButton()
+        createAccount.RoundCornerButton()
         
         hideKeyboardWhenTappedAround()
         
-        UITextField.connectFields(fields: [email, password])
+        UITextField.connectFields(fields: [username, email, gender, password, confirmPassword])
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
         
+        
+        picker()
+
     }
     
+    func picker() {
+        
+        let thePicker = UIPickerView()
+
+        thePicker.dataSource = self
+        thePicker.delegate = self
+        
+        // toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
     
+//       toolbar.barTintColor = UIColor.clear
+        
+        // done button for toolbar
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(dateDonePressed))
+        let blankSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+        toolbar.setItems([blankSpace, done], animated: true)
+        
+        gender.inputView = thePicker
+        gender.inputAccessoryView = toolbar
+    }
+    
+    @objc func dateDonePressed() {
+        
+        if selectedPicker == nil {
+            self.gender.text = "Male"
+        } else {
+            self.gender.text = selectedPicker
+        }
+        self.view.endEditing(true)
+    }
+    
+    // picker view
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return genderArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return genderArray[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        self.gender.text = genderArray[row]
+        selectedPicker = genderArray[row]
+    }
     
     
     override func viewDidLayoutSubviews() {
@@ -55,9 +118,13 @@ class SignUp: UIViewController, UITextFieldDelegate {
     
     
     // login button
-    @IBAction func signUp(_ sender: UIButton) {
+    @IBAction func createAccount(_ sender: UIButton) {
         
-        if (email.text!.isBlank) {
+        if (username.text!.isBlank) {
+            
+            snackBarFunction(message: "Username field is required.")
+       
+        } else if (email.text!.isBlank) {
             
             snackBarFunction(message: "Email field is required.")
         }
@@ -65,6 +132,10 @@ class SignUp: UIViewController, UITextFieldDelegate {
         else if (email.text!.isEmail == false) {
             
             snackBarFunction(message: "The email must be a valid email address.")
+       
+        } else if (gender.text!.isBlank) {
+            
+            snackBarFunction(message: "Gender must be selected")
         }
             
         else if (password.text!.isBlank) {
@@ -72,34 +143,46 @@ class SignUp: UIViewController, UITextFieldDelegate {
             snackBarFunction(message: "Password field is required.")
         }
             
-        else if (password.text!.isPassword == false) {
+//        else if (password.text!.isPassword == false) {
+//            
+//            snackBarFunction(message: "Invalid Password")
+//       
+//        }
+        
+        else if (confirmPassword.text!.isBlank) {
             
-            snackBarFunction(message: "Invalid Password")
-        }
+            snackBarFunction(message: "Confirm Password field is required.")
+       
+        } else if (password.text! != confirmPassword.text!) {
             
-        else {
-            //            loginFunction()
-            
-            
-            // MOVED CONTROLLER
-            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
-            //            controller.email = self.email.text!
-            //            controller.password = self.password.text!
-            
-            self.present(controller, animated: true, completion: nil)
-            
+            snackBarFunction(message: "Confirm Password not matched with Password.")
+       
+        } else {
+
+            signUpFunction()
         }
     }
     
-    
+    // login action
+    @IBAction func loginAction(_ sender: UIButton) {
+        
+        // MOVED CONTROLLER
+     
+//        _ = navigationController?.popViewController(animated: true)
+        
+ 
+        presentAlertWithAction(title: "Succesfull !", message: "Nitrx Account creation is Successfull", buttonText: "Go to Login") {
+              _ = self.navigationController?.popViewController(animated: true)
+        }
+
+    }
     
     
     // login function
     func signUpFunction() {
         
         let url = baseURL + registerUrl
-        let parameters = ["email": email.text!, "password": password.text!]
+        let parameters = ["username": username.text!, "email": email.text!, "password": password.text!]
         
         httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
             
