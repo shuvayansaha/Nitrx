@@ -12,6 +12,8 @@
 		226572332168A36A00C994F1 /* SearchCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226572322168A36A00C994F1 /* SearchCategoryCell.swift */; };
 		226572362168CE3200C994F1 /* CellSeacrh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226572352168CE3200C994F1 /* CellSeacrh.swift */; };
 		226572382168F2D800C994F1 /* CallSearch2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226572372168F2D800C994F1 /* CallSearch2.swift */; };
+		2265A77021BE459A00790332 /* Comments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2265A76F21BE459A00790332 /* Comments.swift */; };
+		2265A77221BE916900790332 /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2265A77121BE916900790332 /* CommentsCell.swift */; };
 		22A262AF2137D20F00DDFED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A262AE2137D20F00DDFED3 /* AppDelegate.swift */; };
 		22A262B62137D21000DDFED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B52137D21000DDFED3 /* Assets.xcassets */; };
 		22A262B92137D21000DDFED3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A262B72137D21000DDFED3 /* LaunchScreen.storyboard */; };
@@ -85,6 +87,8 @@
 		226572322168A36A00C994F1 /* SearchCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryCell.swift; sourceTree = "<group>"; };
 		226572352168CE3200C994F1 /* CellSeacrh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSeacrh.swift; sourceTree = "<group>"; };
 		226572372168F2D800C994F1 /* CallSearch2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallSearch2.swift; sourceTree = "<group>"; };
+		2265A76F21BE459A00790332 /* Comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comments.swift; sourceTree = "<group>"; };
+		2265A77121BE916900790332 /* CommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		22A262AB2137D20F00DDFED3 /* Nitrx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nitrx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22A262AE2137D20F00DDFED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22A262B52137D21000DDFED3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -183,6 +187,15 @@
 				226572372168F2D800C994F1 /* CallSearch2.swift */,
 			);
 			path = "Cell Search";
+			sourceTree = "<group>";
+		};
+		2265A76E21BE456300790332 /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				2265A76F21BE459A00790332 /* Comments.swift */,
+				2265A77121BE916900790332 /* CommentsCell.swift */,
+			);
+			path = Comments;
 			sourceTree = "<group>";
 		};
 		22A262A22137D20F00DDFED3 = {
@@ -311,6 +324,7 @@
 				7E728A3021AF23CE003CE716 /* HomeCell6.swift */,
 				7E7C38C6214EE3B30063F47C /* HomeTableCell.swift */,
 				7E0BE4CB21A9A8AD00F7B043 /* SubTableCell.swift */,
+				2265A76E21BE456300790332 /* Comments */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -576,6 +590,7 @@
 				7E88AE6B214D428100FC994F /* ForgotPassword.swift in Sources */,
 				22F8E21A2141031100862E22 /* Entropy.swift in Sources */,
 				7EBE732C216D999B00E8E3C5 /* SearchDetails.swift in Sources */,
+				2265A77221BE916900790332 /* CommentsCell.swift in Sources */,
 				7EE1F2FE21AC54EF009D89F7 /* HomeCell3.swift in Sources */,
 				7E388F91216A04C700F66939 /* OtherTableViewCell.swift in Sources */,
 				7E88AE71214D589A00FC994F /* YourInterests.swift in Sources */,
@@ -585,6 +600,7 @@
 				2254FD3D216B90F1006A20EB /* TopRatedCellChild.swift in Sources */,
 				7EBE732A216D996800E8E3C5 /* SearchDetailsCell.swift in Sources */,
 				7E7C38C2214EDE3A0063F47C /* Search.swift in Sources */,
+				2265A77021BE459A00790332 /* Comments.swift in Sources */,
 				7E97A9AC2179272E00F746D7 /* Insta.swift in Sources */,
 				226572382168F2D800C994F1 /* CallSearch2.swift in Sources */,
 				7E6EB4F421564A3000A763BF /* TermsOfServiceNav.swift in Sources */,

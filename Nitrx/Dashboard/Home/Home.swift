@@ -9,12 +9,8 @@
 import UIKit
 import WebKit
 
-class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate, CustomCellRateButtonDelegate {
-   
-    
-
-    
-    
+class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate, CustomCellRateButtonDelegate, CommentsCellDelegate {
+ 
     @IBOutlet weak var homeTable: UITableView!
     @IBOutlet var ratePopUp: UIView!
 
@@ -34,7 +30,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
         loadHome {
             self.homeTable.reloadData()
-            
         }
         
         // custom navigation bar right side icon
@@ -52,7 +47,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         closeButton = UIBarButtonItem(customView: closeBtn)
         
         self.navigationItem.rightBarButtonItems = [pencilButton]
-        
         
         // navigation bar logo centre
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
@@ -104,8 +98,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         //        print("verified", verified!)
         //        print("Wallet", Wallet!)
         
-        
-        
     }
     
     @objc func notification() {
@@ -118,7 +110,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             viewWithTag.removeFromSuperview()
             self.navigationItem.leftBarButtonItems = nil
             navigationItem.titleView = imageView
-            
             
         } else{
             print("No!")
@@ -141,30 +132,41 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     func rateButton1Press(row: Int) {
         print(row)
-        
-        
-        
     }
     
     func rateButton2Press(row: Int) {
         print(row)
-
     }
     
     func rateButton3Press(row: Int) {
         print(row)
-
     }
     
     func rateButton4Press(row: Int) {
         print(row)
-
     }
     
     func rateButton5Press(row: Int) {
         print(row)
-
     }
+    
+    
+    func commentButtonPress(row: Int) {
+        performSegue(withIdentifier: "CommentsSegue", sender: row)
+        
+    }
+    
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if (segue.identifier == "CommentsSegue") {
+            let vc = segue.destination as! Comments
+            vc.userID = postArray[sender as! Int].user_id
+        }
+    }
+  
+
     
     func buttonPress(row: Int) {
         
@@ -212,6 +214,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         navigationItem.titleView = nil
         
     }
+    
     
     // comment box
     func commentBox(row: Int) {
@@ -352,32 +355,8 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     }
     
     
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableCell", for: indexPath) as! HomeTableCell
-//
-//        cell.rank.tag = indexPath.row
-//        cell.link.tag = indexPath.row
-//        cell.follow.tag = indexPath.row
-//
-//        cell.postText.text = postArray[indexPath.row].postText
-//        cell.link.setTitle(postArray[indexPath.row].website_url, for: .normal)
-//        cell.username.text = postArray[indexPath.row].username
-////        cell.desText.text = postArray[indexPath.row].description
-//        cell.viewPost.text = String(postArray[indexPath.row].view)
-//        cell.commentCount.text = String(postArray[indexPath.row].comment_count)
-//        cell.nitrxCount.text = postArray[indexPath.row].nitrix_count
-//        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage)
-//        cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.row].postFile)
-//
-//        cell.delegate = self
-//
-//
-//        return cell
-//
-//    }
-    
+
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -418,6 +397,8 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell4") as! HomeCell4
             
             cell.commentCount.text = String(postArray[indexPath.section].comment_count)
+            cell.commentsDelegate = self
+            cell.commentsButton.tag =  indexPath.section
 
             return cell
             
@@ -435,7 +416,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             cell.button4.tag = indexPath.section
             cell.button5.tag = indexPath.section
 
-            
             return cell
             
         } else if indexPath.row == 5 {

@@ -22,6 +22,7 @@ let forget_password = "forget_password.php/"
 
 let normal_feeds = "normal_feeds.php/"
 
+let comment = "comment.php/"
 
 
 
@@ -62,7 +63,17 @@ struct NormalFeeds: Codable {
 }
 
 
-
+class CommentsClass {
+    
+    var comment_user_id = String()
+    var COMMENT_NO = Int()
+    var post_id = String()
+    var post_user_id = String()
+    var status = String()
+    var text = String()
+    var time = String()
+ 
+}
 
 
 

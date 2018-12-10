@@ -59,8 +59,6 @@ class HomeCell5: UITableViewCell {
     
     @IBAction func btn1(_ sender: UIButton) {
         rateDelegate?.rateButton1Press(row: sender.tag)
-        
-        
     }
     
     @IBAction func btn2(_ sender: UIButton) {

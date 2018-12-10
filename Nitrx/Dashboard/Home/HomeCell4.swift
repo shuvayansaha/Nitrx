@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol CommentsCellDelegate {
+    
+    func commentButtonPress(row: Int)
+}
 class HomeCell4: UITableViewCell {
 
+    @IBOutlet weak var commentsButton: UIButton!
     @IBOutlet weak var commentCount: UILabel!
     
+    var commentsDelegate: CommentsCellDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,5 +31,10 @@ class HomeCell4: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    @IBAction func commentsAction(_ sender: UIButton) {
+        
+        commentsDelegate?.commentButtonPress(row: sender.tag)
 
+    }
+    
 }

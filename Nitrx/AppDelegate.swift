@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        print("udid ****", UIDevice.current.identifierForVendor!.uuidString)
+//        print("udid ****", UIDevice.current.identifierForVendor!.uuidString)
 
 //        print("First launch, setting UserDefault.")
 //        UserDefaults.standard.set(true, forKey: "launchedBefore")
