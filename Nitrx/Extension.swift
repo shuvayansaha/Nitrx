@@ -571,6 +571,65 @@ func httpGet(controller: UIViewController, url: String, headerValue: String, hea
     
 }
 
+func httpGetTableView(controller: UITableViewCell, url: String, headerValue: String, headerField: String, completionHandler: @escaping (Data, Int, String) -> ()) {
+    
+    let activityIndicator = UIActivityIndicatorView()
+    activityIndicator.center = controller.contentView.center
+    activityIndicator.hidesWhenStopped = true
+    activityIndicator.style = .gray
+    controller.contentView.addSubview(activityIndicator)
+    activityIndicator.startAnimating()
+    UIApplication.shared.beginIgnoringInteractionEvents()
+    
+    if Connectivity.isConnectedToInternet() {
+        print("Yes! internet is available.")
+        
+        guard let url = URL(string: url) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(headerValue, forHTTPHeaderField: headerField)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            if error == nil {
+                
+                guard let response = response as? HTTPURLResponse else { return }
+                guard let data = data else { return }
+                let dataString = String(data: data, encoding: .utf8)
+                let stringData = ("String Data: \(dataString!)")
+                let statusCode = response.statusCode
+                
+                DispatchQueue.main.async {
+                    completionHandler(data, statusCode, stringData)
+                    
+                    activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+                
+            } else {
+                
+                DispatchQueue.main.async {
+                    snackBarFunction(message: (error?.localizedDescription)!)
+                    
+                    activityIndicator.stopAnimating()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+            }
+            }.resume()
+    } else {
+        
+        DispatchQueue.main.async {
+            
+            snackBarFunction(message: "No Internet Connection.")
+            
+            activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
+    }
+    
+    
+}
+
 
 //class Indiacator {
 //
@@ -605,5 +664,34 @@ func httpGet(controller: UIViewController, url: String, headerValue: String, hea
 //
 //    func hide() {
 //        alert.dismiss(animated: true, completion: nil)
+//    }
+//}
+
+
+
+//extension UIViewController: UITextFieldDelegate {
+//    func addToolBar(textField: UITextField, txtView: UIView) {
+//        let toolBar = UIToolbar()
+//        toolBar.barStyle = UIBarStyle.default
+//        toolBar.isTranslucent = true
+//        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+//        
+//        let customItem = UIBarButtonItem(customView: txtView)
+//        //        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(donePressed))
+//        //        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+//        
+//        toolBar.setItems([customItem], animated: true)
+//        toolBar.isUserInteractionEnabled = true
+//        toolBar.sizeToFit()
+//        
+//        textField.delegate = self
+//        textField.inputAccessoryView = toolBar
+//    }
+//    @objc func donePressed() {
+//        view.endEditing(true)
+//    }
+//    
+//    @objc func cancelPressed() {
+//        view.endEditing(true)
 //    }
 //}

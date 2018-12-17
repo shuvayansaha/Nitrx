@@ -916,6 +916,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <sections/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3648,10 +3649,46 @@
                     <size key="freeformSize" width="320" height="1100"/>
                     <connections>
                         <outlet property="homeTable" destination="ZTH-vF-K29" id="ObQ-bX-awa"/>
+                        <outlet property="sendButton" destination="Lx7-R6-bzd" id="1AR-aI-kPe"/>
+                        <outlet property="textViewOutlet" destination="yeG-8h-xWf" id="EjL-A8-cmz"/>
+                        <outlet property="txtView" destination="Nj2-Ux-Da9" id="wMl-CK-Rgx"/>
                         <segue destination="THr-5Y-vVT" kind="show" identifier="CommentsSegue" id="MfC-4a-eXL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2wq-MU-9lM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Nj2-Ux-Da9">
+                    <rect key="frame" x="0.0" y="0.0" width="223" height="137"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9z-nF-ADT">
+                            <rect key="frame" x="0.0" y="0.0" width="223" height="137"/>
+                            <subviews>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yeG-8h-xWf">
+                                    <rect key="frame" x="0.0" y="0.0" width="177" height="137"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lx7-R6-bzd">
+                                    <rect key="frame" x="177" y="0.0" width="46" height="137"/>
+                                    <state key="normal" title="Send"/>
+                                    <connections>
+                                        <action selector="sendButton:" destination="FRH-Ba-eOI" eventType="touchUpInside" id="IhB-IK-SOP"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90196078430000004" green="0.12549019610000001" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="kfx-J7-XyR" firstAttribute="bottom" secondItem="V9z-nF-ADT" secondAttribute="bottom" id="14n-7F-s02"/>
+                        <constraint firstItem="kfx-J7-XyR" firstAttribute="trailing" secondItem="V9z-nF-ADT" secondAttribute="trailing" id="RbV-gc-UmB"/>
+                        <constraint firstItem="V9z-nF-ADT" firstAttribute="leading" secondItem="kfx-J7-XyR" secondAttribute="leading" id="kWD-aq-mvg"/>
+                        <constraint firstItem="V9z-nF-ADT" firstAttribute="top" secondItem="kfx-J7-XyR" secondAttribute="top" id="u41-Mr-ibZ"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="kfx-J7-XyR"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="938" y="2041"/>
         </scene>

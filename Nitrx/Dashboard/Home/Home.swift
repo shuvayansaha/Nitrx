@@ -14,6 +14,10 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     @IBOutlet weak var homeTable: UITableView!
     @IBOutlet var ratePopUp: UIView!
 
+    @IBOutlet weak var txtView: UIView!
+    @IBOutlet weak var textViewOutlet: UITextView!
+    @IBOutlet weak var sendButton: UIButton!
+    
     let web = WKWebView()
     
     var closeButton = UIBarButtonItem()
@@ -22,6 +26,11 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        addToolBar(textField: self, txtView: txtView)
+
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         homeTable.delegate = self
         homeTable.dataSource = self
@@ -62,6 +71,19 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
     }
     
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            print(keyboardHeight)
+        }
+    }
+    
+    
+    // comment send
+    @IBAction func sendButton(_ sender: UIButton) {
+    }
     
     func userDefaultsFunc() {
         
@@ -162,7 +184,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
         if (segue.identifier == "CommentsSegue") {
             let vc = segue.destination as! Comments
-            vc.userID = postArray[sender as! Int].user_id
+            vc.post_id = postArray[sender as! Int].post_id
         }
     }
   
@@ -219,7 +241,55 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     // comment box
     func commentBox(row: Int) {
         
-        print(row)
+        
+
+        
+//        let post_id = postArray[row].post_id
+//        let profile_id = postArray[row].profile_id
+//
+//        print(post_id, profile_id)
+//
+//        let url = baseURL + save_comment + "?"
+//            + "post_id="
+//            + "\(post_id)"
+//            + "&user_id="
+//            + "\(profile_id)"
+//            + "&action="
+//            + "\("comment_user")"
+//            + "&text="
+//            + "\("test123")"
+//
+//        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+//
+//            print(stringData)
+//
+//            do {
+//                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
+//
+//                for json in jsonObject! {
+//
+//                    if let jsonDic = json as? [String: Any] {
+//
+//                        if jsonDic["success"] as? Int == 200 {
+//
+//                            self.performSegue(withIdentifier: "CommentsSegue", sender: row)
+//
+//                        }
+//                    }
+//
+//                }
+//
+////                DispatchQueue.main.async { completed() }
+//
+//            } catch {
+//                print("ERROR")
+//                DispatchQueue.main.async {
+//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+//                }
+//
+//            }
+//        }
+
     }
     
     
@@ -235,11 +305,11 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     func loadHome(completed: @escaping () -> ()) {
         
-        let url = baseURL + normal_feeds
+        let url = baseURL + post_details
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
+//            print(stringData)
             
             do {
                 
@@ -267,20 +337,20 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
                                 postData.description = postDic?["description"] as! String
                             }
                             
-                            if postDic?["user_id"] != nil {
-                                postData.user_id = postDic?["user_id"] as! String
+                            if postDic?["profile_id"] != nil {
+                                postData.profile_id = postDic?["profile_id"] as! String
                             }
                             
-                            if postDic?["username"] != nil {
-                                postData.username = postDic?["username"] as! String
+                            if postDic?["first_name"] != nil {
+                                postData.first_name = postDic?["first_name"] as! String
                             }
                             
                             if postDic?["postText"] != nil {
                                 postData.postText = postDic?["postText"] as! String
                             }
                             
-                            if postDic?["postFile"] != nil {
-                                postData.postFile = postDic?["postFile"] as! String
+                            if postDic?["image"] != nil {
+                                postData.image = postDic?["image"] as! String
                             }
                             
                             if postDic?["qrimage"] != nil {
@@ -291,30 +361,26 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
                                 postData.post_cat_id = postDic?["post_cat_id"] as! String
                             }
                             
-                            if postDic?["view"] != nil {
-                                postData.view = postDic?["view"] as! Int
+                            if postDic?["view_count"] != nil {
+                                postData.view_count = postDic?["view_count"] as! Int
                             } else {
-                                postData.view = 0
+                                postData.view_count = 0
+                            }
+                            
+                            if postDic?["ncoins"] as? Int != nil {
+                                postData.ncoins = postDic?["ncoins"] as! Int
+                            } else {
+                                postData.ncoins = 0
                                 
                             }
                             
-                            if postDic?["nitrix_count"] as? String != nil {
-                                postData.nitrix_count = postDic?["nitrix_count"] as! String
+                            if postDic?["comments"] != nil {
+                                postData.comments = postDic?["comments"] as! Int
                             } else {
-                                postData.nitrix_count = "0"
-                                
+                                postData.comments = 0
                             }
                             
-                            if postDic?["comment_count"] != nil {
-                                postData.comment_count = postDic?["comment_count"] as! Int
-                            } else {
-                                postData.comment_count = 0
-                                
-                            }
-                            
-                            if postDic?["status"] != nil {
-                                postData.status = postDic?["status"] as! String
-                            }
+                        
                             
                             
                         }
@@ -324,10 +390,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
                     }
                 }
                 
-                DispatchQueue.main.async {
-                    
-                    completed()
-                }
+                DispatchQueue.main.async { completed() }
                 
                 
             } catch {
@@ -364,12 +427,12 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell1") as! HomeCell1
             
-            cell.username.text = postArray[indexPath.section].username
-            cell.nitrxCount.text = postArray[indexPath.section].nitrix_count
-            cell.viewCount.text = String(postArray[indexPath.section].view)
-            cell.commentCount.text = String(postArray[indexPath.section].comment_count)
+            cell.username.text = postArray[indexPath.section].first_name + postArray[indexPath.section].last_name
+            cell.nitrxCount.text = String(postArray[indexPath.section].ncoins)
+            cell.viewCount.text = String(postArray[indexPath.section].view_count)
+            cell.commentCount.text = String(postArray[indexPath.section].comments)
 
-            cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.section].postFile)
+            cell.postFile.loadImageUsingUrlString(urlString: postArray[indexPath.section].image)
 
             return cell
             
@@ -396,7 +459,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell4") as! HomeCell4
             
-            cell.commentCount.text = String(postArray[indexPath.section].comment_count)
+            cell.commentCount.text = String(postArray[indexPath.section].comments)
             cell.commentsDelegate = self
             cell.commentsButton.tag =  indexPath.section
 
@@ -488,30 +551,35 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
 //        }
 //    }
     
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-        }
-    }
+//    @objc func keyboardWillShow(_ notification: Notification) {
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//            let keyboardRectangle = keyboardFrame.cgRectValue
+//            let keyboardHeight = keyboardRectangle.height
+//        }
+//    }
   
 }
 
 
 class Post {
     
-    var post_id = String()
-    var website_url = String()
+    var avg_post_rate = Int()
+    var comments = Int()
     var description = String()
-    var user_id = String()
-    var username = String()
+    var first_name = String()
+    var image = String()
+    var last_name = String()
+    var ncoins = Int()
     var postText = String()
-    var postFile = String()
-    var qrimage = String()
     var post_cat_id = String()
-    var view = Int()
-    var nitrix_count = String()
-    var comment_count = Int()
+    var post_date = String()
+    var post_id = String()
+    var profile_id = String()
+    var promoted = String()
+    var qrimage = String()
     var status = String()
-    
+    var user_avatar = String()
+    var view_count = Int()
+    var website_url = String()
+
 }

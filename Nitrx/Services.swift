@@ -22,6 +22,9 @@ let normal_feeds = "normal_feeds.php/"
 let comment = "comment.php/"
 let verify_email = "verify_email.php/"
 let select_interest = "select_interest.php/"
+let save_interest = "save_interest.php/"
+let post_details = "post_details.php/"
+let save_comment = "save_comment.php/"
 
 
 

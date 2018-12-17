@@ -13,7 +13,7 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
  
     @IBOutlet weak var collection: UICollectionView!
     
-    let category = ["News", "Technology", "Film", "Arts", "Music", "Home", "Photography", "Politics", "News", "Technology", "Film", "Arts", "Music", "Home", "Photography", "Politics"]
+    var interest = [InterestClass]()
    
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,6 +23,9 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         collection.dataSource = self
         collection.allowsMultipleSelection = true
 
+        interestFunc {
+            self.collection.reloadData()
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -33,7 +36,7 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return category.count
+        return interest.count
     }
     
     
@@ -46,9 +49,9 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourIntCell", for: indexPath) as! YourIntCell
         
-        cell.label.text = category[indexPath.row]
+        cell.label.text = interest[indexPath.row].post_cat_name
 //        cell.image.image = UIImage(named: category[indexPath.row])?.noir
-        cell.image.image = UIImage(named: category[indexPath.row])
+         cell.image.loadImageUsingUrlString(urlString: interest[indexPath.row].image)
         
         cell.check.alpha = 0
         cell.blackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
@@ -69,7 +72,7 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
             cell.check.alpha = 1
 //            cell.image.image = UIImage(named: category[indexPath.row])
             
-            selectedCategory.append(category[indexPath.row])
+            selectedCategory.append(interest[indexPath.row].post_cat_id)
             
         } else {
             
@@ -79,7 +82,7 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
 //            cell.image.image = UIImage(named: category[indexPath.row])?.noir
             
             selectedCategory.removeAll { (element) -> Bool in
-                element == category[indexPath.row]
+                element == interest[indexPath.row].post_cat_id
             }
         }
             
@@ -102,7 +105,7 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
             cell.check.alpha = 1
 //            cell.image.image = UIImage(named: category[indexPath.row])
             
-            selectedCategory.append(category[indexPath.row])
+            selectedCategory.append(interest[indexPath.row].post_cat_id)
             
         } else {
             
@@ -112,11 +115,59 @@ class YourIntColView: UITableViewCell, UICollectionViewDelegate, UICollectionVie
 //            cell.image.image = UIImage(named: category[indexPath.row])?.noir
             
             selectedCategory.removeAll { (element) -> Bool in
-                element == category[indexPath.row]
+                element == interest[indexPath.row].post_cat_id
             }
         }
             
             
+    }
+    
+    
+    
+    // Interest Function
+    func interestFunc(completed: @escaping() -> ()) {
+        
+        let url = baseURL + select_interest
+        
+        httpGetTableView(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+//            print(stringData)
+            
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
+                
+                for json in jsonObject! {
+                    
+                    if let jsonDic = json as? [String: Any] {
+                        
+                        let interestArray = InterestClass()
+                        
+                        if let post_cat_id = jsonDic["post_cat_id"] as? String {
+                            interestArray.post_cat_id = post_cat_id
+                        }
+                        if let post_cat_name = jsonDic["post_cat_name"] as? String {
+                            interestArray.post_cat_name = post_cat_name
+                        }
+                        if let image = jsonDic["image"] as? String {
+                            interestArray.image = image
+                        }
+                        
+                        self.interest.append(interestArray)
+                    }
+                    
+                }
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+                
+            }
+        }
+        
     }
     
     

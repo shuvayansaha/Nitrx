@@ -12,7 +12,7 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var commentsTable: UITableView!
 
-    var userID = String()
+    var post_id = String()
     var commentArray = [CommentsClass]()
     
     override func viewDidLoad() {
@@ -21,9 +21,9 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate {
         commentsTable.delegate = self
         commentsTable.dataSource = self
         
-        print("userID ***", userID)
+        print("post_id ***", post_id)
         
-        loadComments(userID: userID) {
+        loadComments(post_id: post_id) {
             self.commentsTable.reloadData()
         }
     }
@@ -52,9 +52,9 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     // load comments
-    func loadComments(userID: String, completed: @escaping () -> ()) {
+    func loadComments(post_id: String, completed: @escaping () -> ()) {
 
-        let url = baseURL + comment + "?" + "user_id=" + "\(userID)"
+        let url = baseURL + comment + "?" + "post_id=" + "\(post_id)"
 
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
 

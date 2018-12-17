@@ -12,18 +12,13 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     @IBOutlet weak var tableView: UITableView!
 
-    var interest = [InterestClass]()
-
+    let user_id = UserDefaults.standard.string(forKey: "user_id")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        interestFunction {
-            self.tableView.reloadData()
-        }
-     
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,9 +45,6 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
             
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "YourIntColView", for: indexPath) as! YourIntColView
-
-
-            cell.collection.reloadData()
             
             return cell
             
@@ -75,7 +67,7 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
             
         } else if indexPath.row == 1 {
             
-            return 600
+            return 730
             
         } else if indexPath.row == 2 {
             
@@ -91,83 +83,74 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     @IBAction func confirmChoices(_ sender: UIButton) {
         
-        print(selectedCategory.count)
-        
         print(selectedCategory)
         
         if selectedCategory.count == 5 {
             
-            // MOVED CONTROLLER
-            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "DashboardTab") as! DashboardTab
-            //            controller.email = self.email.text!
-            //            controller.password = self.password.text!
+            let url = baseURL + save_interest + "?"
+                + "post_cat_id[0]="
+                + "\(selectedCategory[0])"
+                + "&post_cat_id[1]="
+                + "\(selectedCategory[1])"
+                + "&post_cat_id[2]="
+                + "\(selectedCategory[2])"
+                + "&post_cat_id[3]="
+                + "\(selectedCategory[3])"
+                + "&post_cat_id[4]="
+                + "\(selectedCategory[4])"
+                + "&user_id="
+                + "\(user_id!)"
             
-            self.present(controller, animated: true, completion: nil)
+            print(url)
+            
+            httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+                
+                print(stringData)
+                
+                do {
+                    let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
+                    
+                    for json in jsonObject! {
+                        
+                        if let jsonDic = json as? [String: Any] {
+                            
+                            
+                            if jsonDic["success"] as? Int == 200 {
+
+
+                                // MOVED CONTROLLER
+                                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                                let controller = storyboard.instantiateViewController(withIdentifier: "DashboardTab") as! DashboardTab
+                                //            controller.email = self.email.text!
+                                //            controller.password = self.password.text!
+                                
+                                self.present(controller, animated: true, completion: nil)
+
+                            }
+                            
+       
+                            
+                        }
+                        
+                    }
+                    
+                } catch {
+                    print("ERROR")
+                    DispatchQueue.main.async {
+                        snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                    }
+                    
+                }
+            }
             
         } else {
-            
             snackBarFunction(message: "Please seelect 5 categories")
         }
         
         
     }
     
-    
-    
-    
-    // Interest Function
-    func interestFunction(completed: @escaping () -> ()) {
-        
-        let url = baseURL + select_interest
-        
-        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
-            
-            print(stringData)
-            
-            do {
-                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
-                
-                for json in jsonObject! {
-                    
-                    if let jsonDic = json as? [String: Any] {
-                        
-                        let interestArray = InterestClass()
-
-                        if let post_cat_id = jsonDic["post_cat_id"] as? String {
-                            interestArray.post_cat_id = post_cat_id
-                        }
-                        if let post_cat_name = jsonDic["post_cat_name"] as? String {
-                            interestArray.post_cat_id = post_cat_name
-                        }
-                        if let image = jsonDic["image"] as? String {
-                            interestArray.post_cat_id = image
-                        }
-
-                        self.interest.append(interestArray)
-                        
-                    }
    
-                }
-                
-                DispatchQueue.main.async { completed() }
-                
-            } catch {
-                print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
-                
-            }
-        }
-        
-        
-    }
-    
-    
-    
-    
-    
 
     // back to previous
     @IBAction func back(_ sender: UIButton) {

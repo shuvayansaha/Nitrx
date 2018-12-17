@@ -118,7 +118,7 @@ class Login: UIViewController, UITextFieldDelegate {
 //                            let status = jsonDic["status"] as! String
 //                            let UserType = jsonDic["User-Type"] as! String
 //                            let username = jsonDic["username"] as! String
-//                            let user_id = jsonDic["user_id"] as! String
+                            let user_id = jsonDic["user_id"] as! String
 //                            let verified = jsonDic["verified"] as! String
 //                            let Wallet = jsonDic["Wallet"] as! String
                             
@@ -134,7 +134,7 @@ class Login: UIViewController, UITextFieldDelegate {
 //                            UserDefaults.standard.set(status, forKey: "status")
 //                            UserDefaults.standard.set(UserType, forKey: "UserType")
 //                            UserDefaults.standard.set(username, forKey: "username")
-//                            UserDefaults.standard.set(user_id, forKey: "user_id")
+                            UserDefaults.standard.set(user_id, forKey: "user_id")
 //                            UserDefaults.standard.set(verified, forKey: "verified")
 //                            UserDefaults.standard.set(Wallet, forKey: "Wallet")
                             
