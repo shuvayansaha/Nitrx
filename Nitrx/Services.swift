@@ -18,11 +18,18 @@ let baseURL = "http://json.nitrx.com/"
 let loginUrl = "login.php/"
 let registerUrl = "register.php/"
 let forget_password = "forget_password.php/"
-
-
 let normal_feeds = "normal_feeds.php/"
-
 let comment = "comment.php/"
+let verify_email = "verify_email.php/"
+let select_interest = "select_interest.php/"
+
+
+
+
+
+
+
+
 
 
 

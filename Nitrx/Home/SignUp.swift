@@ -51,6 +51,20 @@ class SignUp: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIP
 
     }
     
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        var colors = [UIColor]()
+        colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
+        colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
+        navigationController?.navigationBar.setGradientBackground(colors: colors)
+        
+        whiteView.layer.borderColor = UIColor.lightGray.cgColor
+        whiteView.layer.borderWidth = 0.5
+        whiteView.layer.cornerRadius = 4
+    }
+    
     func picker() {
         
         let thePicker = UIPickerView()
@@ -103,18 +117,7 @@ class SignUp: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIP
     }
     
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        var colors = [UIColor]()
-        colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
-        colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
-        navigationController?.navigationBar.setGradientBackground(colors: colors)
-        
-        whiteView.layer.borderColor = UIColor.lightGray.cgColor
-        whiteView.layer.borderWidth = 0.5
-        whiteView.layer.cornerRadius = 4
-    }
+   
     
     
     // login button
@@ -166,62 +169,65 @@ class SignUp: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIP
     // login action
     @IBAction func loginAction(_ sender: UIButton) {
         
-        // MOVED CONTROLLER
-     
-//        _ = navigationController?.popViewController(animated: true)
-        
+        // MOVED POP CONTROLLER
+        _ = navigationController?.popViewController(animated: true)
  
-        presentAlertWithAction(title: "Succesfull !", message: "Nitrx Account creation is Successfull", buttonText: "Go to Login") {
-              _ = self.navigationController?.popViewController(animated: true)
-        }
-
     }
     
     
     // login function
     func signUpFunction() {
         
-        let url = baseURL + registerUrl
-        let parameters = ["username": username.text!, "email": email.text!, "password": password.text!]
+         let url = baseURL + registerUrl + "?"
+            + "username="
+            + "\(username.text!)"
+            + "&email="
+            + "\(email.text!)"
+            + "&pwd="
+            + "\(confirmPassword.text!)"
+            + "&gender="
+            + "\(gender.text!)"
+            + "&nxit="
+            + "\("")"
         
-        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
-            
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+
             print(stringData)
             
             do {
-                let getData = try JSONDecoder().decode(JSONData.self, from: data)
+
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
                 
-                if getData.isLoginStatus == true {
-                    if getData.otp_type == "email" {
-                        
-                        //                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
-                        
-                    } else {
-                        
-                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
-                        
-                    }
+                for json in jsonObject! {
                     
-                } else {}
+                    if let jsonDic = json as? [String: Any] {
+                        
+                        if jsonDic["status"] as? String == "1" {
+                        
+                            if let success = jsonDic["success"] as? String {
+                                
+                                self.presentAlertWithAction(title: "Success !", message: success, buttonText: "Verify Your Account", completion: {
+                                    
+                                    // MOVED CONTROLLER
+                                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                                    let controller = storyboard.instantiateViewController(withIdentifier: "VerificationNav") as! UINavigationController
+                                    self.present(controller, animated: true, completion: nil)
+                                })
+
+                            }
+//                            let username = jsonDic["username"] as? String
+//                            let email = jsonDic["email"] as? String
+//                            let gender = jsonDic["gender"] as? String
+                        }
+                    
                 
-                //                if getData.message?.email != nil {
-                //                    snackBarFunction(message: (getData.message?.email![0])!)
-                //                } else {
-                //                    snackBarFunction(message: (getData.message?.english)!)
-                //                }
-                
+                        if let errors = jsonDic["errors"] as? [String: Any] {
+                            if let error = errors["error_text"] as? String {
+                                snackBarFunction(message: error)
+                            }
+                        }
+                    }
+                }
                 
             } catch {
                 print("ERROR")

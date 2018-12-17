@@ -1582,10 +1582,10 @@
             </objects>
             <point key="canvasLocation" x="4515" y="3254"/>
         </scene>
-        <!--Terms Of Service Nav-->
+        <!--Navigation Controller-->
         <scene sceneID="3cX-kW-WYl">
             <objects>
-                <navigationController storyboardIdentifier="TermsOfServiceNav" automaticallyAdjustsScrollViewInsets="NO" id="gbd-H3-nO9" customClass="TermsOfServiceNav" customModule="Nitrx" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TermsOfServiceNav" automaticallyAdjustsScrollViewInsets="NO" id="gbd-H3-nO9" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tbJ-Bl-YT2">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>

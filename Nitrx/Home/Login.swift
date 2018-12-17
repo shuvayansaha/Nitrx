@@ -88,84 +88,115 @@ class Login: UIViewController, UITextFieldDelegate {
     // login function
     func loginFunction() {
         
-        let url = baseURL + loginUrl + "?" + "username=" + "\(email.text!)" + "&password=" + "\(password.text!)"
+        let url = baseURL + loginUrl + "?"
+            + "username=" + "\(email.text!)"
+            + "&password=" + "\(password.text!)"
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData, statusCode)
+            print(stringData)
 
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
                 
-                
-                for post in jsonObject! {
+                for json in jsonObject! {
                     
-                    let postDic = post as? [String: Any]
-                    
-                    if postDic != nil {
+                    if let jsonDic = json as? [String: Any] {
                         
-                        if postDic?["login"] != nil {
+                        if jsonDic["status"] as? String == "1" {
                             
-                            let Address = postDic?["Address"] as! String
-                            let DOB = postDic?["DOB"] as! String
-                            let email = postDic?["email"] as! String
-                            let FirstName = postDic?["First-Name"] as! String
-                            let followPrivacy = postDic?["follow-privacy"] as! String
-                            let ImagePath = postDic?["Image-Path"] as! String
-                            let JoinDate = postDic?["Join-Date"] as! String
-                            let LastName = postDic?["Last-Name"] as! String
-                            let login = postDic?["login"] as! String
-                            let qrimage = postDic?["qrimage"] as! String
-                            let status = postDic?["status"] as! String
-                            let UserType = postDic?["User-Type"] as! String
-                            let username = postDic?["username"] as! String
-                            let user_id = postDic?["user_id"] as! String
-                            let verified = postDic?["verified"] as! String
-                            let Wallet = postDic?["Wallet"] as! String
+//                            let Address = jsonDic["Address"] as! String
+//                            let DOB = jsonDic["DOB"] as! String
+//                            let email = jsonDic["email"] as! String
+//                            let FirstName = jsonDic["First-Name"] as! String
+//                            let followPrivacy = jsonDic["follow-privacy"] as! String
+//                            let ImagePath = jsonDic["Image-Path"] as! String
+//                            let JoinDate = jsonDic["Join-Date"] as! String
+//                            let LastName = jsonDic["Last-Name"] as! String
+//                            let login = jsonDic["login"] as! String
+//                            let qrimage = jsonDic["qrimage"] as! String
+//                            let status = jsonDic["status"] as! String
+//                            let UserType = jsonDic["User-Type"] as! String
+//                            let username = jsonDic["username"] as! String
+//                            let user_id = jsonDic["user_id"] as! String
+//                            let verified = jsonDic["verified"] as! String
+//                            let Wallet = jsonDic["Wallet"] as! String
                             
-                            UserDefaults.standard.set(Address, forKey: "Address")
-                            UserDefaults.standard.set(DOB, forKey: "DOB")
-                            UserDefaults.standard.set(email, forKey: "email")
-                            UserDefaults.standard.set(FirstName, forKey: "FirstName")
-                            UserDefaults.standard.set(followPrivacy, forKey: "followPrivacy")
-                            UserDefaults.standard.set(ImagePath, forKey: "ImagePath")
-                            UserDefaults.standard.set(JoinDate, forKey: "JoinDate")
-                            UserDefaults.standard.set(LastName, forKey: "LastName")
-                            UserDefaults.standard.set(qrimage, forKey: "qrimage")
-                            UserDefaults.standard.set(status, forKey: "status")
-                            UserDefaults.standard.set(UserType, forKey: "UserType")
-                            UserDefaults.standard.set(username, forKey: "username")
-                            UserDefaults.standard.set(user_id, forKey: "user_id")
-                            UserDefaults.standard.set(verified, forKey: "verified")
-                            UserDefaults.standard.set(Wallet, forKey: "Wallet")
+//                            UserDefaults.standard.set(Address, forKey: "Address")
+//                            UserDefaults.standard.set(DOB, forKey: "DOB")
+//                            UserDefaults.standard.set(email, forKey: "email")
+//                            UserDefaults.standard.set(FirstName, forKey: "FirstName")
+//                            UserDefaults.standard.set(followPrivacy, forKey: "followPrivacy")
+//                            UserDefaults.standard.set(ImagePath, forKey: "ImagePath")
+//                            UserDefaults.standard.set(JoinDate, forKey: "JoinDate")
+//                            UserDefaults.standard.set(LastName, forKey: "LastName")
+//                            UserDefaults.standard.set(qrimage, forKey: "qrimage")
+//                            UserDefaults.standard.set(status, forKey: "status")
+//                            UserDefaults.standard.set(UserType, forKey: "UserType")
+//                            UserDefaults.standard.set(username, forKey: "username")
+//                            UserDefaults.standard.set(user_id, forKey: "user_id")
+//                            UserDefaults.standard.set(verified, forKey: "verified")
+//                            UserDefaults.standard.set(Wallet, forKey: "Wallet")
                             
-                            snackBarFunction(message: login)
                             
-                            // MOVED CONTROLLER
-                            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-                            let controller = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceNav") as! TermsOfServiceNav
-                            //            controller.email = self.email.text!
-                            //            controller.password = self.password.text!
+                            if jsonDic["verified"] as? String == "YES" {
+                                
+                                if jsonDic["preference"] as? String == "YES" {
+
+                                    // MOVED CONTROLLER
+                                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                                    let controller = storyboard.instantiateViewController(withIdentifier: "DashboardTab") as! DashboardTab
+                                    
+                                    //            controller.email = self.email.text!
+                                    //            controller.password = self.password.text!
+                                    self.present(controller, animated: true, completion: nil)
+                                    
+                                }
+                                
+                                if jsonDic["preference"] as? String == "NO" {
+                                    
+                                    // MOVED CONTROLLER
+                                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                                    let controller = storyboard.instantiateViewController(withIdentifier: "DashboardNav") as! DashboardNav
+                                    //            controller.email = self.email.text!
+                                    //            controller.password = self.password.text!
+                                    self.present(controller, animated: true, completion: nil)
+                                    
+                                }
+                                
+                           
+                            }
                             
-                            self.present(controller, animated: true, completion: nil)
+                            if jsonDic["verified"] as? String == "NO" {
+                                
+                                // MOVED CONTROLLER
+                                let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                                let controller = storyboard.instantiateViewController(withIdentifier: "VerificationNav") as! UINavigationController
+                                //            controller.email = self.email.text!
+                                //            controller.password = self.password.text!
+                                self.present(controller, animated: true, completion: nil)
+                            }
+                            
                             
                         }
                         
-                        if postDic?["errors"] != nil {
+                        if jsonDic["errors"] != nil {
                             
-                            let errors = postDic?["errors"] as! [String: Any]
-                            
+                            let errors = jsonDic["errors"] as! [String: Any]
                             let error = errors["error_text"] as! String
                             
                             snackBarFunction(message: error)
                             
-                            
                         }
                         
-                        
-                        
-                        
                     }
+                    
+                    
+                    
+                        
+                        
+                        
+                        
                 }
                 
             } catch {

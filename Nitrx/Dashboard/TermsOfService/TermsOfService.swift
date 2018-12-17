@@ -126,7 +126,7 @@ class TermsOfService: UIViewController, UICollectionViewDelegateFlowLayout, UICo
 
         // MOVED CONTROLLER
         let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "DashboardNav") as! DashboardNav
+        let controller = storyboard.instantiateViewController(withIdentifier: "DashboardNav") as! UINavigationController
         //            controller.email = self.email.text!
         //            controller.password = self.password.text!
         

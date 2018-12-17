@@ -19,7 +19,7 @@ extension UIButton {
       
         //round corner button
         
-//        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 4
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.gray.cgColor
 

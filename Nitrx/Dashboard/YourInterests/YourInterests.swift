@@ -12,11 +12,18 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     @IBOutlet weak var tableView: UITableView!
 
+    var interest = [InterestClass]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        interestFunction {
+            self.tableView.reloadData()
+        }
+     
     }
     
     override func viewDidLayoutSubviews() {
@@ -43,8 +50,12 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
             
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "YourIntColView", for: indexPath) as! YourIntColView
+
+
+            cell.collection.reloadData()
             
             return cell
+            
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "label2", for: indexPath)
             
@@ -82,6 +93,8 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         print(selectedCategory.count)
         
+        print(selectedCategory)
+        
         if selectedCategory.count == 5 {
             
             // MOVED CONTROLLER
@@ -100,10 +113,72 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
     }
     
+    
+    
+    
+    // Interest Function
+    func interestFunction(completed: @escaping () -> ()) {
+        
+        let url = baseURL + select_interest
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
+                
+                for json in jsonObject! {
+                    
+                    if let jsonDic = json as? [String: Any] {
+                        
+                        let interestArray = InterestClass()
+
+                        if let post_cat_id = jsonDic["post_cat_id"] as? String {
+                            interestArray.post_cat_id = post_cat_id
+                        }
+                        if let post_cat_name = jsonDic["post_cat_name"] as? String {
+                            interestArray.post_cat_id = post_cat_name
+                        }
+                        if let image = jsonDic["image"] as? String {
+                            interestArray.post_cat_id = image
+                        }
+
+                        self.interest.append(interestArray)
+                        
+                    }
+   
+                }
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+                
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
 
     // back to previous
     @IBAction func back(_ sender: UIButton) {
-        print("previous")
+        
+        // MOVED CONTROLLER
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! UINavigationController
+        //            controller.email = self.email.text!
+        //            controller.password = self.password.text!
+        
+        self.present(controller, animated: true, completion: nil)
 
     }
 }
@@ -120,4 +195,12 @@ extension UIImage {
         }
         return nil
     }
+}
+
+
+class InterestClass {
+    
+    var post_cat_id = String()
+    var post_cat_name = String()
+    var image = String()
 }
