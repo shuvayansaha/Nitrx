@@ -73,26 +73,36 @@ struct NormalFeeds: Codable {
 }
 
 
-class CommentsClass {
+
+
+
+
+
+
+
+
+
+
+struct CommentsClass: Codable {
     
-    var comment_user_id = String()
-    var COMMENT_NO = Int()
-    var post_id = String()
-    var post_user_id = String()
-    var status = String()
-    var text = String()
-    var time = String()
- 
+    let comment_id: String?
+    let comment_reply: [CommentsReplyClass]?
+    let post_id: String?
+    let post_user_id: String?
+    let text: String?
+    let time: String?
+    let username: String?
+    let user_avater: String?
+    let user_id: String?
+    let user_rate: String?
+
 }
 
 
-
-
-
-
-
-
-
+struct CommentsReplyClass: Codable {
+    
+  
+}
 
 
 

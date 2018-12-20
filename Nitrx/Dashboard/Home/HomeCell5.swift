@@ -8,10 +8,14 @@
 
 import UIKit
 
-class HomeCell5: UITableViewCell {
+class HomeCell5: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var clickCommentBox: UIButton!
+    
+    @IBOutlet weak var commentTextView: UITextField!
+    //    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var commentView: UIView!
     
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
@@ -20,23 +24,22 @@ class HomeCell5: UITableViewCell {
     @IBOutlet weak var button5: UIButton!
     
     var delegate: CustomCellDelegate?
-    var rateDelegate: CustomCellRateButtonDelegate?
+//    var rateDelegate: CustomCellRateButtonDelegate?
+    var commentDelegate: CustomCommentDelegate?
+    
+    var rateButtonNo = Int()
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
 
-
-        
         button1.RoundCornerButton()
         button2.RoundCornerButton()
         button3.RoundCornerButton()
         button4.RoundCornerButton()
         button5.RoundCornerButton()
         
-    
         
-//        button1.setImage(UIImage(named: "avater1-white"), for: .normal)
     }
     
     override func layoutSubviews() {
@@ -48,81 +51,95 @@ class HomeCell5: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    @IBAction func clickCommentBox(_ sender: UIButton) {
-    
-        delegate?.commentBox(row: sender.tag)
-    }
-    
-    
-    
-    @IBAction func btn1(_ sender: UIButton) {
-        rateDelegate?.rateButton1Press(row: sender.tag)
-    }
-    
-    @IBAction func btn2(_ sender: UIButton) {
-        rateDelegate?.rateButton1Press(row: sender.tag)
-    }
-    
-    @IBAction func btn3(_ sender: UIButton) {
-        rateDelegate?.rateButton1Press(row: sender.tag)
-    }
-    
-    @IBAction func btn4(_ sender: UIButton) {
-        rateDelegate?.rateButton1Press(row: sender.tag)
-    }
-    
-    @IBAction func btn5(_ sender: UIButton) {
-        rateDelegate?.rateButton1Press(row: sender.tag)
-    }
-    
-    @IBAction func rateButton(_ sender: UIButton) {
-                
-//        delegate?.rateButtonPress(row: sender.tag)
         
-        if sender.tag == 1 {
-            
-            button1.setImage(UIImage(named: "avater1-white"), for: .normal)
-            button2.setImage(UIImage(named: "avater2"), for: .normal)
-            button3.setImage(UIImage(named: "car"), for: .normal)
-            button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
+        
 
-        } else if sender.tag == 2 {
+    }
+    
+   
+    // comment send action
+    @IBAction func commentSendAction(_ sender: UIButton) {
+        commentDelegate?.commentBox(row: sender.tag, text: commentTextView.text!, rate: rateButtonNo)
+    }
+    
+    
+
+    var indexPath:IndexPath!
+//
+    @IBAction func btn1(_ sender: UIButton) {
+        
+        rateButtonNo = 1
+        
+        if (sender.isSelected)
+        {
+            sender.isSelected = false
             
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
-            button2.setImage(UIImage(named: "avater2-white"), for: .normal)
-            button3.setImage(UIImage(named: "car"), for: .normal)
-            button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
-            
-        } else if sender.tag == 3 {
-            
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
-            button2.setImage(UIImage(named: "avater2"), for: .normal)
-            button3.setImage(UIImage(named: "car-white"), for: .normal)
-            button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
-            
-        } else if sender.tag == 4 {
-            
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
-            button2.setImage(UIImage(named: "avater2"), for: .normal)
-            button3.setImage(UIImage(named: "car"), for: .normal)
-            button4.setImage(UIImage(named: "booster-white"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
-            
-        } else if sender.tag == 5 {
-            
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
             button2.setImage(UIImage(named: "avater2"), for: .normal)
             button3.setImage(UIImage(named: "car"), for: .normal)
             button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3-white"), for: .normal)
-            
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
         }
+        else
+        {
+            sender.isSelected = true
+        }
+    
+    }
 
+    @IBAction func btn2(_ sender: UIButton) {
+        
+        rateButtonNo = 2
+
+        if (sender.isSelected)
+        {
+            sender.isSelected = false
+        }
+        else
+        {
+            sender.isSelected = true
+        }
+    }
+
+    @IBAction func btn3(_ sender: UIButton) {
+        
+        rateButtonNo = 3
+
+        if (sender.isSelected)
+        {
+            sender.isSelected = false
+        }
+        else
+        {
+            sender.isSelected = true
+        }
+    }
+
+    @IBAction func btn4(_ sender: UIButton) {
+        
+        rateButtonNo = 4
+
+        if (sender.isSelected)
+        {
+            sender.isSelected = false
+        }
+        else
+        {
+            sender.isSelected = true
+        }
+    }
+
+    @IBAction func btn5(_ sender: UIButton) {
+        
+        rateButtonNo = 5
+
+        if (sender.isSelected)
+        {
+            sender.isSelected = false
+        }
+        else
+        {
+            sender.isSelected = true
+        }
     }
     
     

@@ -15,7 +15,7 @@ import Alamofire
 
 // button border extension
 extension UIButton {
-    func RoundCornerButton() {
+    func RoundCornerButtonWithGrayBorder() {
       
         //round corner button
         
@@ -24,6 +24,15 @@ extension UIButton {
         self.layer.borderColor = UIColor.gray.cgColor
 
 
+    }
+    
+    func RoundCornerButton() {
+        
+        //round corner button
+        
+        self.layer.cornerRadius = 3
+        
+        
     }
 }
 

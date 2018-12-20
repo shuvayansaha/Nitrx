@@ -19,6 +19,9 @@ class HomeCell2: UITableViewCell {
         // Initialization code
         
 
+     
+        
+        postLinkButton.layer.cornerRadius = 14
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

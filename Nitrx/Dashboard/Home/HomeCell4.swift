@@ -16,6 +16,7 @@ class HomeCell4: UITableViewCell {
 
     @IBOutlet weak var commentsButton: UIButton!
     @IBOutlet weak var commentCount: UILabel!
+    @IBOutlet weak var avarageRate: UIImageView!
     
     var commentsDelegate: CommentsCellDelegate?
 

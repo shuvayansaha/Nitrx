@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UserDefaults.standard.set(true, forKey: "launchedBefore")
         
         let storyboardName = "Dashboard"
-        let withIdentifier = "DashboardNav"
+        let withIdentifier = "DashboardTab"
 
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: withIdentifier)

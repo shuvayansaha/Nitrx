@@ -9,15 +9,12 @@
 import UIKit
 import WebKit
 
-class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate, CustomCellRateButtonDelegate, CommentsCellDelegate {
+class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate, CommentsCellDelegate, CustomCommentDelegate {
  
     @IBOutlet weak var homeTable: UITableView!
     @IBOutlet var ratePopUp: UIView!
+    var rateButtonNo = Int()
 
-    @IBOutlet weak var txtView: UIView!
-    @IBOutlet weak var textViewOutlet: UITextView!
-    @IBOutlet weak var sendButton: UIButton!
-    
     let web = WKWebView()
     
     var closeButton = UIBarButtonItem()
@@ -27,16 +24,12 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        addToolBar(textField: self, txtView: txtView)
-
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
+        hideKeyboardWhenTappedAround()
+                
         homeTable.delegate = self
         homeTable.dataSource = self
         
-        userDefaultsFunc()
-        
+
         loadHome {
             self.homeTable.reloadData()
         }
@@ -67,58 +60,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         web.frame  = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
         self.navigationController?.navigationBar.isTranslucent = false
-        //        self.tabBarController?.tabBar.isTranslucent = false
-        
-    }
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            
-            print(keyboardHeight)
-        }
-    }
-    
-    
-    // comment send
-    @IBAction func sendButton(_ sender: UIButton) {
-    }
-    
-    func userDefaultsFunc() {
-        
-        //        let Address = UserDefaults.standard.string(forKey: "Address")
-        //        let DOB = UserDefaults.standard.string(forKey: "DOB")
-        //        let email = UserDefaults.standard.string(forKey: "email")
-        //        let FirstName = UserDefaults.standard.string(forKey: "FirstName")
-        //        let followPrivacy = UserDefaults.standard.string(forKey: "followPrivacy")
-        //        let ImagePath = UserDefaults.standard.string(forKey: "ImagePath")
-        //        let JoinDate = UserDefaults.standard.string(forKey: "JoinDate")
-        //        let LastName = UserDefaults.standard.string(forKey: "LastName")
-        //        let qrimage = UserDefaults.standard.string(forKey: "qrimage")
-        //        let status = UserDefaults.standard.string(forKey: "status")
-        //        let UserType = UserDefaults.standard.string(forKey: "UserType")
-        //        let username = UserDefaults.standard.string(forKey: "username")
-        //        let user_id = UserDefaults.standard.string(forKey: "user_id")
-        //        let verified = UserDefaults.standard.string(forKey: "verified")
-        //        let Wallet = UserDefaults.standard.string(forKey: "Wallet")
-        
-        
-        //        print("Address", Address!)
-        //        print("DOB", DOB!)
-        //        print("email", email!)
-        //        print("FirstName", FirstName!)
-        //        print("followPrivacy", followPrivacy!)
-        //        print("ImagePath", ImagePath!)
-        //        print("JoinDate", JoinDate!)
-        //        print("LastName", LastName!)
-        //        print("qrimage", qrimage!)
-        //        print("status", status!)
-        //        print("UserType", UserType!)
-        //        print("username", username!)
-        //        print("user_id", user_id!)
-        //        print("verified", verified!)
-        //        print("Wallet", Wallet!)
         
     }
     
@@ -139,7 +80,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
     }
     
-    
+
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -151,27 +92,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         navigationController?.navigationBar.setGradientBackground(colors: colors)
     }
     
-    
-    func rateButton1Press(row: Int) {
-        print(row)
-    }
-    
-    func rateButton2Press(row: Int) {
-        print(row)
-    }
-    
-    func rateButton3Press(row: Int) {
-        print(row)
-    }
-    
-    func rateButton4Press(row: Int) {
-        print(row)
-    }
-    
-    func rateButton5Press(row: Int) {
-        print(row)
-    }
-    
+  
     
     func commentButtonPress(row: Int) {
         performSegue(withIdentifier: "CommentsSegue", sender: row)
@@ -185,6 +106,8 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         if (segue.identifier == "CommentsSegue") {
             let vc = segue.destination as! Comments
             vc.post_id = postArray[sender as! Int].post_id
+            vc.profile_id = postArray[sender as! Int].profile_id
+
         }
     }
   
@@ -239,57 +162,79 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     // comment box
-    func commentBox(row: Int) {
+    func commentBox(row: Int, text: String, rate: Int) {
+        
+        let post_id = postArray[row].post_id
+        let profile_id = postArray[row].profile_id
+        
+        let url = baseURL + save_comment + "?"
+            + "post_id="
+            + "\(post_id)"
+            + "&user_id="
+            + "\(profile_id)"
+            + "&action="
+            + "\("comment_user")"
+            + "&text="
+            + "\(text)"
+            + "&rate_post="
+            + "\(rateButtonNo)"
         
         
+        print(url)
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+                        
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
+                
+                
+                
+                    
+                    for json in jsonObject! {
+                        
+                        if let jsonDic = json as? [String: Any] {
+                            
+                            if jsonDic["success"] as? Int == 200 {
+                                
+                                self.performSegue(withIdentifier: "CommentsSegue", sender: row)
+                                
+                            } else {
+                                
+                                if jsonDic["errors"] != nil {
+                                    
+                                    let errors = jsonDic["errors"] as! [String: Any]
+                                    let error = errors["error_text"] as! String
+                                    
+                                    snackBarFunction(message: error)
+                                    
+                                }
+                                
+                            }
+                        }
+                        
+                    }
+                    
+                
 
-        
-//        let post_id = postArray[row].post_id
-//        let profile_id = postArray[row].profile_id
-//
-//        print(post_id, profile_id)
-//
-//        let url = baseURL + save_comment + "?"
-//            + "post_id="
-//            + "\(post_id)"
-//            + "&user_id="
-//            + "\(profile_id)"
-//            + "&action="
-//            + "\("comment_user")"
-//            + "&text="
-//            + "\("test123")"
-//
-//        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
-//
-//            print(stringData)
-//
-//            do {
-//                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
-//
-//                for json in jsonObject! {
-//
-//                    if let jsonDic = json as? [String: Any] {
-//
-//                        if jsonDic["success"] as? Int == 200 {
-//
-//                            self.performSegue(withIdentifier: "CommentsSegue", sender: row)
-//
-//                        }
-//                    }
-//
-//                }
-//
-////                DispatchQueue.main.async { completed() }
-//
-//            } catch {
-//                print("ERROR")
-//                DispatchQueue.main.async {
-//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-//                }
-//
-//            }
-//        }
+                
 
+                
+                //                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+                
+            }
+        }
+        
+        
+        
+        
     }
     
     
@@ -317,77 +262,90 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
                 
                 for post in jsonObject! {
                     
-                    let postDic = post as? [String: Any]
-                    
-                    if postDic != nil {
+                    if let postDic = post as? [String: Any] {
                         
                         let postData = Post()
                         
-                        if postDic?["postText"] as? String != nil {
-                            
-                            if postDic?["post_id"] != nil {
-                                postData.post_id = postDic?["post_id"] as! String
-                            }
-                            
-                            if postDic?["website_url"] != nil {
-                                postData.website_url = postDic?["website_url"] as! String
-                            }
-                            
-                            if postDic?["description"] != nil {
-                                postData.description = postDic?["description"] as! String
-                            }
-                            
-                            if postDic?["profile_id"] != nil {
-                                postData.profile_id = postDic?["profile_id"] as! String
-                            }
-                            
-                            if postDic?["first_name"] != nil {
-                                postData.first_name = postDic?["first_name"] as! String
-                            }
-                            
-                            if postDic?["postText"] != nil {
-                                postData.postText = postDic?["postText"] as! String
-                            }
-                            
-                            if postDic?["image"] != nil {
-                                postData.image = postDic?["image"] as! String
-                            }
-                            
-                            if postDic?["qrimage"] != nil {
-                                postData.qrimage = postDic?["qrimage"] as! String
-                            }
-                            
-                            if postDic?["post_cat_id"] != nil {
-                                postData.post_cat_id = postDic?["post_cat_id"] as! String
-                            }
-                            
-                            if postDic?["view_count"] != nil {
-                                postData.view_count = postDic?["view_count"] as! Int
-                            } else {
-                                postData.view_count = 0
-                            }
-                            
-                            if postDic?["ncoins"] as? Int != nil {
-                                postData.ncoins = postDic?["ncoins"] as! Int
-                            } else {
-                                postData.ncoins = 0
-                                
-                            }
-                            
-                            if postDic?["comments"] != nil {
-                                postData.comments = postDic?["comments"] as! Int
-                            } else {
-                                postData.comments = 0
-                            }
-                            
+                        if postDic["avg_post_rate"] != nil {
+                            postData.avg_post_rate = postDic["avg_post_rate"] as! Int
+                        }
                         
-                            
+                        if postDic["comments"] != nil {
+                            postData.comments = postDic["comments"] as! Int
+                        }
+                        
+                        if postDic["description"] != nil {
+                            postData.description = postDic["description"] as? String ?? ""
                             
                         }
                         
-                        self.postArray.append(postData)
+                        if postDic["first_name"] != nil {
+                            postData.first_name = postDic["first_name"] as? String ?? ""
+                        }
+
+                        if postDic["image"] != nil {
+                            postData.image = postDic["image"] as? String ?? ""
+                        }
                         
+                        if postDic["last_name"] != nil {
+                            postData.last_name = postDic["last_name"] as? String ?? ""
+                        }
+                        
+                        if postDic["ncoins"] as? Int != nil {
+                            postData.ncoins = postDic["ncoins"] as! Int
+                        } else {
+                            postData.ncoins = 0
+                            
+                        }
+                        
+                        if postDic["postText"] != nil {
+                            postData.postText = postDic["postText"] as? String ?? ""
+                        }
+
+                        
+                        if postDic["post_cat_id"] != nil {
+                            postData.post_cat_id = postDic["post_cat_id"] as? String ?? ""
+                        }
+                        
+                        if postDic["post_date"] != nil {
+                            postData.post_date = postDic["post_date"] as? String ?? ""
+                        }
+                        
+                        if postDic["post_id"] != nil {
+                            postData.post_id = postDic["post_id"] as? String ?? ""
+                        }
+                        
+                        if postDic["profile_id"] != nil {
+                            postData.profile_id = postDic["profile_id"] as? String ?? ""
+                        }
+                        
+                        if postDic["promoted"] != nil {
+                            postData.promoted = postDic["promoted"] as? String ?? ""
+                        }
+                        
+                        if postDic["qrimage"] != nil {
+                            postData.qrimage = postDic["qrimage"] as? String ?? ""
+                        }
+
+                        if postDic["status"] != nil {
+                            postData.status = postDic["status"] as? String ?? ""
+                        }
+                        
+                        if postDic["user_avatar"] != nil {
+                            postData.user_avatar = postDic["user_avatar"] as? String ?? ""
+                        }
+                        
+                        if postDic["view_count"] != nil {
+                            postData.view_count = postDic["view_count"] as! Int
+                        }
+                        
+                        if postDic["website_url"] != nil {
+                            postData.website_url = postDic["website_url"] as? String ?? ""
+                        }
+                        
+                        self.postArray.append(postData)
                     }
+                    
                 }
                 
                 DispatchQueue.main.async { completed() }
@@ -427,7 +385,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell1") as! HomeCell1
             
-            cell.username.text = postArray[indexPath.section].first_name + postArray[indexPath.section].last_name
+            cell.username.text = postArray[indexPath.section].first_name + " " + postArray[indexPath.section].last_name
             cell.nitrxCount.text = String(postArray[indexPath.section].ncoins)
             cell.viewCount.text = String(postArray[indexPath.section].view_count)
             cell.commentCount.text = String(postArray[indexPath.section].comments)
@@ -461,23 +419,75 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
             cell.commentCount.text = String(postArray[indexPath.section].comments)
             cell.commentsDelegate = self
-            cell.commentsButton.tag =  indexPath.section
+            cell.commentsButton.tag = indexPath.section
 
+            if (postArray[indexPath.section].avg_post_rate) == 1 {
+                cell.avarageRate.image = UIImage(named: "avater1-white")
+            }
+            
+            if (postArray[indexPath.section].avg_post_rate) == 2 {
+                cell.avarageRate.image = UIImage(named: "avater2-white")
+            }
+
+            if (postArray[indexPath.section].avg_post_rate) == 3 {
+                cell.avarageRate.image = UIImage(named: "car-white")
+
+            } else if (postArray[indexPath.section].avg_post_rate) == 4 {
+                cell.avarageRate.image = UIImage(named: "booster-white")
+            } else if (postArray[indexPath.section].avg_post_rate) == 5 {
+                cell.avarageRate.image = UIImage(named: "avater3-white")
+            } else {
+                cell.avarageRate.image = nil
+            }
+            
             return cell
             
         } else if indexPath.row == 4 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell5") as! HomeCell5
-            cell.delegate = self
-            cell.rateDelegate = self
-
-            cell.clickCommentBox.tag = indexPath.section
             
-            cell.button1.tag = indexPath.section
-            cell.button2.tag = indexPath.section
-            cell.button3.tag = indexPath.section
-            cell.button4.tag = indexPath.section
-            cell.button5.tag = indexPath.section
+            cell.delegate = self
+            cell.sendButton.tag = indexPath.section
+            cell.commentDelegate = self
+            
+
+//            rateButtonNo = cell.rateButton(<#T##sender: UIButton##UIButton#>)
+            
+//            cell.indexPath = indexPath
+//            cell.rateDelegate = self
+//
+//            myButton.addTarget(self, action: "connected:", forControlEvents: .TouchUpInside)
+
+//            cell.indexPath = indexPath
+
+
+            
+//            cell.button1.tag = indexPath.section
+//            cell.button2.tag = indexPath.section
+//            cell.button3.tag = indexPath.section
+//            cell.button4.tag = indexPath.section
+//            cell.button5.tag = indexPath.section
+            
+            cell.button1.setImage(UIImage(named: "avater1"), for: .normal)
+            cell.button2.setImage(UIImage(named: "avater2"), for: .normal)
+            cell.button3.setImage(UIImage(named: "car"), for: .normal)
+            cell.button4.setImage(UIImage(named: "booster"), for: .normal)
+            cell.button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+            cell.button1.setImage(UIImage(named: "avater1-white"), for: .selected)
+            cell.button2.setImage(UIImage(named: "avater2-white"), for: .selected)
+            cell.button3.setImage(UIImage(named: "car-white"), for: .selected)
+            cell.button4.setImage(UIImage(named: "booster-white"), for: .selected)
+            cell.button5.setImage(UIImage(named: "avater3-white"), for: .selected)
+
+            
+            
+            cell.button1.isSelected = false
+            cell.button2.isSelected = false
+            cell.button3.isSelected = false
+            cell.button4.isSelected = false
+            cell.button5.isSelected = false
+
 
             return cell
             
@@ -540,23 +550,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     
-    
-    
-//    func handleKeyboardNotification(notification: NSNotification) {
-//
-//        if let userInfo = notification.userInfo {
-//
-//            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey]
-//            print(keyboardFrame)
-//        }
-//    }
-    
-//    @objc func keyboardWillShow(_ notification: Notification) {
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//            let keyboardRectangle = keyboardFrame.cgRectValue
-//            let keyboardHeight = keyboardRectangle.height
-//        }
-//    }
+
   
 }
 
