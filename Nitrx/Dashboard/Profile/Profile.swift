@@ -12,6 +12,9 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
 
     @IBOutlet weak var homeCol: UICollectionView!
 
+    var posts = [PostsClass]()
+    var profileDetails: ProfileDetailsClass?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,6 +49,10 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
 //        let image = UIImage(named: "logo")
 //        imageView.image = image
 //        navigationItem.titleView = imageView
+        
+        loadProfileDetails(user_id: "70") {
+            
+        }
     }
 
     @objc func wallet() {
@@ -163,6 +170,35 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     
     
     
+    
+    // load comments
+    func loadProfileDetails(user_id: String, completed: @escaping () -> ()) {
+        
+        let url = baseURL + loginUrl + "?"
+            + "post_id=" + "\(user_id)"
+            + "&action=" + "\("user_profile")"
+
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
+                
+                self.posts = getData.posts!
+                self.profileDetails = getData.profile
+
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
 
    
     

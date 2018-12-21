@@ -25,6 +25,7 @@ let select_interest = "select_interest.php/"
 let save_interest = "save_interest.php/"
 let post_details = "post_details.php/"
 let save_comment = "save_comment.php/"
+let profile = "profile.php/"
 
 
 
@@ -46,11 +47,9 @@ struct JSONData: Codable {
 
 struct LoginData: Codable {
     
-
     let user_id: String?
     let username: String?
 
-    
 }
 
 
@@ -106,9 +105,52 @@ struct CommentsReplyClass: Codable {
 
 
 
+// profile
+struct ProfileClass: Codable {
+    
+    let profile: ProfileDetailsClass?
+    let posts: [PostsClass]?
+}
 
 
+struct ProfileDetailsClass: Codable {
+    
+    let about: String?
+    let Address: String?
+    let countFollowers: String?
+    let countFollowing: String?
+    let countUserPosts: String?
+    let DOB: String?
+    let email: String?
+    let First_Name: String?
+    let follow_privacy: String?
+    let Gender: String?
+    let Image_Path: String?
+    let Join_Date: String?
+    let Last_Name: String?
+    let post_cat_id: String?
+    let preference: String?
+    let qrimage: String?
+    let status: String?
+    let User_Type: String?
+    let username: String?
+    let user_id: String?
+    let user_score: Int?
+    let verified: String?
+}
 
+struct PostsClass: Codable {
+    
+    let api_status: String?
+    let api_text: String?
+    let errors: ErrorsClass?
+}
+
+struct ErrorsClass: Codable {
+    
+    let error_id: String?
+    let error_text: String?
+}
 
 
 
