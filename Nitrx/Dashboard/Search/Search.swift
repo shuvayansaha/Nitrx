@@ -15,12 +15,30 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
     @IBOutlet weak var colView: UICollectionView!
     @IBOutlet var otherView: UIView!
     
-    let category = ["Trending", "People", "Food", "Tech", "Film", "Other"]
-   
+    let category = ["Trending", "People", "Food", "Tech", "Film"]
+    let user_id = UserDefaults.standard.string(forKey: "user_id")
+    var selectedIndex = Int()
+
+    var postArray = [PostsClass]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        getUserData(user_id: user_id!) {
+//
+//        }
+        
+//        colView.allowsMultipleSelection = true
+//        colView.allowsSelection = true //this is set by default
 
-//        hideKeyboardWhenTappedAround()
+        
+        self.loadSearch(post_cat_id: "2") {
+            
+            self.cellCol.reloadData()
+        }
+    
+
+        hideKeyboardWhenTappedAround()
 
         cellCol.delegate = self
         cellCol.dataSource = self
@@ -32,7 +50,8 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         colView.dataSource = self
         
         // custom search bar on navigation bar
-        let searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 100, height: 20))
+//        let searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 100, height: 20))
+        let searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 20))
 
         searchBar.placeholder = "Search..."
         let leftNavBarButton = UIBarButtonItem(customView:searchBar)
@@ -54,7 +73,8 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         
         
 //        self.navigationItem.rightBarButtonItems = [notificationButton]
-        self.navigationItem.leftBarButtonItems = [plusButton, leftNavBarButton, notificationButton]
+//        self.navigationItem.leftBarButtonItems = [plusButton, leftNavBarButton, notificationButton]
+        self.navigationItem.leftBarButtonItems = [leftNavBarButton]
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
@@ -97,14 +117,13 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
 //        navView.layer.insertSublayer(gradient, at: 0)
     }
     
-    var selectedIndex = Int()
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if collectionView == colView {
             return category.count
         } else {
-            return 5
+            return postArray.count
         }
     }
 
@@ -116,7 +135,7 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         
         } else {
             
-            return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.width + collectionView.frame.size.width/3)
+            return CGSize(width: collectionView.frame.size.width/3 - 2, height: collectionView.frame.size.width/3 - 2)
 
         }
     }
@@ -142,13 +161,17 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
                 cell.label.layer.borderWidth = 0
                 cell.label.layer.cornerRadius = 0
                 
-                
             }
 
             return cell
 
         } else {
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellSeacrh", for: indexPath) as! CellSeacrh
+            
+            cell.image.loadImageUsingUrlString(urlString: postArray[indexPath.row].image!)
+            cell.label.text = "  " + postArray[indexPath.row].postText!
+
             return cell
         }
     }
@@ -156,37 +179,43 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        print(indexPath.row)
         if collectionView == colView {
+
             selectedIndex = indexPath.row
-            
-            if indexPath.row == category.count - 1 {
-                
-                print("Last")
-                
-                self.view.addSubview(otherView)
-                otherView.alpha = 1
-                otherView.dropShadow()
-                otherView.translatesAutoresizingMaskIntoConstraints = false
-                
-                otherView.topAnchor.constraint(equalTo: colView.bottomAnchor, constant: 16).isActive = true
-//                otherView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
-//                otherView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-                otherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-                otherView.heightAnchor.constraint(equalToConstant: view.frame.height/2).isActive = true
-                otherView.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
 
-                
-            } else {
-                otherView.alpha = 0
+//            if indexPath.row == category.count - 1 {
+//
+//                print("Last")
+//
+//                self.view.addSubview(otherView)
+//                otherView.alpha = 1
+//                otherView.dropShadow()
+//                otherView.translatesAutoresizingMaskIntoConstraints = false
+//
+//                otherView.topAnchor.constraint(equalTo: colView.bottomAnchor, constant: 16).isActive = true
+////                otherView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
+////                otherView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+//                otherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+//                otherView.heightAnchor.constraint(equalToConstant: view.frame.height/2).isActive = true
+//                otherView.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+//
+//
+//            } else {
+//                otherView.alpha = 0
+//
+//            }
 
-            }
-            
             collectionView.reloadData()
 
+        } else {
+            
+            print(indexPath.row)
+
+            
         }
-        
-        
+
+
     }
     
     
@@ -215,7 +244,63 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
     
     
     
+    //get user data
+    func getUserData(user_id: String, completed: @escaping () -> ()) {
+        
+        let url = baseURL + get_user_data + "?"
+            
+            + "user_id="
+            + "\(user_id)"
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode(UserDataClass.self, from: data)
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
     
+    
+    
+    
+    //load search data
+    func loadSearch(post_cat_id: String, completed: @escaping () -> ()) {
+        
+        let url = baseURL + post_details + "?"
+            
+            + "post_cat_id="
+            + "\(post_cat_id)"
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode([PostsClass].self, from: data)
+                
+                self.postArray = getData
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
     
     
 }

@@ -10,4 +10,6 @@ import UIKit
 
 class CellSeacrh: UICollectionViewCell {
     
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var label: UILabel!
 }

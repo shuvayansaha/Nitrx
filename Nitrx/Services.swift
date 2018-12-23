@@ -26,6 +26,7 @@ let save_interest = "save_interest.php/"
 let post_details = "post_details.php/"
 let save_comment = "save_comment.php/"
 let profile = "profile.php/"
+let get_user_data = "get_user_data.php/"
 
 
 
@@ -178,6 +179,28 @@ struct PostsClass: Codable {
 
 }
 
+
+struct UserDataClass: Codable {
+    
+    let avg_post_rate: Int?
+    let comments: Int?
+    let description: String?
+    let first_name: String?
+    let image: String?
+    let last_name: String?
+    //    let ncoins: Int?
+    let postText: String?
+    let post_cat_id: String?
+    let post_date: String?
+    let post_id: String?
+    let profile_id: String?
+    let qrimage: String?
+    let status: String?
+    let user_avatar: String?
+    let view_count: Int?
+    let website_url: String?
+    
+}
 
 
 
