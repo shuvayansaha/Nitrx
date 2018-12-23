@@ -75,9 +75,17 @@ struct NormalFeeds: Codable {
 
 
 
+// send comment
 
+struct SendCommentsClass: Codable {
 
+    let status: String?
+    let errors: ErrorsClass?
+}
 
+struct ErrorsClass: Codable {
+    let error_text: String?
+}
 
 
 
@@ -100,6 +108,11 @@ struct CommentsClass: Codable {
 
 struct CommentsReplyClass: Codable {
     
+    let text: String?
+    let time: String?
+    let username: String?
+    let user_avater: String?
+
   
 }
 
@@ -122,12 +135,13 @@ struct ProfileDetailsClass: Codable {
     let countUserPosts: String?
     let DOB: String?
     let email: String?
-    let First_Name: String?
+    let first_name: String?
     let follow_privacy: String?
     let Gender: String?
-    let Image_Path: String?
+    let image_path: String?
     let Join_Date: String?
-    let Last_Name: String?
+    let last_name: String?
+    let points: String?
     let post_cat_id: String?
     let preference: String?
     let qrimage: String?
@@ -139,23 +153,30 @@ struct ProfileDetailsClass: Codable {
     let verified: String?
 }
 
+
+
+
 struct PostsClass: Codable {
-    
-    let api_status: String?
-    let api_text: String?
-    let errors: ErrorsClass?
+
+    let avg_post_rate: Int?
+    let comments: Int?
+    let description: String?
+    let first_name: String?
+    let image: String?
+    let last_name: String?
+//    let ncoins: Int?
+    let postText: String?
+    let post_cat_id: String?
+    let post_date: String?
+    let post_id: String?
+    let profile_id: String?
+    let qrimage: String?
+    let status: String?
+    let user_avatar: String?
+    let view_count: Int?
+    let website_url: String?
+
 }
-
-struct ErrorsClass: Codable {
-    
-    let error_id: String?
-    let error_text: String?
-}
-
-
-
-
-
 
 
 

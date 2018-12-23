@@ -12,6 +12,8 @@ class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayou
     
     @IBOutlet weak var colView: UICollectionView!
     
+    var posts = [PostsClass]()
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -21,13 +23,8 @@ class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayou
     }
     
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -39,6 +36,13 @@ class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyProfileChildPostCell", for: indexPath) as! MyProfileChildPostCell
+    
+        if let img = posts[indexPath.row].image {
+            cell.image.loadImageUsingUrlString(urlString: img)
+        }
+
+        cell.label.text = posts[indexPath.row].postText
+     
         
         return cell
         

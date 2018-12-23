@@ -10,6 +10,13 @@ import UIKit
 
 class CommentReplyCell: UITableViewCell {
 
+    @IBOutlet weak var commentText: UILabel!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var replyButton: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

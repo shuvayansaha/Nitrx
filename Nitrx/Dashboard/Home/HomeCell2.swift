@@ -17,10 +17,7 @@ class HomeCell2: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-
-     
-        
+       
         postLinkButton.layer.cornerRadius = 14
     }
 

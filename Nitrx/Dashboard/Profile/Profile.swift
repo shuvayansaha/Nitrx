@@ -15,6 +15,8 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     var posts = [PostsClass]()
     var profileDetails: ProfileDetailsClass?
 
+    let user_id = UserDefaults.standard.string(forKey: "user_id")
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,29 +32,26 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         let searchButton = UIBarButtonItem(customView: searchBtn)
         
         let clipBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
-        clipBtn.setImage(UIImage(named: "notification"), for: [])
+        clipBtn.setImage(UIImage(named: "settings-white"), for: [])
         clipBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
         clipBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let clipButton = UIBarButtonItem(customView: clipBtn)
+      
+        self.navigationItem.rightBarButtonItems = [clipButton, searchButton]
         
-        let pencilBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
-        pencilBtn.setImage(UIImage(named: "notification"), for: [])
-        pencilBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
-        pencilBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        let pencilButton = UIBarButtonItem(customView: pencilBtn)
-        
-        self.navigationItem.rightBarButtonItems = [pencilButton, clipButton, searchButton]
-        
-//        // navigation bar logo centre
+          // navigation bar logo centre
 //        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
 //        imageView.contentMode = .scaleAspectFit
 //        let image = UIImage(named: "logo")
 //        imageView.image = image
 //        navigationItem.titleView = imageView
         
-        loadProfileDetails(user_id: "70") {
-            
+        if user_id != nil {
+            loadProfileDetails(user_id: user_id!) {
+                self.homeCol.reloadData()
+            }
         }
+        
     }
 
     @objc func wallet() {
@@ -76,6 +75,7 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         self.present(controller, animated: true, completion: nil)
         
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -94,7 +94,7 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 5
+        return 3
         
     }
     
@@ -103,22 +103,42 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if indexPath.row == 0 {
-            return CGSize(width: collectionView.frame.size.width, height: 800)
+            return CGSize(width: collectionView.frame.size.width, height: 650)
+            
+//            return UICollectionViewFlowLayout.automaticSize
 
+            
         } else if indexPath.row == 1 {
-            return CGSize(width: collectionView.frame.size.width, height: 40)
+            return CGSize(width: collectionView.frame.size.width, height: 60)
             
         } else if indexPath.row == 2 {
             // top rated  cell
-            return CGSize(width: collectionView.frame.size.width, height: 150)
             
-        } else if indexPath.row == 3 {
-            return CGSize(width: collectionView.frame.size.width, height: 60)
+            var totalHeight = CGFloat()
+            let eachCellHeight = collectionView.frame.size.width / 3 - 2
+
+            if posts.count > 3 {
+                
+                let postCount = posts.count / 3
+                let rem = posts.count % 3
+
+                if rem == 0 {
+                    
+                    totalHeight = eachCellHeight * CGFloat(postCount)
+                    
+                } else {
+                    
+                    totalHeight = (eachCellHeight * CGFloat(postCount)) + 1
+                }
+                
+            } else {
+                
+                totalHeight = eachCellHeight
+            }
             
-        } else if indexPath.row == 4 {
-            return CGSize(width: collectionView.frame.size.width, height: 400)
+            return CGSize(width: collectionView.frame.size.width, height: totalHeight)
             
-        } else {
+        }  else {
             return UICollectionViewFlowLayout.automaticSize
         }
         
@@ -131,34 +151,50 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         if indexPath.row == 0 {
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileColCell", for: indexPath) as! ProfileColCell
-           
+            
+            
+            if let img = profileDetails?.image_path {
+                cell.userImage.loadImageUsingUrlString(urlString: img)
+            }
+            
+            if let qrImg = profileDetails?.qrimage {
+                cell.qrImage.loadImageUsingUrlString(urlString: qrImg)
+            }
+            
+            if let first_name = profileDetails?.first_name {
+                
+                if let last_name = profileDetails?.last_name {
+                    
+                    cell.username.text = first_name + " " + last_name
+
+                }
+                
+            }
+            
+            cell.count1.text = profileDetails?.countFollowing
+            cell.count2.text = profileDetails?.countFollowers
+            cell.count3.text = profileDetails?.points
+            cell.count4.text = profileDetails?.countUserPosts
+            cell.des.text = profileDetails?.about
+
             return cell
             
         } else if indexPath.row == 1 {
 
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopRatedHeader", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyPostHeaderCell", for: indexPath)
             
             return cell
 
         } else if indexPath.row == 2 {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopRatedCell", for: indexPath) as! TopRatedCell
-            
-            return cell
-
-        } else if indexPath.row == 3 {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopRatedHeader2", for: indexPath)
-            
-            return cell
-            
-        } else if indexPath.row == 4 {
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostCell", for: indexPath) as! ProfileMyPostCell
             
+            cell.posts = posts
+            cell.colView.reloadData()
+            
             return cell
             
-        } else {
+        }  else {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostCell", for: indexPath) as! ProfileMyPostCell
             
@@ -174,8 +210,8 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     // load comments
     func loadProfileDetails(user_id: String, completed: @escaping () -> ()) {
         
-        let url = baseURL + loginUrl + "?"
-            + "post_id=" + "\(user_id)"
+        let url = baseURL + profile + "?"
+            + "user_id=" + "\(user_id)"
             + "&action=" + "\("user_profile")"
 
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in

@@ -13,10 +13,20 @@ let blueColor2 = UIColor(red: 25/255, green: 154/255, blue: 255/255, alpha: 1)
 
 class ProfileColCell: UICollectionViewCell {
 
-    @IBOutlet weak var tag1: UIButton!
-    @IBOutlet weak var tag2: UIButton!
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var username: UILabel!
     @IBOutlet weak var edit: UIButton!
     @IBOutlet weak var whiteView: UIView!
+    
+    @IBOutlet weak var count1: UILabel!
+    @IBOutlet weak var count2: UILabel!
+    @IBOutlet weak var count3: UILabel!
+    @IBOutlet weak var count4: UILabel!
+    
+    @IBOutlet weak var des: UILabel!
+    
+    @IBOutlet weak var scoreImage: UIImageView!
+    @IBOutlet weak var qrImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,13 +39,7 @@ class ProfileColCell: UICollectionViewCell {
         edit.layer.borderWidth = 1
         edit.layer.cornerRadius = 4
         
-        tag1.layer.borderColor = blueColor2.cgColor
-        tag1.layer.borderWidth = 1
-        tag1.layer.cornerRadius = 16
-        
-        tag2.layer.borderColor = blueColor2.cgColor
-        tag2.layer.borderWidth = 1
-        tag2.layer.cornerRadius = 16
+
         
     }
 }

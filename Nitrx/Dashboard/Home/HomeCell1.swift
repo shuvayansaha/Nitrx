@@ -30,7 +30,8 @@ protocol CustomCellRateButtonDelegate {
 
 //    func closeFriendsTapped(at index:IndexPath)
 
-    func rateButtonPress(row: Int, at index: IndexPath)
+    func rateButtonPress(senderTag: Int)
+    
 }
 
 
