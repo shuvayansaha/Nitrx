@@ -203,6 +203,12 @@ struct UserDataClass: Codable {
 }
 
 
+struct SelectInterestClass: Codable {
 
+    let image: String?
+    let post_cat_id: String?
+    let post_cat_name: String?
+    let status: String?
 
+}
 

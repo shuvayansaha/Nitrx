@@ -105,38 +105,14 @@ class Login: UIViewController, UITextFieldDelegate {
                         
                         if jsonDic["status"] as? String == "1" {
                             
-//                            let Address = jsonDic["Address"] as! String
-//                            let DOB = jsonDic["DOB"] as! String
-//                            let email = jsonDic["email"] as! String
-//                            let FirstName = jsonDic["First-Name"] as! String
-//                            let followPrivacy = jsonDic["follow-privacy"] as! String
-//                            let ImagePath = jsonDic["Image-Path"] as! String
-//                            let JoinDate = jsonDic["Join-Date"] as! String
-//                            let LastName = jsonDic["Last-Name"] as! String
-//                            let login = jsonDic["login"] as! String
-//                            let qrimage = jsonDic["qrimage"] as! String
-//                            let status = jsonDic["status"] as! String
-//                            let UserType = jsonDic["User-Type"] as! String
-//                            let username = jsonDic["username"] as! String
+
                             let user_id = jsonDic["user_id"] as! String
-//                            let verified = jsonDic["verified"] as! String
-//                            let Wallet = jsonDic["Wallet"] as! String
-                            
-//                            UserDefaults.standard.set(Address, forKey: "Address")
-//                            UserDefaults.standard.set(DOB, forKey: "DOB")
-//                            UserDefaults.standard.set(email, forKey: "email")
-//                            UserDefaults.standard.set(FirstName, forKey: "FirstName")
-//                            UserDefaults.standard.set(followPrivacy, forKey: "followPrivacy")
-//                            UserDefaults.standard.set(ImagePath, forKey: "ImagePath")
-//                            UserDefaults.standard.set(JoinDate, forKey: "JoinDate")
-//                            UserDefaults.standard.set(LastName, forKey: "LastName")
-//                            UserDefaults.standard.set(qrimage, forKey: "qrimage")
-//                            UserDefaults.standard.set(status, forKey: "status")
-//                            UserDefaults.standard.set(UserType, forKey: "UserType")
-//                            UserDefaults.standard.set(username, forKey: "username")
+                            let post_cat_id = jsonDic["post_cat_id"] as! String
+
+
                             UserDefaults.standard.set(user_id, forKey: "user_id")
-//                            UserDefaults.standard.set(verified, forKey: "verified")
-//                            UserDefaults.standard.set(Wallet, forKey: "Wallet")
+                            UserDefaults.standard.set(post_cat_id, forKey: "post_cat_id")
+
                             
                             
                             if jsonDic["verified"] as? String == "YES" {

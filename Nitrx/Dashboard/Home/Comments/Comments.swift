@@ -82,10 +82,7 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        
-
-        
+       
         let cellHeight = 3 + 8 + 21 + 3 + 21 + 3 + 15 + 3
 
         if let replyCount = commentArray[indexPath.row].comment_reply?.count {
@@ -95,11 +92,8 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
             return CGFloat(totalHeight)
 
         } else {
-
             return UITableView.automaticDimension
-
         }
-        
 
     }
   

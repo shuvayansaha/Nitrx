@@ -2,104 +2,58 @@
 //  Search.swift
 //  Nitrx
 //
-//  Created by Shuvayan Saha on 17/09/18.
+//  Created by Rplanx on 24/12/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-
-    @IBOutlet weak var otherTableView: UITableView!
-    @IBOutlet weak var cellCol: UICollectionView!
-    @IBOutlet weak var colView: UICollectionView!
-    @IBOutlet var otherView: UIView!
+class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
-    let category = ["Trending", "People", "Food", "Tech", "Film"]
-    let user_id = UserDefaults.standard.string(forKey: "user_id")
-    var selectedIndex = Int()
+    @IBOutlet weak var catCollectionView: UICollectionView!
+    @IBOutlet weak var selectedCatCollectionView: UICollectionView!
 
+    let post_cat_id = UserDefaults.standard.string(forKey: "post_cat_id")
+    var interestCategory = [SelectInterestClass]()
     var postArray = [PostsClass]()
+    var filterPostArray = [PostsClass]()
+    var searchBar: UISearchBar!
 
+    var selectedIndex = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        getUserData(user_id: user_id!) {
-//
-//        }
-        
-//        colView.allowsMultipleSelection = true
-//        colView.allowsSelection = true //this is set by default
+//        hideKeyboardWhenTappedAround()
 
-        
-        self.loadSearch(post_cat_id: "2") {
-            
-            self.cellCol.reloadData()
-        }
-    
-
-        hideKeyboardWhenTappedAround()
-
-        cellCol.delegate = self
-        cellCol.dataSource = self
-        
-        otherTableView.delegate = self
-        otherTableView.dataSource = self
-        
-        colView.delegate = self
-        colView.dataSource = self
-        
         // custom search bar on navigation bar
-//        let searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 100, height: 20))
-        let searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 20))
-
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 20))
+        
         searchBar.placeholder = "Search..."
         let leftNavBarButton = UIBarButtonItem(customView:searchBar)
-//        self.navigationItem.leftBarButtonItem = leftNavBarButton
         
-        // custom navigation bar right side icon
-        let notificationBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
-        notificationBtn.setImage(UIImage(named: "notification"), for: [])
-        notificationBtn.addTarget(self, action: #selector(notification), for: UIControl.Event.touchUpInside)
-        notificationBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        let notificationButton = UIBarButtonItem(customView: notificationBtn)
-        
-        // custom navigation bar right side icon
-        let plusBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
-        plusBtn.setImage(UIImage(named: "plus"), for: [])
-        plusBtn.addTarget(self, action: #selector(notification), for: UIControl.Event.touchUpInside)
-        plusBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        let plusButton = UIBarButtonItem(customView: plusBtn)
-        
-        
-//        self.navigationItem.rightBarButtonItems = [notificationButton]
-//        self.navigationItem.leftBarButtonItems = [plusButton, leftNavBarButton, notificationButton]
         self.navigationItem.leftBarButtonItems = [leftNavBarButton]
-
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
         searchBar.tintColor = .blue
+        searchBar.delegate = self
+
+        catCollectionView.delegate = self
+        catCollectionView.dataSource = self
+        selectedCatCollectionView.delegate = self
+        selectedCatCollectionView.dataSource = self
         
-//        UITextField.appearance(whenContainedInInstancesOf: [type(of: searchController.searchBar)]).tintColor = .black
+        selectInterest {
+            self.catCollectionView.reloadData()
 
-    }
+            let post_cat_id = self.interestCategory[self.selectedIndex].post_cat_id
 
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+            self.loadSearch(post_cat_id: post_cat_id!) {
+                
+                self.selectedCatCollectionView.reloadData()
+            }
+        }
         
-//        self.navigationController?.isNavigationBarHidden = true
     }
     
- 
-    @objc func notification() {
-        print("wallet")
-    }
-    
-    @objc func plus() {
-        print("wallet")
-    }
-
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -109,43 +63,32 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
         navigationController?.navigationBar.setGradientBackground(colors: colors)
         
-//        let red = UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1).cgColor
-//        let green = UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1).cgColor
-//        let gradient = CAGradientLayer()
-//        gradient.frame = navView.bounds
-//        gradient.colors = [red, green]
-//        navView.layer.insertSublayer(gradient, at: 0)
     }
     
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if collectionView == colView {
-            return category.count
+        if collectionView == catCollectionView {
+            return interestCategory.count
         } else {
-            return postArray.count
+            return filterPostArray.count
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-       
-        if collectionView == colView {
-            
-            return CGSize(width: collectionView.frame.size.width/3, height: collectionView.frame.size.height)
-        
+        if collectionView == catCollectionView {
+            return CGSize(width: collectionView.frame.size.width/3 - 8, height: collectionView.frame.size.height)
         } else {
-            
             return CGSize(width: collectionView.frame.size.width/3 - 2, height: collectionView.frame.size.width/3 - 2)
-
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
-        if collectionView == colView {
+        
+        if collectionView == catCollectionView {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCategoryCell", for: indexPath) as! SearchCategoryCell
-            cell.label.text = category[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCatCell", for: indexPath) as! SearchCatCell
+            
+            cell.label.text = interestCategory[indexPath.row].post_cat_name
             
             if selectedIndex == indexPath.row {
                 
@@ -153,7 +96,7 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
                 cell.label.layer.borderColor = blue.cgColor
                 cell.label.layer.borderWidth = 1
                 cell.label.layer.cornerRadius = 16
-
+                
             } else {
                 
                 cell.label.textColor = UIColor.black
@@ -162,95 +105,83 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
                 cell.label.layer.cornerRadius = 0
                 
             }
-
+            
             return cell
-
+            
         } else {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellSeacrh", for: indexPath) as! CellSeacrh
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchPostCatCell", for: indexPath) as! SearchPostCatCell
             
-            cell.image.loadImageUsingUrlString(urlString: postArray[indexPath.row].image!)
-            cell.label.text = "  " + postArray[indexPath.row].postText!
-
+            if let img = filterPostArray[indexPath.row].image {
+                
+                cell.image.loadImageUsingUrlString(urlString: img)
+            }
+            
+            if let txt = filterPostArray[indexPath.row].postText {
+                
+                cell.label.text = "  " + txt
+            }
+            
             return cell
         }
     }
-    
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-        if collectionView == colView {
-
+        
+        if collectionView == catCollectionView {
+            print(interestCategory[indexPath.row])
+            
             selectedIndex = indexPath.row
-
-//            if indexPath.row == category.count - 1 {
-//
-//                print("Last")
-//
-//                self.view.addSubview(otherView)
-//                otherView.alpha = 1
-//                otherView.dropShadow()
-//                otherView.translatesAutoresizingMaskIntoConstraints = false
-//
-//                otherView.topAnchor.constraint(equalTo: colView.bottomAnchor, constant: 16).isActive = true
-////                otherView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
-////                otherView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-//                otherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-//                otherView.heightAnchor.constraint(equalToConstant: view.frame.height/2).isActive = true
-//                otherView.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-//
-//
-//            } else {
-//                otherView.alpha = 0
-//
-//            }
-
-            collectionView.reloadData()
-
+            let post_cat_id = interestCategory[selectedIndex].post_cat_id
+            
+            loadSearch(post_cat_id: post_cat_id!) {
+                self.selectedCatCollectionView.reloadData()
+            }
+            
         } else {
-            
-            print(indexPath.row)
-
-            
+            print(filterPostArray[indexPath.row])
         }
-
-
+        
+        collectionView.reloadData()
     }
     
-    
-    
-    
-    
-    // other tableview
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // tableview scroll event
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        return category.count
+        self.searchBar.endEditing(true)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    // search bar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "OtherTableViewCell", for: indexPath) as! OtherTableViewCell
+        guard !searchText.isEmpty else {
+            filterPostArray = postArray
+            selectedCatCollectionView.reloadData()
+            return
+        }
         
-        cell.textLabel?.text = category[indexPath.row]
-        return cell
+        filterPostArray = postArray.filter({ (data) -> Bool in
+            (data.postText?.lowercased().contains(searchText.lowercased()))!
+        })
         
+        selectedCatCollectionView.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 30
+    // close keyboard
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.endEditing(true)
     }
     
     
     
     //get user data
-    func getUserData(user_id: String, completed: @escaping () -> ()) {
+    func selectInterest(completed: @escaping () -> ()) {
         
-        let url = baseURL + get_user_data + "?"
+        let url = baseURL + select_interest + "?"
             
-            + "user_id="
-            + "\(user_id)"
+            + "post_cat_id="
+            + "\(post_cat_id!)"
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
@@ -258,7 +189,9 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
             
             do {
                 
-                let getData = try JSONDecoder().decode(UserDataClass.self, from: data)
+                let getData = try JSONDecoder().decode([SelectInterestClass].self, from: data)
+                
+                self.interestCategory = getData
                 
                 DispatchQueue.main.async { completed() }
                 
@@ -270,9 +203,6 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
             }
         }
     }
-    
-    
-    
     
     //load search data
     func loadSearch(post_cat_id: String, completed: @escaping () -> ()) {
@@ -291,6 +221,8 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
                 let getData = try JSONDecoder().decode([PostsClass].self, from: data)
                 
                 self.postArray = getData
+                self.filterPostArray = getData
+                
                 DispatchQueue.main.async { completed() }
                 
             } catch {
@@ -301,6 +233,5 @@ class Search: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
             }
         }
     }
-    
     
 }
