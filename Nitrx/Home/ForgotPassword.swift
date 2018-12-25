@@ -17,7 +17,6 @@ class ForgotPassword: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var sendLink: UIButton!
     @IBOutlet weak var cancel: UIButton!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,47 +84,31 @@ class ForgotPassword: UIViewController, UITextFieldDelegate {
     // forgot function
     func forgotPasswordFunction() {
         
-        let url = baseURL + forget_password + "?" + "email=" + "\(email.text!)"
+        let url = baseURL + forget_password + "?"
+            + "email=" + "\(email.text!)"
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
             print(stringData)
             
             do {
-                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
                 
-                for post in jsonObject! {
+                let getData = try JSONDecoder().decode([ForgetPasswordClass].self, from: data)
+                
+                for i in getData {
                     
-                    let postDic = post as? [String: Any]
-                    
-                    if postDic != nil {
+                    if i.status == "1" {
                         
-                        if postDic?["message"] != nil {
+                        self.performSegue(withIdentifier: "ResendLink", sender: i.hidden_code)
+                        
+                    } else {
+                        
+                        if let err = i.error {
                             
-                            let message = postDic?["message"] as! String
-                            
-                            snackBarFunction(message: message)
-                            
-                            self.performSegue(withIdentifier: "ResendLink", sender: nil)
-                            
+                            snackBarFunction(message: err)
                         }
-                        
-                        if postDic?["error"] != nil {
-                            
-                            let error = postDic?["error"] as! String
-                            
-                            snackBarFunction(message: error)
-                            
-                            
-                        }
-                        
-                        
-                        
-                        
                     }
                 }
-                
-                
                 
             } catch {
                 print("ERROR")
@@ -137,6 +120,14 @@ class ForgotPassword: UIViewController, UITextFieldDelegate {
     }
     
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if (segue.identifier == "ResendLink") {
+            let vc = segue.destination as! ResendLink
+            vc.hiddenCode = sender as! String
+            
+        }
+    }
     
     
     

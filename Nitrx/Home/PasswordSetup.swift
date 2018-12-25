@@ -18,10 +18,12 @@ class PasswordSetup: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var whiteView: UIView!
     @IBOutlet weak var sendLink: UIButton!
     @IBOutlet weak var cancel: UIButton!
+
+    var arrayData = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         password.delegate = self
         password.delegate = self
 
@@ -82,15 +84,8 @@ class PasswordSetup: UIViewController, UITextFieldDelegate {
         }
             
         else {
-//            passwordSetupFunction()
-            
-            // MOVED CONTROLLER
-            let storyboard = UIStoryboard(name: "Home", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
-            //            controller.email = self.email.text!
-            //            controller.password = self.password.text!
-            
-            self.present(controller, animated: true, completion: nil)
+            passwordSetupFunction()
+
         }
     }
     
@@ -100,56 +95,54 @@ class PasswordSetup: UIViewController, UITextFieldDelegate {
     // cancel
     @IBAction func cancel(_ sender: UIButton) {
         
+        // MOVED CONTROLLER
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
+        self.present(controller, animated: true, completion: nil)
+        
     }
     
+
     
-    
-    
-    
-    // login function
+    // reset function
     func passwordSetupFunction() {
         
-        let url = baseURL 
-        let parameters = ["password": password.text!, "confirmPassword": confirmPassword.text!]
-        
-        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
+        let url = baseURL + change_password + "?"
+            + "userid=" + "\(arrayData[1])"
+            + "&email=" + "\(arrayData[0])"
+            + "&varified=" + "\(arrayData[2])"
+            + "&password=" + "\(confirmPassword.text!)"
+
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
             print(stringData)
             
             do {
-                let getData = try JSONDecoder().decode(JSONData.self, from: data)
                 
-                if getData.isLoginStatus == true {
-                    if getData.otp_type == "email" {
-                        
-                        //                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
-                        
-                    } else {
+                let getData = try JSONDecoder().decode([ForgetPasswordClass].self, from: data)
+                
+                for i in getData {
+
+                    if i.status == "1" {
                         
                         // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
+                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                        let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
+                        self.present(controller, animated: true, completion: nil)
                         
+                    } else {
+
+                        if let err = i.errors?.error_text {
+                            snackBarFunction(message: err)
+                        }
                     }
-                    
-                } else {}
+                }
                 
-//                if getData.message?.email != nil {
-//                    snackBarFunction(message: (getData.message?.email![0])!)
-//                } else {
-//                    snackBarFunction(message: (getData.message?.english)!)
-//                }
                 
+                //            // MOVED CONTROLLER
+                //            let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                //            let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
+                //            self.present(controller, animated: true, completion: nil)
                 
             } catch {
                 print("ERROR")
@@ -159,9 +152,6 @@ class PasswordSetup: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
-    
-    
     
     
     

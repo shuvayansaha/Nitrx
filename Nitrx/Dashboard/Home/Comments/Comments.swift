@@ -13,11 +13,21 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
     @IBOutlet weak var commentsTable: UITableView!
     @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var sendComment: UIButton!
-
+    
+    @IBOutlet weak var button1: UIButton!
+    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var button3: UIButton!
+    @IBOutlet weak var button4: UIButton!
+    @IBOutlet weak var button5: UIButton!
+    @IBOutlet weak var rateView: UIView!
+    
     var post_id = String()
     var profile_id = String()
 
     var commentArray = [CommentsClass]()
+    var reply = false
+    var replyRow = Int()
+    var rate = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +37,60 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
         commentsTable.delegate = self
         commentsTable.dataSource = self
         
-        print("post_id ***", post_id)
-        
         loadComments(post_id: post_id) {
             self.commentsTable.reloadData()
+            self.scrollToBottom()
         }
     }
     
-
+    // rate buttons
+    @IBAction func rateAction(_ sender: UIButton) {
+        
+        rate = sender.tag
+    
+        if sender.tag == 1 {
+            
+            button1.setImage(UIImage(named: "avater1-white"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 2 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2-white"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 3 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car-white"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 4 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster-white"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 5 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3-white"), for: .normal)
+            
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return commentArray.count
@@ -70,15 +126,7 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
     }
     
 
-//
-//    // reply comment
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if (segue.identifier == "ReplySegue") {
-//            let vc = segue.destination as! ReplyComment
-//            vc.comment_reply = commentArray[sender as! Int].comment_reply!
-//        }
-//    }
+
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -97,12 +145,9 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
 
     }
   
-    var reply = false
-    var replyRow = Int()
+  
 
     @IBAction func messageSend(_ sender: UIButton) {
-        
-        print(reply, replyRow)
         
         if reply == true {
             
@@ -198,6 +243,8 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
             + "comment_user"
             + "&text="
             + "\(text)"
+            + "&rate_post="
+            + "\(rate)"
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             

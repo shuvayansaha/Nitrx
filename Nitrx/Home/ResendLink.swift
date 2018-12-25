@@ -17,9 +17,11 @@ class ResendLink: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var sendLink: UIButton!
     @IBOutlet weak var cancel: UIButton!
 
+    var hiddenCode = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         email.delegate = self
         
         sendLink.RoundCornerButton()
@@ -54,17 +56,11 @@ class ResendLink: UIViewController, UITextFieldDelegate {
         
         if (email.text!.isBlank) {
             
-            snackBarFunction(message: "Email field is required.")
-        }
-            
-        else if (email.text!.isEmail == false) {
-            
-            snackBarFunction(message: "The email must be a valid email address.")
+            snackBarFunction(message: "Code field is required.")
         }
             
         else {
-            forgotPasswordFunction()
-            performSegue(withIdentifier: "PasswordSetup", sender: nil)
+            resetPasswordFunction()
 
         }
     }
@@ -77,54 +73,43 @@ class ResendLink: UIViewController, UITextFieldDelegate {
         
     }
     
+
     
     
-    
-    
-    // login function
-    func forgotPasswordFunction() {
+
+    // reset function
+    func resetPasswordFunction() {
         
-        let url = baseURL 
-        let parameters = ["email": email.text!]
-        
-        httpPost(controller: self, url: url, headerValue1: "application/json", headerField1: "Content-Type", headerValue2: "application/json", headerField2: "Content-Type", parameters: parameters) { (data, statusCode, stringData) in
+        let url = baseURL + reset_password + "?"
+            + "hidden_code=" + "\(hiddenCode)"
+            + "&code=" + "\(email.text!)"
+
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
             print(stringData)
             
             do {
-                let getData = try JSONDecoder().decode(JSONData.self, from: data)
                 
-                if getData.isLoginStatus == true {
-                    if getData.otp_type == "email" {
+                let getData = try JSONDecoder().decode([ForgetPasswordClass].self, from: data)
+                
+                for i in getData {
+
+                    if i.status == "1" {
                         
-                        //                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "EmailOtp") as! EmailOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
+                        snackBarFunction(message: i.message!)
                         
+                        let data = [i.email, i.userid, i.varified]
+
+                        self.performSegue(withIdentifier: "PasswordSetup", sender: data)
+
                     } else {
-                        
-                        // MOVED CONTROLLER
-                        //                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        //                        let controller = storyboard.instantiateViewController(withIdentifier: "GAuthOtp") as! GAuthOtp
-                        //                        controller.email = self.email.text!
-                        //                        controller.password = self.password.text!
-                        //
-                        //                        self.present(controller, animated: true, completion: nil)
-                        
+
+                        if let err = i.errors?.error_text {
+                            snackBarFunction(message: err)
+                        }
                     }
-                    
-                } else {}
-                
-//                if getData.message?.email != nil {
-//                    snackBarFunction(message: (getData.message?.email![0])!)
-//                } else {
-//                    snackBarFunction(message: (getData.message?.english)!)
-//                }
-                
+                }
+
                 
             } catch {
                 print("ERROR")
@@ -136,10 +121,14 @@ class ResendLink: UIViewController, UITextFieldDelegate {
     }
     
     
-    
-    
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if (segue.identifier == "PasswordSetup") {
+            let vc = segue.destination as! PasswordSetup
+            
+            vc.arrayData =  sender as! [String]
+        }
+    }
     
     
     

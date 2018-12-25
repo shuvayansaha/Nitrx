@@ -27,8 +27,8 @@ let post_details = "post_details.php/"
 let save_comment = "save_comment.php/"
 let profile = "profile.php/"
 let get_user_data = "get_user_data.php/"
-
-
+let reset_password = "reset_password.php/"
+let change_password = "change_password.php/"
 
 
 
@@ -86,6 +86,7 @@ struct SendCommentsClass: Codable {
 
 struct ErrorsClass: Codable {
     let error_text: String?
+    let status: String?
 }
 
 
@@ -176,6 +177,8 @@ struct PostsClass: Codable {
     let user_avatar: String?
     let view_count: Int?
     let website_url: String?
+    let errors: ErrorsClass?
+    let api_status: String?
 
 }
 
@@ -212,3 +215,19 @@ struct SelectInterestClass: Codable {
 
 }
 
+
+struct ForgetPasswordClass: Codable {
+    
+    let message: String?
+    let hidden_code: String?
+    let status: String?
+    let error: String?
+
+    let email: String?
+    let page_name: String?
+    let varified: String?
+    let userid: String?
+    let errors: ErrorsClass?
+
+
+}

@@ -222,7 +222,15 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
                 
                 let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
                 
-                self.posts = getData.posts!
+                for i in getData.posts! {
+                    
+                    if i.api_status != "400" {
+                        
+                        self.posts = getData.posts!
+
+                    }
+                }
+                
                 self.profileDetails = getData.profile
 
                 DispatchQueue.main.async { completed() }

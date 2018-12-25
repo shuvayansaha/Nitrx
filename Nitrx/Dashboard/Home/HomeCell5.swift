@@ -29,6 +29,8 @@ class HomeCell5: UITableViewCell, UITextViewDelegate {
     
     var rateButtonNo = Int()
 
+    let imagePath = UserDefaults.standard.string(forKey: "Image-Path")
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -38,6 +40,13 @@ class HomeCell5: UITableViewCell, UITextViewDelegate {
         button3.RoundCornerButtonWithGrayBorder()
         button4.RoundCornerButtonWithGrayBorder()
         button5.RoundCornerButtonWithGrayBorder()
+        
+        if let img = imagePath {
+            userImage.loadImageUsingUrlString(urlString: img)
+
+        }
+        
+        
 
     }
     

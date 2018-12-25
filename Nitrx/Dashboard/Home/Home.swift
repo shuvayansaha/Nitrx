@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+let user_id = UserDefaults.standard.string(forKey: "user_id")
 
 class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate, CommentsCellDelegate, CustomCommentDelegate, CustomCellRateButtonDelegate {
  
@@ -31,7 +32,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
                 
         homeTable.delegate = self
         homeTable.dataSource = self
-        
 
         loadHome {
             self.homeTable.reloadData()
@@ -43,8 +43,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         pencilBtn.addTarget(self, action: #selector(notification), for: UIControl.Event.touchUpInside)
         pencilBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let pencilButton = UIBarButtonItem(customView: pencilBtn)
-        
-    
         
         self.navigationItem.rightBarButtonItems = [pencilButton]
         
@@ -59,6 +57,16 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
         self.navigationController?.navigationBar.isTranslucent = false
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // navigation bar gradient color
+        var colors = [UIColor]()
+        colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
+        colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
+        navigationController?.navigationBar.setGradientBackground(colors: colors)
     }
     
     // pull to refresh
@@ -105,34 +113,10 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     }
     
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // navigation bar gradient color
-        var colors = [UIColor]()
-        colors.append(UIColor(red: 61/255, green: 78/255, blue: 253/255, alpha: 1))
-        colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
-        navigationController?.navigationBar.setGradientBackground(colors: colors)
-    }
+
     
   
-    
-    func commentButtonPress(row: Int) {
-        performSegue(withIdentifier: "CommentsSegue", sender: row)
-        
-    }
-    
 
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if (segue.identifier == "CommentsSegue") {
-            let vc = segue.destination as! Comments
-            vc.post_id = postArray[sender as! Int].post_id!
-            vc.profile_id = postArray[sender as! Int].profile_id!
-
-        }
-    }
   
     // tableview scroll event
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -168,6 +152,9 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         }, completion: nil)
     }
     
+    
+    
+    // link press
     func linkPress(row: Int) {
         
         //        print("Tap", link.titleLabel?.text!)
@@ -197,93 +184,9 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
         }
 
-        
     }
     
-    func postComment(row: Int, text: String, rate: Int, completed: @escaping () -> ()) {
-        
-        let post_id = postArray[row].post_id
-        let profile_id = postArray[row].profile_id
-        
-        let url = baseURL + save_comment + "?"
-            + "post_id="
-            + "\(post_id!)"
-            + "&user_id="
-            + "\(profile_id!)"
-            + "&action="
-            + "\("comment_user")"
-            + "&text="
-            + "\(text)"
-            + "&rate_post="
-            + "\(rateButtonNo)"
-        
-        print(url)
-        
-        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
-            
-//            print(stringData)
-            
-            do {
-                
-                let getData = try JSONDecoder().decode([SendCommentsClass].self, from: data)
-                
-                for i in getData {
-                    
-                    if i.status == "1" {
-                        
-                        self.performSegue(withIdentifier: "CommentsSegue", sender: row)
 
-                    } else {
-                        
-                        if let err = i.errors?.error_text {
-                            snackBarFunction(message: err)
-                        }
-                    }
-                }
-                
-                DispatchQueue.main.async { completed() }
-                
-                
-            } catch {
-                print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
-                
-            }
-        }
-        
-    }
-    
-    
-    
-    //load home data
-    func loadHome(completed: @escaping () -> ()) {
-        
-        let url = baseURL + post_details
-        
-        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
-            
-//            print(stringData)
-            
-            do {
-                
-                let getData = try JSONDecoder().decode([PostsClass].self, from: data)
-                
-                self.postArray = getData
-                DispatchQueue.main.async { completed() }
-                
-            } catch {
-                print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
-            }
-        }
-    }
-    
-    
-    
     
     // close pop up
     @IBAction func close(_ sender: UIButton) {
@@ -295,10 +198,27 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     
+    func commentButtonPress(row: Int) {
+        performSegue(withIdentifier: "CommentsSegue", sender: row)
+        
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if (segue.identifier == "CommentsSegue") {
+            let vc = segue.destination as! Comments
+            vc.post_id = postArray[sender as! Int].post_id!
+            vc.profile_id = user_id!
+            
+        }
+    }
 
     
     
-    
+    // MARK : -  TABLE VIEW
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return postArray.count
     }
@@ -306,13 +226,10 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return 6
     }
     
     
-
-
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -330,7 +247,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             
             cell.userImage.loadImageUsingUrlString(urlString: postArray[indexPath.section].user_avatar!)
             
-
             return cell
             
         } else if indexPath.row == 1 {
@@ -387,9 +303,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
             cell.rateDelegate = self
 
             cell.sendButton.tag = indexPath.section
-            
-            cell.userImage.loadImageUsingUrlString(urlString: postArray[indexPath.section].user_avatar!)
-
 
             let avg_post_rate = postArray[indexPath.section].avg_post_rate
             
@@ -473,6 +386,115 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     
+    func postComment(row: Int, text: String, rate: Int, completed: @escaping () -> ()) {
+        
+        let post_id = postArray[row].post_id
+        let profile_id = user_id
+        
+        let url = baseURL + save_comment + "?"
+            + "post_id="
+            + "\(post_id!)"
+            + "&user_id="
+            + "\(profile_id!)"
+            + "&action="
+            + "\("comment_user")"
+            + "&text="
+            + "\(text)"
+            + "&rate_post="
+            + "\(rateButtonNo)"
+        
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            //            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode([SendCommentsClass].self, from: data)
+                
+                for i in getData {
+                    
+                    if i.status == "1" {
+                        
+                        self.performSegue(withIdentifier: "CommentsSegue", sender: row)
+                        
+                    } else {
+                        
+                        if let err = i.errors?.error_text {
+                            snackBarFunction(message: err)
+                        }
+                    }
+                }
+                
+                DispatchQueue.main.async { completed() }
+                
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+                
+            }
+        }
+        
+    }
+    
+    
+    
+    //load home data
+    func loadHome(completed: @escaping () -> ()) {
+        
+        let url = baseURL + post_details
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            //            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode([PostsClass].self, from: data)
+                
+                self.postArray = getData
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
+    
+    
+
+    // get user data
+//    func getUserData(user_id: String, completed: @escaping () -> ()) {
+//
+//        let url = baseURL + get_user_data + "?"
+//
+//            + "user_id="
+//            + "\(user_id)"
+//
+//        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+//
+//            print(stringData)
+//
+//            do {
+//
+//                let getData = try JSONDecoder().decode(UserDataClass.self, from: data)
+//
+//                DispatchQueue.main.async { completed() }
+//
+//            } catch {
+//                print("ERROR")
+//                DispatchQueue.main.async {
+//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+//                }
+//            }
+//        }
+//    }
 
   
 }

@@ -108,16 +108,17 @@ class Login: UIViewController, UITextFieldDelegate {
 
                             let user_id = jsonDic["user_id"] as! String
                             let post_cat_id = jsonDic["post_cat_id"] as! String
-
+                            let Image_Path = jsonDic["Image-Path"] as! String
 
                             UserDefaults.standard.set(user_id, forKey: "user_id")
                             UserDefaults.standard.set(post_cat_id, forKey: "post_cat_id")
+                            UserDefaults.standard.set(Image_Path, forKey: "Image-Path")
 
                             
                             
                             if jsonDic["verified"] as? String == "YES" {
                                 
-                                if jsonDic["preference"] as? String == "YES" {
+                                if jsonDic["post_cat_id"] as? String != "" {
 
                                     // MOVED CONTROLLER
                                     let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
@@ -127,9 +128,7 @@ class Login: UIViewController, UITextFieldDelegate {
                                     //            controller.password = self.password.text!
                                     self.present(controller, animated: true, completion: nil)
                                     
-                                }
-                                
-                                if jsonDic["preference"] as? String == "NO" {
+                                } else {
                                     
                                     // MOVED CONTROLLER
                                     let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
