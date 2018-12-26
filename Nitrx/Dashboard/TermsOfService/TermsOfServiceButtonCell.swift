@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CustomCellDelegate {
+    func buttonPress(row: Int)
+}
+
 class TermsOfServiceButtonCell: UICollectionViewCell {
     
     @IBOutlet weak var accept: UIButton!

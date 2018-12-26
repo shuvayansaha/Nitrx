@@ -12,10 +12,7 @@ class TermsServiceCell: UICollectionViewCell {
 
     @IBOutlet weak var whiteView: UIView!
     @IBOutlet weak var label: UILabel!
-    
-    
-
-
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         

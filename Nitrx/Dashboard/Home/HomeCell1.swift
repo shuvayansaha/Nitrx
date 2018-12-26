@@ -8,33 +8,6 @@
 
 import UIKit
 
-protocol CustomCellDelegate {
-    
-    func buttonPress(row: Int)
-    func linkPress(row: Int)
-
-}
-
-protocol CustomCommentDelegate {
-    func commentBox(row: Int, text: String, rate: Int)
-    
-}
-
-protocol CustomCellRateButtonDelegate {
-    
-//    func rateButton1Press(row: Int, button: Int)
-//    func rateButton2Press(row: Int, button: Int)
-//    func rateButton3Press(row: Int, button: Int)
-//    func rateButton4Press(row: Int, button: Int)
-//    func rateButton5Press(row: Int, button: Int)
-
-//    func closeFriendsTapped(at index:IndexPath)
-
-    func rateButtonPress(senderTag: Int)
-    
-}
-
-
 class HomeCell1: UITableViewCell {
     
     @IBOutlet weak var userImage: UIImageView!

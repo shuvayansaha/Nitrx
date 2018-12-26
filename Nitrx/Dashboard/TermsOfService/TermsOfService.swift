@@ -9,23 +9,6 @@
 import UIKit
 
 class TermsOfService: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, CustomCellDelegate {
-    
-    func rateButtonPress(row: Int) {
-        
-    }
-    
-   
-    func commentBox(row: Int) {
-        
-    }
-    
-   
-    func linkPress(row: Int) {
-        
-    }
-    
-
-    
 
     @IBOutlet weak var colView: UICollectionView!
 

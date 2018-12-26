@@ -10,11 +10,16 @@ import UIKit
 import WebKit
 let user_id = UserDefaults.standard.string(forKey: "user_id")
 
-class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CustomCellDelegate, CommentsCellDelegate, CustomCommentDelegate, CustomCellRateButtonDelegate {
+class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CommentCellDelegate, CommentsCellDelegate {
  
+    @IBOutlet weak var commentTextField: UITextField!
+    @IBOutlet weak var keyboardView: UIView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var homeTable: UITableView!
     @IBOutlet var ratePopUp: UIView!
+    
     var rateButtonNo = Int()
+    var index: Int?
 
     let web = WKWebView()
     
@@ -28,8 +33,8 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
         addPullToRefreshTableView()
 
-        hideKeyboardWhenTappedAround()
-                
+//        hideKeyboardWhenTappedAround()
+        
         homeTable.delegate = self
         homeTable.dataSource = self
 
@@ -57,7 +62,15 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
         self.navigationController?.navigationBar.isTranslucent = false
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
+    
+
+
+
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -106,23 +119,20 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     }
     
 
-    func rateButtonPress(senderTag: Int) {
-        print(senderTag)
-        
-        rateButtonNo = senderTag
-    }
-    
-    
 
     
-  
 
-  
-    // tableview scroll event
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
-        view.endEditing(true)
+    // comment view
+    @IBAction func rateButtonAction(_ sender: UIButton) {
+    
+        rateButtonNo = sender.tag
     }
+    
+    @IBAction func postCommentButtonAction(_ sender: UIButton) {
+        
+        
+    }
+    
 
     
     func buttonPress(row: Int) {
@@ -175,19 +185,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         
     }
     
-    
-    
-    // post comment
-    func commentBox(row: Int, text: String, rate: Int) {
-        
-        postComment(row: row, text: text, rate: rate) {
-            
-        }
-
-    }
-    
-
-    
     // close pop up
     @IBAction func close(_ sender: UIButton) {
         
@@ -198,11 +195,33 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
     
     
     
-    func commentButtonPress(row: Int) {
-        performSegue(withIdentifier: "CommentsSegue", sender: row)
+//    // post comment
+//    func commentBox(row: Int, text: String, rate: Int) {
+//
+//        postComment(row: row, text: text, rate: rate) {
+//
+//        }
+//
+//    }
+    
+    func commentPress(row: Int) {
+        print(row)
+        
+        index = row
+        commentTextField.becomeFirstResponder()
         
     }
     
+
+    
+ 
+    
+    
+    // all comments view
+    func commentButtonPress(row: Int) {
+        performSegue(withIdentifier: "CommentsSegue", sender: row)
+    }
+
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -297,12 +316,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         } else if indexPath.row == 4 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell5") as! HomeCell5
-            
-            cell.delegate = self
-            cell.commentDelegate = self
-            cell.rateDelegate = self
-
-            cell.sendButton.tag = indexPath.section
 
             let avg_post_rate = postArray[indexPath.section].avg_post_rate
             
@@ -324,6 +337,9 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
                 cell.button5.setImage(UIImage(named: "avater3"), for: .normal)
 
             }
+            
+            cell.commentButton.tag = indexPath.section
+            cell.delegate = self
 
             return cell
             
@@ -384,6 +400,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
         return 0
     }
     
+  
     
     
     func postComment(row: Int, text: String, rate: Int, completed: @escaping () -> ()) {
@@ -496,6 +513,42 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Custom
 //        }
 //    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        bottomConstraint.constant = -100
+        //        self.tabBarController?.tabBar.isHidden = true
+        
+    }
+    
+    
+    // tableview scroll event
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        view.endEditing(true)
+        bottomConstraint.constant = -100
+
+    }
+    
+    
+    @objc func handleKeybaordNotification(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            bottomConstraint?.constant = keyboardHeight
+            let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+            bottomConstraint?.constant = isKeyboardShowing ? keyboardHeight : 0
+            
+            UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                if isKeyboardShowing {
+                    let indexPath = IndexPath(row: 3, section: self.index!)
+                    self.homeTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
+            }
+        }
+    }
   
 }
 

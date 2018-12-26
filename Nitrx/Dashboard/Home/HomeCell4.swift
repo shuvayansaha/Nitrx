@@ -12,6 +12,7 @@ protocol CommentsCellDelegate {
     
     func commentButtonPress(row: Int)
 }
+
 class HomeCell4: UITableViewCell {
 
     @IBOutlet weak var commentsButton: UIButton!
