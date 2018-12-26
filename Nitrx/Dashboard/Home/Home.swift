@@ -12,6 +12,12 @@ let user_id = UserDefaults.standard.string(forKey: "user_id")
 
 class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CommentCellDelegate, CommentsCellDelegate {
  
+    @IBOutlet weak var button1: UIButton!
+    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var button3: UIButton!
+    @IBOutlet weak var button4: UIButton!
+    @IBOutlet weak var button5: UIButton!
+    
     @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var keyboardView: UIView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -30,6 +36,12 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        button1.RoundCornerButtonWithGrayBorder()
+        button2.RoundCornerButtonWithGrayBorder()
+        button3.RoundCornerButtonWithGrayBorder()
+        button4.RoundCornerButtonWithGrayBorder()
+        button5.RoundCornerButtonWithGrayBorder()
         
         addPullToRefreshTableView()
 
@@ -63,12 +75,27 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
         self.navigationController?.navigationBar.isTranslucent = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+//        print("Remove NotificationCenter Deinit")
+//        NotificationCenter.default.removeObserver(self)
+        commentTextField.endEditing(true)
+    }
 
+    deinit {
+
+        print("Remove NotificationCenter Deinit")
+        NotificationCenter.default.removeObserver(self)
+
+    }
 
 
     
@@ -126,11 +153,49 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
     @IBAction func rateButtonAction(_ sender: UIButton) {
     
         rateButtonNo = sender.tag
-    }
-    
-    @IBAction func postCommentButtonAction(_ sender: UIButton) {
         
-        
+        if sender.tag == 1 {
+            
+            button1.setImage(UIImage(named: "avater1-white"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 2 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2-white"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 3 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car-white"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 4 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster-white"), for: .normal)
+            button5.setImage(UIImage(named: "avater3"), for: .normal)
+            
+        } else if sender.tag == 5 {
+            
+            button1.setImage(UIImage(named: "avater1"), for: .normal)
+            button2.setImage(UIImage(named: "avater2"), for: .normal)
+            button3.setImage(UIImage(named: "car"), for: .normal)
+            button4.setImage(UIImage(named: "booster"), for: .normal)
+            button5.setImage(UIImage(named: "avater3-white"), for: .normal)
+            
+        }
+
     }
     
 
@@ -195,31 +260,44 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
     
     
     
-//    // post comment
-//    func commentBox(row: Int, text: String, rate: Int) {
-//
-//        postComment(row: row, text: text, rate: rate) {
-//
-//        }
-//
-//    }
+
     
     func commentPress(row: Int) {
         print(row)
         
         index = row
+        rateButtonNo = 0
+        
+        button1.setImage(UIImage(named: "avater1"), for: .normal)
+        button2.setImage(UIImage(named: "avater2"), for: .normal)
+        button3.setImage(UIImage(named: "car"), for: .normal)
+        button4.setImage(UIImage(named: "booster"), for: .normal)
+        button5.setImage(UIImage(named: "avater3"), for: .normal)
+
         commentTextField.becomeFirstResponder()
+
         
     }
     
 
     
  
+    @IBAction func postCommentButtonAction(_ sender: UIButton) {
+
+        self.postComment()
+        
+    }
+ 
+
     
     
     // all comments view
     func commentButtonPress(row: Int) {
         performSegue(withIdentifier: "CommentsSegue", sender: row)
+        
+        
+        index = row
+
     }
 
     
@@ -403,20 +481,19 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
   
     
     
-    func postComment(row: Int, text: String, rate: Int, completed: @escaping () -> ()) {
+    func postComment() {
         
-        let post_id = postArray[row].post_id
-        let profile_id = user_id
+        let post_id = postArray[index!].post_id
         
         let url = baseURL + save_comment + "?"
             + "post_id="
             + "\(post_id!)"
             + "&user_id="
-            + "\(profile_id!)"
+            + "\(user_id!)"
             + "&action="
             + "\("comment_user")"
             + "&text="
-            + "\(text)"
+            + "\((commentTextField.text)!)"
             + "&rate_post="
             + "\(rateButtonNo)"
         
@@ -433,7 +510,8 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
                     
                     if i.status == "1" {
                         
-                        self.performSegue(withIdentifier: "CommentsSegue", sender: row)
+                        self.commentTextField.text = ""
+                        self.performSegue(withIdentifier: "CommentsSegue", sender: self.index)
                         
                     } else {
                         
@@ -443,15 +521,16 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
                     }
                 }
                 
-                DispatchQueue.main.async { completed() }
+//                DispatchQueue.main.async { completed() }
                 
                 
             } catch {
                 print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
-                
+//                DispatchQueue.main.async {
+//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+//                }
+                snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+
             }
         }
         
@@ -515,8 +594,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        bottomConstraint.constant = -100
-        //        self.tabBarController?.tabBar.isHidden = true
+        bottomConstraint.constant = -90
         
     }
     
@@ -525,7 +603,7 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         view.endEditing(true)
-        bottomConstraint.constant = -100
+        bottomConstraint.constant = -90
 
     }
     
@@ -543,8 +621,11 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
                 self.view.layoutIfNeeded()
             }) { (completed) in
                 if isKeyboardShowing {
-                    let indexPath = IndexPath(row: 3, section: self.index!)
-                    self.homeTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                    
+                    if self.index != 0 {
+                        let indexPath = IndexPath(row: 3, section: self.index!)
+                        self.homeTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                    }
                 }
             }
         }

@@ -19,6 +19,7 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
     @IBOutlet weak var button3: UIButton!
     @IBOutlet weak var button4: UIButton!
     @IBOutlet weak var button5: UIButton!
+    
     @IBOutlet weak var rateView: UIView!
     
     var post_id = String()
