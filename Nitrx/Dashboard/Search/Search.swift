@@ -185,7 +185,7 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
+//            print(stringData)
             
             do {
                 
@@ -214,7 +214,7 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
+//            print(stringData)
             
             do {
                 

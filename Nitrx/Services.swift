@@ -91,6 +91,13 @@ struct ErrorsClass: Codable {
     let status: String?
 }
 
+struct CreatePostClass: Codable {
+    
+    let status: String?
+    let success: Int?
+    let errors: ErrorsClass?
+
+}
 
 
 
