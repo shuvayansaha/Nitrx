@@ -10,9 +10,9 @@ import UIKit
 
 class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var tableView: UITableView!
-
     let user_id = UserDefaults.standard.string(forKey: "user_id")
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

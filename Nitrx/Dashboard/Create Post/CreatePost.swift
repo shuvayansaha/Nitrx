@@ -1,47 +1,38 @@
 //
-//  EditProfile.swift
+//  CreatePost.swift
 //  Nitrx
 //
-//  Created by Shuvayan Saha on 30/09/18.
+//  Created by Shuvayan Saha on 30/12/18.
 //  Copyright © 2018 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     let user_id = UserDefaults.standard.string(forKey: "user_id")
     
-    @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var changeButton: UIButton!
-    @IBOutlet weak var name: UITextField!
-    @IBOutlet weak var username: UITextField!
-    @IBOutlet weak var website: UITextField!
-
+    @IBOutlet weak var postTitle: UITextField!
+    @IBOutlet weak var url: UITextField!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var upload: UIButton!
+    @IBOutlet weak var save: UIButton!
+    @IBOutlet weak var postView: UIView!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var whiteView: UIView!
-    
     var alertController: UIAlertController!
-    
-    var getProfileImage: String?
-    var getName: String?
-    var getUsername: String?
-    var getAbout: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         hideKeyboardWhenTappedAround()
         
-        UITextField.connectFields(fields: [name, username, website])
+        UITextField.connectFields(fields: [postTitle, url])
         
         whiteView.layer.borderColor = UIColor.lightGray.cgColor
         whiteView.layer.borderWidth = 0.5
         whiteView.layer.cornerRadius = 4
-        
-        changeButton.layer.cornerRadius = 20
         
         textView.layer.borderColor = UIColor.lightGray.cgColor
         textView.layer.borderWidth = 0.5
@@ -51,8 +42,19 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         textView.text = "Describe your post here..."
         textView.textColor = UIColor.lightGray
         
+        upload.layer.cornerRadius = 4
+        
+        save.layer.borderColor = blueColor2.cgColor
+        save.layer.borderWidth = 1
+        save.layer.cornerRadius = 4
+        
+        postView.layer.borderColor = UIColor.lightGray.cgColor
+        postView.layer.borderWidth = 0.5
+        postView.layer.cornerRadius = 4
+        
+        postView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageUpload)))
+        
         imagePicker()
-        loadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,6 +65,8 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
         navigationController?.navigationBar.setGradientBackground(colors: colors)
     }
+    
+
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
@@ -80,8 +84,9 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
     
     
     
+    
     @objc func imageUpload() {
-        
+       
         present(alertController, animated: true, completion: nil)
     }
     
@@ -118,7 +123,7 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         }
         
         alertController.addAction(gallery)
-        //        alertController.addAction(camera)
+//        alertController.addAction(camera)
         alertController.addAction(cancel)
     }
     
@@ -129,69 +134,52 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             //        photographPhoto = image.jpegData(compressionQuality: 1)!
-            
-            profileImage.image = image
         }
-        
+    
         dismiss(animated: true, completion: nil)
     }
     
     
     
-
     
     
-    
-    
-    
-    @IBAction func changeImage(_ sender: UIButton) {
-        present(alertController, animated: true, completion: nil)
-
-    }
-    
-    
-    
-    @IBAction func saveProfile(_ sender: UIBarButtonItem) {
+    @IBAction func uploadAction(_ sender: UIButton) {
         post()
     }
     
-    func loadData() {
+    
+    
+    
+    
+    
+    @IBAction func saveAction(_ sender: UIButton) {
         
-        profileImage.loadImageUsingUrlString(urlString: getProfileImage!)
-        name.text = getName
-        username.text = getUsername
-        textView.text = getAbout
     }
+    
+    
     
     //load search data
     func post() {
         
         if textView.text == "Describe your post here..." {
             
-            textView.text = ""
+           textView.text = ""
         }
         
-        var urlComponents = URLComponents(string: baseURL + update_profile_setting)!
+        var urlComponents = URLComponents(string: baseURL + postUrl)!
         
         urlComponents.queryItems = [
             URLQueryItem(name: "user_id", value: user_id),
-            URLQueryItem(name: "first_name", value: name.text),
-            URLQueryItem(name: "last_name", value: ""),
-            URLQueryItem(name: "about_me", value: textView.text),
-            URLQueryItem(name: "location", value: ""),
-            URLQueryItem(name: "school", value: ""),
-            URLQueryItem(name: "working_at", value: ""),
-            URLQueryItem(name: "company_website", value: ""),
-            URLQueryItem(name: "website", value: website.text),
-            URLQueryItem(name: "relationship", value: ""),
-            URLQueryItem(name: "type", value: ""),
-
+            URLQueryItem(name: "post_cat_id", value: "2"),
+            URLQueryItem(name: "website_url", value: url.text),
+            URLQueryItem(name: "postText", value: postTitle.text),
+            URLQueryItem(name: "description", value: textView.text)
         ]
         
         let req = "\((urlComponents.url)!)"
         
         print(req)
-        
+
         httpGet(controller: self, url: req, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
             print(stringData)
@@ -207,7 +195,7 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
                         snackBarFunction(message: i.success!)
                     }
                 }
-                
+             
             } catch {
                 print("ERROR")
                 DispatchQueue.main.async {
@@ -219,7 +207,7 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
     
     
     
-
+    
     
     
     
@@ -234,6 +222,7 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         super.viewWillAppear(true)
         
         NotificationCenter.default.removeObserver(self)
+
     }
     
     
@@ -254,6 +243,5 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         scrollView.contentInset = contentInset
     }
     
-
-
+    
 }

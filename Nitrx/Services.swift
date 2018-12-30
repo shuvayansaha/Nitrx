@@ -29,8 +29,8 @@ let profile = "profile.php/"
 let get_user_data = "get_user_data.php/"
 let reset_password = "reset_password.php/"
 let change_password = "change_password.php/"
-
-
+let postUrl = "post.php/"
+let update_profile_setting = "update_profile_setting.php/"
 
 
 
@@ -81,6 +81,8 @@ struct NormalFeeds: Codable {
 struct SendCommentsClass: Codable {
 
     let status: String?
+    let success: String?
+
     let errors: ErrorsClass?
 }
 

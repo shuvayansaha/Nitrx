@@ -8,10 +8,11 @@
 
 import UIKit
 import WebKit
-let user_id = UserDefaults.standard.string(forKey: "user_id")
 
 class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, CommentCellDelegate, CommentsCellDelegate {
  
+    let user_id = UserDefaults.standard.string(forKey: "user_id")
+
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
@@ -74,19 +75,23 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
         
         self.navigationController?.navigationBar.isTranslucent = false
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
+      
         
     }
-    
-    
+//
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
 //        print("Remove NotificationCenter Deinit")
-//        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         commentTextField.endEditing(true)
     }
 
@@ -594,6 +599,11 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeybaordNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         bottomConstraint.constant = -90
         
     }

@@ -65,16 +65,14 @@
 		7EC1732F216D249200A7BD3E /* ProfileOthersMyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1732E216D249200A7BD3E /* ProfileOthersMyPostCell.swift */; };
 		7EC17331216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC17330216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift */; };
 		7EC2D2DA2155F219009A5E7B /* ProfileColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2D2D92155F219009A5E7B /* ProfileColCell.swift */; };
+		7EC4ACC721D8DD8E00743237 /* CreatePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC4ACC621D8DD8E00743237 /* CreatePost.swift */; };
 		7ED0969521C61147002D429E /* VerificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED0969421C61147002D429E /* VerificationCode.swift */; };
 		7EDE39D821610BEC00D43F5D /* EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDE39D721610BEC00D43F5D /* EditProfile.swift */; };
-		7EDE39DA21610E5A00D43F5D /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */; };
 		7EE1F2FB21AC54EF009D89F7 /* HomeCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F621AC54EE009D89F7 /* HomeCell1.swift */; };
 		7EE1F2FC21AC54EF009D89F7 /* HomeCell5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F721AC54EE009D89F7 /* HomeCell5.swift */; };
 		7EE1F2FD21AC54EF009D89F7 /* HomeCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F821AC54EE009D89F7 /* HomeCell2.swift */; };
 		7EE1F2FE21AC54EF009D89F7 /* HomeCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2F921AC54EE009D89F7 /* HomeCell3.swift */; };
 		7EE1F2FF21AC54EF009D89F7 /* HomeCell4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1F2FA21AC54EF009D89F7 /* HomeCell4.swift */; };
-		7EE43AF52156B50C002F8A5A /* PostDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF42156B50C002F8A5A /* PostDetails.swift */; };
-		7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */; };
 		7EE5431D21A66EDB003EA9C7 /* YourIntColView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE5431C21A66EDB003EA9C7 /* YourIntColView.swift */; };
 		7EEB0B8C21441FCA003EA5C4 /* NickName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB0B8B21441FCA003EA5C4 /* NickName.swift */; };
 		7EF73BCA219897220086A4BF /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF73BC9219897210086A4BF /* SignUp.swift */; };
@@ -141,16 +139,14 @@
 		7EC1732E216D249200A7BD3E /* ProfileOthersMyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOthersMyPostCell.swift; sourceTree = "<group>"; };
 		7EC17330216D249F00A7BD3E /* ProfileOthersMyPostCellChild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOthersMyPostCellChild.swift; sourceTree = "<group>"; };
 		7EC2D2D92155F219009A5E7B /* ProfileColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileColCell.swift; sourceTree = "<group>"; };
+		7EC4ACC621D8DD8E00743237 /* CreatePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePost.swift; sourceTree = "<group>"; };
 		7ED0969421C61147002D429E /* VerificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCode.swift; sourceTree = "<group>"; };
 		7EDE39D721610BEC00D43F5D /* EditProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfile.swift; sourceTree = "<group>"; };
-		7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
 		7EE1F2F621AC54EE009D89F7 /* HomeCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell1.swift; sourceTree = "<group>"; };
 		7EE1F2F721AC54EE009D89F7 /* HomeCell5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell5.swift; sourceTree = "<group>"; };
 		7EE1F2F821AC54EE009D89F7 /* HomeCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell2.swift; sourceTree = "<group>"; };
 		7EE1F2F921AC54EE009D89F7 /* HomeCell3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell3.swift; sourceTree = "<group>"; };
 		7EE1F2FA21AC54EF009D89F7 /* HomeCell4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell4.swift; sourceTree = "<group>"; };
-		7EE43AF42156B50C002F8A5A /* PostDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetails.swift; sourceTree = "<group>"; };
-		7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsCell.swift; sourceTree = "<group>"; };
 		7EE5431C21A66EDB003EA9C7 /* YourIntColView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourIntColView.swift; sourceTree = "<group>"; };
 		7EEB0B8B21441FCA003EA5C4 /* NickName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickName.swift; sourceTree = "<group>"; };
 		7EF73BC9219897210086A4BF /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
@@ -242,15 +238,15 @@
 				22A262C42137D57F00DDFED3 /* Dashboard.storyboard */,
 				7EC13CAC21C6A405005B31C4 /* DashboardNav.swift */,
 				7E7C38BB214ED05A0063F47C /* DashboardTab.swift */,
-				7E97A9AA2179270900F746D7 /* InstaNav */,
 				7E6EB4EC2156438600A763BF /* TermsOfService */,
+				7E88AE7C214D75F300FC994F /* YourInterests */,
+				7E97A9AA2179270900F746D7 /* InstaNav */,
 				7E7C38BD214ED0D90063F47C /* Home */,
 				7E7C38C0214EDE140063F47C /* Search */,
-				7E7C38C3214EDF4F0063F47C /* Profile */,
-				7EE43AF12156B4C8002F8A5A /* Post Details */,
+				7EE43AF12156B4C8002F8A5A /* Create Post */,
 				7E388F94216A09B300F66939 /* Add */,
 				7EBE732D216D9C6400E8E3C5 /* Message */,
-				7E88AE7C214D75F300FC994F /* YourInterests */,
+				7E7C38C3214EDF4F0063F47C /* Profile */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -380,18 +376,16 @@
 			isa = PBXGroup;
 			children = (
 				7EDE39D721610BEC00D43F5D /* EditProfile.swift */,
-				7EDE39D921610E5A00D43F5D /* EditProfileCell.swift */,
 			);
 			path = "Edit Profile";
 			sourceTree = "<group>";
 		};
-		7EE43AF12156B4C8002F8A5A /* Post Details */ = {
+		7EE43AF12156B4C8002F8A5A /* Create Post */ = {
 			isa = PBXGroup;
 			children = (
-				7EE43AF42156B50C002F8A5A /* PostDetails.swift */,
-				7EE43AF62156BDE2002F8A5A /* PostDetailsCell.swift */,
+				7EC4ACC621D8DD8E00743237 /* CreatePost.swift */,
 			);
-			path = "Post Details";
+			path = "Create Post";
 			sourceTree = "<group>";
 		};
 		A19913BC2E50394D15CECE7B /* Pods */ = {
@@ -527,7 +521,7 @@
 				7E1ABC982141B97A00517E48 /* Splash.swift in Sources */,
 				7E1ABC942141B66F00517E48 /* Extension.swift in Sources */,
 				7EE1F2FD21AC54EF009D89F7 /* HomeCell2.swift in Sources */,
-				7EE43AF52156B50C002F8A5A /* PostDetails.swift in Sources */,
+				7EC4ACC721D8DD8E00743237 /* CreatePost.swift in Sources */,
 				7E7C38BC214ED05A0063F47C /* DashboardTab.swift in Sources */,
 				7EA5BE9F21458AA1002A8E5E /* Email.swift in Sources */,
 				7EE1F2FC21AC54EF009D89F7 /* HomeCell5.swift in Sources */,
@@ -536,7 +530,6 @@
 				7E6EB4E72156326D00A763BF /* ProfileMyPostCell.swift in Sources */,
 				7E2A200B2179621D00F484E0 /* GridLayout.swift in Sources */,
 				7ED0969521C61147002D429E /* VerificationCode.swift in Sources */,
-				7EDE39DA21610E5A00D43F5D /* EditProfileCell.swift in Sources */,
 				7E88AE6F214D511000FC994F /* PasswordSetup.swift in Sources */,
 				7E1ABC962141B67500517E48 /* Services.swift in Sources */,
 				7E6EB4F22156485400A763BF /* TermsServiceHeaderCell.swift in Sources */,
@@ -555,7 +548,6 @@
 				7E728A3121AF23CE003CE716 /* HomeCell6.swift in Sources */,
 				22F8E21C2141041D00862E22 /* EntropyCell.swift in Sources */,
 				2297295F21D0C99B00F735C5 /* SearchPostCatCell.swift in Sources */,
-				7EE43AF72156BDE2002F8A5A /* PostDetailsCell.swift in Sources */,
 				7E0BE4CC21A9A8AD00F7B043 /* SubTableCell.swift in Sources */,
 				7EEB0B8C21441FCA003EA5C4 /* NickName.swift in Sources */,
 				7E2A200521792C3600F484E0 /* InstaCollectionCell.swift in Sources */,

@@ -10,12 +10,12 @@ import UIKit
 
 class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    let user_id = UserDefaults.standard.string(forKey: "user_id")
+
     @IBOutlet weak var homeCol: UICollectionView!
 
     var posts = [PostsClass]()
     var profileDetails: ProfileDetailsClass?
-
-    let user_id = UserDefaults.standard.string(forKey: "user_id")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +65,16 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     }
     
     @objc func searchBtnPressed() {
-        print("wallet")
+        print("logout")
+        
+
+//        UserDefaults.standard.removeObject(forKey: "Key")
+
+        // Remove all Keys
+        if let appDomain = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: appDomain)
+        }
+        
         // MOVED CONTROLLER
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
@@ -246,8 +255,17 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
 
    
     
-    
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if (segue.identifier == "EditProfile") {
+            let vc = segue.destination as! EditProfile
+            
+            vc.getProfileImage = profileDetails?.image_path
+            vc.getName = profileDetails?.first_name
+            vc.getUsername = profileDetails?.username
+            vc.getAbout = profileDetails?.about
+            
+        }
+    }
 
 }
