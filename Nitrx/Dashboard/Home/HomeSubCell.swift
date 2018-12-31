@@ -18,6 +18,16 @@ protocol RateDel {
     func rateFunction(indexPath: IndexPath)
 }
 
+protocol ShowComments {
+    
+    func showCommentsFunction(indexPath: IndexPath)
+}
+
+protocol OpenWebView {
+    
+    func webViewFunction(indexPath: IndexPath)
+}
+
 
 class HomeSubCell: UITableViewCell {
 
@@ -57,7 +67,9 @@ class HomeSubCell: UITableViewCell {
     
     var tapDelegate: CellDel?
     var rateDelegate: RateDel?
-    
+    var showCommentsDelegate: ShowComments?
+    var openWebViewDelegate: OpenWebView?
+
     var indexPath: IndexPath?
     var rate: Int?
     
@@ -101,5 +113,15 @@ class HomeSubCell: UITableViewCell {
         tapDelegate?.commentTextFunction(indexPath: indexPath!)
     }
     
+   
+    @IBAction func showAllComments(_ sender: UIButton) {
     
+        showCommentsDelegate?.showCommentsFunction(indexPath: indexPath!)
+    }
+    
+    @IBAction func webLinkbutton(_ sender: UIButton) {
+        
+        openWebViewDelegate?.webViewFunction(indexPath: indexPath!)
+
+    }
 }

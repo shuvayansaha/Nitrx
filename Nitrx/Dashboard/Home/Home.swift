@@ -300,7 +300,6 @@ class Home: UIViewController, UITableViewDataSource, UITableViewDelegate, Commen
     func commentButtonPress(row: Int) {
         performSegue(withIdentifier: "CommentsSegue", sender: row)
         
-        
         index = row
 
     }

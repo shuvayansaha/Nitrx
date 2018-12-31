@@ -367,6 +367,9 @@
                                                             <state key="normal" title="Comments">
                                                                 <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="showAllComments:" destination="71m-sr-phe" eventType="touchUpInside" id="hvf-a1-86R"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4id-gL-fsD">
                                                             <rect key="frame" x="175.5" y="583.5" width="9.5" height="21"/>
@@ -473,9 +476,13 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="EDM-Pf-Zia"/>
                                                             </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="http://">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="webLinkbutton:" destination="71m-sr-phe" eventType="touchUpInside" id="R3Q-5O-Mgk"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIU-jO-ZoU">
                                                             <rect key="frame" x="266" y="635" width="30" height="30"/>

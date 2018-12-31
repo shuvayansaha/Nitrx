@@ -117,11 +117,9 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
         cell.replyButton.tag = indexPath.row
         cell.delegate = self
         
-
         cell.comment_reply = commentArray[indexPath.row].comment_reply!
 
         cell.replyTable.reloadData()
-
 
         return cell
     }

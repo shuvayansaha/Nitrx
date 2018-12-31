@@ -9,8 +9,8 @@
 import UIKit
 import WebKit
 
-class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDel, RateDel {
- 
+class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDel, RateDel, ShowComments, OpenWebView {
+
     let user_id = UserDefaults.standard.string(forKey: "user_id")
     let imagePath = UserDefaults.standard.string(forKey: "Image-Path")
 
@@ -19,7 +19,8 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
     @IBOutlet weak var homeTableView: UITableView!
     
     var imageView = UIImageView()
-    let web = WKWebView()
+    var web = WKWebView()
+    var closeButton = UIBarButtonItem()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,6 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
             self.homeTableView.reloadData()
         }
         
-        
         // custom navigation bar right side icon
         let pencilBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
         pencilBtn.setImage(UIImage(named: "massege-white"), for: [])
@@ -41,7 +41,14 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         pencilBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let pencilButton = UIBarButtonItem(customView: pencilBtn)
         
-        self.navigationItem.rightBarButtonItems = [pencilButton]
+        // custom navigation bar right side icon
+        let closeWeb: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        closeWeb.setImage(UIImage(named: "cross-white"), for: [])
+        closeWeb.addTarget(self, action: #selector(closeWebFunc), for: UIControl.Event.touchUpInside)
+        closeWeb.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        closeButton = UIBarButtonItem(customView: closeWeb)
+        
+//        self.navigationItem.rightBarButtonItems = [pencilButton]
         
         // navigation bar logo centre
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
@@ -50,10 +57,7 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         imageView.image = image
         navigationItem.titleView = imageView
         
-        web.frame  = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        
         self.navigationController?.navigationBar.isTranslucent = false
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,12 +79,15 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
     
     func commentTextFunction(indexPath: IndexPath) {
         
+        view.endEditing(true)
+        
         let cell = homeTableView.cellForRow(at: indexPath) as! HomeSubCell
         
         let post_id = postArray[indexPath.row].post_id
         let commentText = cell.commentTextField.text
         
         var commentRate = Int()
+        
         if cell.rate != nil {
             
             commentRate = cell.rate!
@@ -111,7 +118,7 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
                     if i.status == "1" {
                         
                         cell.commentTextField.text = ""
-                        self.performSegue(withIdentifier: "CommentsSegue", sender: self.index)
+                        self.performSegue(withIdentifier: "CommentsSegue", sender: indexPath.row)
                         
                     } else {
                         
@@ -121,14 +128,11 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
                     }
                 }
                 
-                //                DispatchQueue.main.async { completed() }
-                
+//                DispatchQueue.main.async { completed() }
                 
             } catch {
                 print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
+                snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
             }
         }
     }
@@ -180,10 +184,56 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         }
     }
     
+    func showCommentsFunction(indexPath: IndexPath) {
+    
+        performSegue(withIdentifier: "CommentsSegue", sender: indexPath.row)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if (segue.identifier == "CommentsSegue") {
+            let vc = segue.destination as! Comments
+            vc.post_id = postArray[sender as! Int].post_id!
+            vc.profile_id = user_id!
+        }
+    }
+    
+    func webViewFunction(indexPath: IndexPath) {
+        
+        let urlLink = postArray[indexPath.row].website_url!
+        
+        self.navigationItem.leftBarButtonItems = [closeButton]
+
+        web = WKWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        self.view.addSubview(web)
+
+        let url = URL(string: "http://" + urlLink)
+        web.load(URLRequest(url: url!))
+        web.tag = 74
+
+//        let baseUrl = url?.absoluteString
+        self.navigationItem.title = urlLink
+        navigationItem.titleView = nil
+        
+//        print(url!)
+    }
+    
+    @objc func closeWebFunc() {
+        
+        if let viewWithTag = self.view.viewWithTag(74) {
+            viewWithTag.removeFromSuperview()
+            self.navigationItem.leftBarButtonItems = nil
+            navigationItem.titleView = imageView
+            
+        } else{
+            print("No!")
+        }
+        
+    }
     
     
     // MARK : - Table View
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postArray.count
     }
@@ -193,9 +243,11 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         
         cell.tapDelegate = self
         cell.rateDelegate = self
+        cell.showCommentsDelegate = self
+        cell.openWebViewDelegate = self
+
         cell.indexPath = indexPath
-        
-        
+
         cell.username.text = postArray[indexPath.row].first_name! + " " + postArray[indexPath.section].last_name!
         cell.postedDate.text = postArray[indexPath.row].post_date
         cell.postImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].image!)
@@ -204,10 +256,17 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         cell.commentCount.text = "\((postArray[indexPath.row].comments)!)"
         cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage!)
         cell.postText.text = postArray[indexPath.row].postText
-        cell.postLinkButton.setTitle(postArray[indexPath.row].website_url, for: .normal)
+        cell.postLinkButton.setTitle("  " + "\((postArray[indexPath.row].website_url)!)", for: .normal)
         cell.postDescription.text = postArray[indexPath.row].description
         cell.commentCount.text = "\((postArray[indexPath.row].comments)!)"
+        cell.commentsCount.text = "\((postArray[indexPath.row].comments)!)"
         
+        if postArray[indexPath.row].comments! < 1 {
+            
+            cell.commentsCount.alpha = 0
+            cell.commentsButton.alpha = 0
+        }
+
         if let img = imagePath {
             cell.userImageInComment.loadImageUsingUrlString(urlString: img)
         }
@@ -237,7 +296,11 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         return UITableView.automaticDimension
     }
 
-    
+    // tableview scroll event
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        view.endEditing(true)
+    }
     
     
     
@@ -248,7 +311,7 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            //            print(stringData)
+//            print(stringData)
             
             do {
                 
@@ -259,9 +322,8 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
                 
             } catch {
                 print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
+                snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+
             }
         }
     }
