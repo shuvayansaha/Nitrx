@@ -10,7 +10,7 @@ import UIKit
 
 class MyProfileChildPostCell: UICollectionViewCell {
    
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var image: CustomImageView!
     @IBOutlet weak var label: UILabel!
     
     

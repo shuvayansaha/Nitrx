@@ -81,15 +81,18 @@ struct NormalFeeds: Codable {
 struct SendCommentsClass: Codable {
 
     let status: String?
-    let success: String?
-
+    let success: Int?
     let errors: ErrorsClass?
 }
 
-struct ErrorsClass: Codable {
-    let error_text: String?
+struct EditProfileClass: Codable {
+    
     let status: String?
+    let success: String?
+    let errors: ErrorsClass?
 }
+
+
 
 struct CreatePostClass: Codable {
     
@@ -99,6 +102,10 @@ struct CreatePostClass: Codable {
 
 }
 
+struct ErrorsClass: Codable {
+    let error_text: String?
+    let status: String?
+}
 
 
 struct CommentsClass: Codable {

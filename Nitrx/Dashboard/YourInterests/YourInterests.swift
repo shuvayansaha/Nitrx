@@ -13,12 +13,17 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
     let user_id = UserDefaults.standard.string(forKey: "user_id")
     
     @IBOutlet weak var tableView: UITableView!
-    
+    var interest = [InterestClass]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        interestFunc {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,6 +51,9 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "YourIntColView", for: indexPath) as! YourIntColView
             
+            cell.interest = interest
+            cell.collection.reloadData()
+            
             return cell
             
         } else if indexPath.row == 2 {
@@ -67,7 +75,17 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
             
         } else if indexPath.row == 1 {
             
-            return 730
+            let eachCellHeight = view.frame.size.width / 3 - 8
+            let eachRowCell = interest.count / 3
+            var totalHeight = CGFloat()
+            
+            if interest.count % 3 == 0 {
+                totalHeight = eachCellHeight * CGFloat(eachRowCell)
+            } else {
+                totalHeight = eachCellHeight * CGFloat(eachRowCell) + eachCellHeight + 16
+            }
+            
+            return totalHeight
             
         } else if indexPath.row == 2 {
             
@@ -150,6 +168,52 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
     }
     
+    
+    // Interest Function
+    func interestFunc(completed: @escaping() -> ()) {
+        
+        let url = baseURL + select_interest
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            //            print(stringData)
+            
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [Any]
+                
+                for json in jsonObject! {
+                    
+                    if let jsonDic = json as? [String: Any] {
+                        
+                        let interestArray = InterestClass()
+                        
+                        if let post_cat_id = jsonDic["post_cat_id"] as? String {
+                            interestArray.post_cat_id = post_cat_id
+                        }
+                        if let post_cat_name = jsonDic["post_cat_name"] as? String {
+                            interestArray.post_cat_name = post_cat_name
+                        }
+                        if let image = jsonDic["image"] as? String {
+                            interestArray.image = image
+                        }
+                        
+                        self.interest.append(interestArray)
+                    }
+                    
+                }
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+                
+            }
+        }
+        
+    }
    
 
     // back to previous

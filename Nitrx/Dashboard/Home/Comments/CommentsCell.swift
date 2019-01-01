@@ -17,7 +17,7 @@ class CommentsCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
     @IBOutlet weak var commentText: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var time: UILabel!
-    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userImage: CustomImageView!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var replyTable: UITableView!
     
@@ -64,7 +64,7 @@ class CommentsCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource 
         
         if let img = comment_reply[indexPath.row].user_avater {
             
-            cell.userImage.loadImageUsingUrlString(urlString: img)
+            cell.userImage.imageLoadingUsingUrlString(urlString: img)
             
         } else {
             

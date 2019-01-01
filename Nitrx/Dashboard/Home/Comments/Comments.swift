@@ -8,19 +8,13 @@
 
 import UIKit
 
-class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, ReplyButtonDelegate {
+class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, ReplyButtonDelegate, UITextFieldDelegate {
   
     @IBOutlet weak var commentsTable: UITableView!
     @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var sendComment: UIButton!
     
-    @IBOutlet weak var button1: UIButton!
-    @IBOutlet weak var button2: UIButton!
-    @IBOutlet weak var button3: UIButton!
-    @IBOutlet weak var button4: UIButton!
-    @IBOutlet weak var button5: UIButton!
-    
-    @IBOutlet weak var rateView: UIView!
+    @IBOutlet weak var textView: UIView!
     
     var post_id = String()
     var profile_id = String()
@@ -28,67 +22,18 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
     var commentArray = [CommentsClass]()
     var reply = false
     var replyRow = Int()
-    var rate = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         hideKeyboardWhenTappedAround()
-
+        commentTextField.delegate = self
         commentsTable.delegate = self
         commentsTable.dataSource = self
         
         loadComments(post_id: post_id) {
             self.commentsTable.reloadData()
             self.scrollToBottom()
-        }
-    }
-    
-    // rate buttons
-    @IBAction func rateAction(_ sender: UIButton) {
-        
-        rate = sender.tag
-    
-        if sender.tag == 1 {
-            
-            button1.setImage(UIImage(named: "avater1-white"), for: .normal)
-            button2.setImage(UIImage(named: "avater2"), for: .normal)
-            button3.setImage(UIImage(named: "car"), for: .normal)
-            button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
-            
-        } else if sender.tag == 2 {
-            
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
-            button2.setImage(UIImage(named: "avater2-white"), for: .normal)
-            button3.setImage(UIImage(named: "car"), for: .normal)
-            button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
-            
-        } else if sender.tag == 3 {
-            
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
-            button2.setImage(UIImage(named: "avater2"), for: .normal)
-            button3.setImage(UIImage(named: "car-white"), for: .normal)
-            button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
-            
-        } else if sender.tag == 4 {
-            
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
-            button2.setImage(UIImage(named: "avater2"), for: .normal)
-            button3.setImage(UIImage(named: "car"), for: .normal)
-            button4.setImage(UIImage(named: "booster-white"), for: .normal)
-            button5.setImage(UIImage(named: "avater3"), for: .normal)
-            
-        } else if sender.tag == 5 {
-            
-            button1.setImage(UIImage(named: "avater1"), for: .normal)
-            button2.setImage(UIImage(named: "avater2"), for: .normal)
-            button3.setImage(UIImage(named: "car"), for: .normal)
-            button4.setImage(UIImage(named: "booster"), for: .normal)
-            button5.setImage(UIImage(named: "avater3-white"), for: .normal)
-            
         }
     }
     
@@ -107,7 +52,7 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
         
         if let img = commentArray[indexPath.row].user_avater {
             
-            cell.userImage.loadImageUsingUrlString(urlString: img)
+            cell.userImage.imageLoadingUsingUrlString(urlString: img)
 
         } else {
             
@@ -154,10 +99,9 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
             
             postCommentReply(userId: profile_id, text: commentTextField.text!, comment_id: comment_id!) {
                 self.loadComments(post_id: self.post_id) {
+                    
                     self.commentsTable.reloadData()
-                    
                     self.scrollToBottom()
-                    
                 }
             }
             
@@ -168,13 +112,9 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
                     self.commentsTable.reloadData()
                     
                     self.scrollToBottom()
-                    
                 }
             }
-            
         }
-        
-        
     }
     
     
@@ -196,10 +136,12 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
     
     // tableview scroll event
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
         view.endEditing(true)
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.scrollToBottom()
+    }
     
     
     // load comments
@@ -221,16 +163,14 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
                 
             } catch {
                 print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
+                snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
             }
         }
     }
     
     
     
-    // comment box
+    // post comment
     func postComment(postId: String, userId: String, text: String, completed: @escaping () -> ()) {
         
         let url = baseURL + save_comment + "?"
@@ -242,9 +182,7 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
             + "comment_user"
             + "&text="
             + "\(text)"
-            + "&rate_post="
-            + "\(rate)"
-        
+ 
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
 //            print(stringData)
@@ -272,9 +210,7 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
                 
             } catch {
                 print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
+                snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
             }
         }
     }
@@ -321,13 +257,16 @@ class Comments: UIViewController, UITableViewDataSource, UITableViewDelegate, Re
                 
             } catch {
                 print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
+                snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
             }
         }
     }
     
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        NotificationCenter.default.removeObserver(self)
+    }
+  
 }

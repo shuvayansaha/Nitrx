@@ -14,6 +14,7 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     @IBOutlet weak var selectedCatCollectionView: UICollectionView!
 
     let post_cat_id = UserDefaults.standard.string(forKey: "post_cat_id")
+    
     var interestCategory = [SelectInterestClass]()
     var postArray = [PostsClass]()
     var filterPostArray = [PostsClass]()
@@ -114,7 +115,7 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             
             if let img = filterPostArray[indexPath.row].image {
                 
-                cell.image.loadImageUsingUrlString(urlString: img)
+                cell.image.imageLoadingUsingUrlString(urlString: img)
             }
             
             if let txt = filterPostArray[indexPath.row].postText {
@@ -130,7 +131,7 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView == catCollectionView {
-            print(interestCategory[indexPath.row])
+//            print(interestCategory[indexPath.row])
             
             selectedIndex = indexPath.row
             let post_cat_id = interestCategory[selectedIndex].post_cat_id
@@ -140,7 +141,7 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             }
             
         } else {
-            print(filterPostArray[indexPath.row])
+//            print(filterPostArray[indexPath.row])
         }
         
         collectionView.reloadData()

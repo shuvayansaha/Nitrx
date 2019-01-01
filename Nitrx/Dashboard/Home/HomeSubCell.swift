@@ -33,10 +33,11 @@ class HomeSubCell: UITableViewCell {
 
     @IBOutlet weak var whiteView: UIView!
     
-    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userImage: CustomImageView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var postedDate: UILabel!
-    @IBOutlet weak var postImage: UIImageView!
+    @IBOutlet weak var postImage: CustomImageView!
+    
     @IBOutlet weak var followButton: UIButton!
 
     @IBOutlet weak var nitrxCount: UILabel!
@@ -46,16 +47,16 @@ class HomeSubCell: UITableViewCell {
 
     @IBOutlet weak var postText: UILabel!
     @IBOutlet weak var postLinkButton: UIButton!
-    @IBOutlet weak var qrImage: UIImageView!
+    @IBOutlet weak var qrImage: CustomImageView!
     
     @IBOutlet weak var postDescription: UILabel!
     @IBOutlet weak var desExpandButton: UIButton!
     
     @IBOutlet weak var commentsButton: UIButton!
     @IBOutlet weak var commentsCount: UILabel!
-    @IBOutlet weak var avarageRate: UIImageView!
+    @IBOutlet weak var avarageRate: CustomImageView!
     
-    @IBOutlet weak var userImageInComment: UIImageView!
+    @IBOutlet weak var userImageInComment: CustomImageView!
     @IBOutlet weak var commentPostButton: UIButton!
     @IBOutlet weak var commentTextField: UITextField!
     
@@ -81,7 +82,6 @@ class HomeSubCell: UITableViewCell {
         whiteView.layer.borderWidth = 0.5
         whiteView.layer.cornerRadius = 4
         postLinkButton.layer.cornerRadius = 14
-        
         
         rate1.RoundCornerButtonWithGrayBorder()
         rate2.RoundCornerButtonWithGrayBorder()

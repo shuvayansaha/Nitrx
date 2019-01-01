@@ -38,7 +38,7 @@ class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyProfileChildPostCell", for: indexPath) as! MyProfileChildPostCell
     
         if let img = posts[indexPath.row].image {
-            cell.image.loadImageUsingUrlString(urlString: img)
+            cell.image.imageLoadingUsingUrlString(urlString: img)
         }
 
         cell.label.text = posts[indexPath.row].postText

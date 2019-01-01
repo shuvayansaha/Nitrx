@@ -13,7 +13,7 @@ class CommentReplyCell: UITableViewCell {
     @IBOutlet weak var commentText: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var time: UILabel!
-    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userImage: CustomImageView!
     @IBOutlet weak var replyButton: UIButton!
     
     

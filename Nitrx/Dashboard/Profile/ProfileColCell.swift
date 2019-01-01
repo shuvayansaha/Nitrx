@@ -13,7 +13,7 @@ let blueColor2 = UIColor(red: 25/255, green: 154/255, blue: 255/255, alpha: 1)
 
 class ProfileColCell: UICollectionViewCell {
 
-    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userImage: CustomImageView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var edit: UIButton!
     @IBOutlet weak var whiteView: UIView!
@@ -25,8 +25,8 @@ class ProfileColCell: UICollectionViewCell {
     
     @IBOutlet weak var des: UILabel!
     
-    @IBOutlet weak var scoreImage: UIImageView!
-    @IBOutlet weak var qrImage: UIImageView!
+    @IBOutlet weak var scoreImage: CustomImageView!
+    @IBOutlet weak var qrImage: CustomImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -11,5 +11,5 @@ import UIKit
 class SearchPostCatCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var image: CustomImageView!
 }

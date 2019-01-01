@@ -233,6 +233,7 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
     }
     
     
+    
     // MARK : - Table View
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postArray.count
@@ -248,15 +249,23 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
 
         cell.indexPath = indexPath
 
+
         cell.username.text = postArray[indexPath.row].first_name! + " " + postArray[indexPath.section].last_name!
         cell.postedDate.text = postArray[indexPath.row].post_date
-        cell.postImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].image!)
-        cell.userImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].user_avatar!)
+        cell.postImage.imageLoadingUsingUrlString(urlString: postArray[indexPath.row].image!)
+
+        cell.userImage.imageLoadingUsingUrlString(urlString: postArray[indexPath.row].user_avatar!)
         cell.viewCount.text = "\((postArray[indexPath.row].view_count)!)"
         cell.commentCount.text = "\((postArray[indexPath.row].comments)!)"
-        cell.qrImage.loadImageUsingUrlString(urlString: postArray[indexPath.row].qrimage!)
+        cell.qrImage.imageLoadingUsingUrlString(urlString: postArray[indexPath.row].qrimage!)
         cell.postText.text = postArray[indexPath.row].postText
-        cell.postLinkButton.setTitle("  " + "\((postArray[indexPath.row].website_url)!)", for: .normal)
+        
+        if let webUrl = postArray[indexPath.row].website_url {
+            
+            cell.postLinkButton.setTitle("  " + "\(webUrl)", for: .normal)
+
+        }
+        
         cell.postDescription.text = postArray[indexPath.row].description
         cell.commentCount.text = "\((postArray[indexPath.row].comments)!)"
         cell.commentsCount.text = "\((postArray[indexPath.row].comments)!)"
@@ -268,7 +277,7 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         }
 
         if let img = imagePath {
-            cell.userImageInComment.loadImageUsingUrlString(urlString: img)
+            cell.userImageInComment.imageLoadingUsingUrlString(urlString: img)
         }
         
         let avg_post_rate = postArray[indexPath.row].avg_post_rate

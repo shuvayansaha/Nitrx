@@ -163,11 +163,11 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
             
             
             if let img = profileDetails?.image_path {
-                cell.userImage.loadImageUsingUrlString(urlString: img)
+                cell.userImage.imageLoadingUsingUrlString(urlString: img)
             }
             
             if let qrImg = profileDetails?.qrimage {
-                cell.qrImage.loadImageUsingUrlString(urlString: qrImg)
+                cell.qrImage.imageLoadingUsingUrlString(urlString: qrImg)
             }
             
             if let first_name = profileDetails?.first_name {

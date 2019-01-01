@@ -198,7 +198,7 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
             
             do {
                 
-                let getData = try JSONDecoder().decode([SendCommentsClass].self, from: data)
+                let getData = try JSONDecoder().decode([EditProfileClass].self, from: data)
                 
                 for i in getData {
                     

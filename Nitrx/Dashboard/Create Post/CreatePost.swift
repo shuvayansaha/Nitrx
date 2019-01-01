@@ -8,20 +8,31 @@
 
 import UIKit
 
-class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     let user_id = UserDefaults.standard.string(forKey: "user_id")
-    
+    let post_cat_id = UserDefaults.standard.string(forKey: "post_cat_id")
+
     @IBOutlet weak var postTitle: UITextField!
     @IBOutlet weak var url: UITextField!
+    @IBOutlet weak var category: UITextField!
+    @IBOutlet weak var addKeywords: UITextField!
+
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var upload: UIButton!
     @IBOutlet weak var save: UIButton!
-    @IBOutlet weak var postView: UIView!
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var uploadImageButton: UIButton!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var whiteView: UIView!
+    
+    var selectedPicker: String?
+
     var alertController: UIAlertController!
+//    let genderArray = ["Male", "Female"]
+    var interestCategory = [SelectInterestClass]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,22 +50,27 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         textView.layer.cornerRadius = 4
         
         textView.delegate = self
-        textView.text = "Describe your post here..."
+        textView.text = "Describe additional information about this post..."
         textView.textColor = UIColor.lightGray
         
         upload.layer.cornerRadius = 4
         
-        save.layer.borderColor = blueColor2.cgColor
-        save.layer.borderWidth = 1
-        save.layer.cornerRadius = 4
+//        save.layer.borderColor = blueColor2.cgColor
+//        save.layer.borderWidth = 1
+//        save.layer.cornerRadius = 4
         
-        postView.layer.borderColor = UIColor.lightGray.cgColor
-        postView.layer.borderWidth = 0.5
-        postView.layer.cornerRadius = 4
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        imageView.layer.borderWidth = 0.5
+        imageView.layer.cornerRadius = 4
         
-        postView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageUpload)))
-        
+        uploadImageButton.layer.cornerRadius = 20
+
         imagePicker()
+        picker()
+
+        selectInterest {
+            
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,15 +93,64 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "Describe your post here..."
+            textView.text = "Describe additional information about this post..."
             textView.textColor = UIColor.lightGray
         }
     }
     
     
+    func picker() {
+        
+        let thePicker = UIPickerView()
+        
+        thePicker.dataSource = self
+        thePicker.delegate = self
+        
+        // toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        //       toolbar.barTintColor = UIColor.clear
+        
+        // done button for toolbar
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(dateDonePressed))
+        let blankSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([blankSpace, done], animated: true)
+        
+        category.inputView = thePicker
+        category.inputAccessoryView = toolbar
+    }
     
+    @objc func dateDonePressed() {
+        
+        if selectedPicker == nil {
+            self.category.text = interestCategory[0].post_cat_name
+        } else {
+            self.category.text = selectedPicker
+        }
+        self.view.endEditing(true)
+    }
     
-    @objc func imageUpload() {
+    // picker view
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return interestCategory.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return interestCategory[row].post_cat_name
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        self.category.text = interestCategory[row].post_cat_name
+        selectedPicker = interestCategory[row].post_cat_name
+    }
+    
+    func imageUpload() {
        
         present(alertController, animated: true, completion: nil)
     }
@@ -133,7 +198,8 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            //        photographPhoto = image.jpegData(compressionQuality: 1)!
+            
+            imageView.image = image
         }
     
         dismiss(animated: true, completion: nil)
@@ -147,6 +213,9 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         post()
     }
     
+    @IBAction func uploadImage(_ sender: UIButton) {
+        imageUpload()
+    }
     
     
     
@@ -154,6 +223,17 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     @IBAction func saveAction(_ sender: UIButton) {
         
+        print("cancel")
+        
+        postTitle.text = nil
+        url.text = nil
+        category.text = nil
+        addKeywords.text = nil
+        textView.text = "Describe additional information about this post..."
+        textView.textColor = UIColor.lightGray
+        imageView.image = nil
+
+
     }
     
     
@@ -161,7 +241,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     //load search data
     func post() {
         
-        if textView.text == "Describe your post here..." {
+        if textView.text == "Describe additional information about this post..." {
             
            textView.text = ""
         }
@@ -186,13 +266,13 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
             
             do {
                 
-                let getData = try JSONDecoder().decode([SendCommentsClass].self, from: data)
+                let getData = try JSONDecoder().decode([CreatePostClass].self, from: data)
                 
                 for i in getData {
                     
                     if i.status == "1" {
                         
-                        snackBarFunction(message: i.success!)
+//                        snackBarFunction(message: i.success!)
                     }
                 }
              
@@ -207,7 +287,34 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     
     
-    
+    //get user data
+    func selectInterest(completed: @escaping () -> ()) {
+        
+        let url = baseURL + select_interest + "?"
+            
+            + "post_cat_id="
+            + "\(post_cat_id!)"
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            //            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode([SelectInterestClass].self, from: data)
+                
+                self.interestCategory = getData
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
     
     
     
