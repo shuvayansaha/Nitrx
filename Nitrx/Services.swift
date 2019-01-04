@@ -31,6 +31,7 @@ let reset_password = "reset_password.php/"
 let change_password = "change_password.php/"
 let postUrl = "post.php/"
 let update_profile_setting = "update_profile_setting.php/"
+let add_post = "add_post.php/"
 
 
 

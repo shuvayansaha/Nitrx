@@ -29,7 +29,7 @@ class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayou
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: collectionView.frame.size.width / 3 - 2, height: collectionView.frame.size.width / 3 - 2)
+        return CGSize(width: collectionView.frame.size.width / 3 - 2, height: collectionView.frame.size.width / 3 + 100)
     }
     
     
@@ -42,12 +42,52 @@ class ProfileMyPostCell: UICollectionViewCell, UICollectionViewDelegateFlowLayou
         }
 
         cell.label.text = posts[indexPath.row].postText
-     
+//        cell.image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapImage)))
         
+//                cell.label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapImage)))
+
         return cell
         
     }
     
+    @objc func tapImage() {
+        
+        print("tap image")
+        
+        
+        
+    }
     
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if collectionView == colView {
+//
+//            let postCatId = posts[indexPath.row].post_cat_id
+//
+//            print(postCatId)
+////            performSegue(withIdentifier: "ProfileDetails", sender: postCatId)
+//
+//        }
+//    }
+//
+    
+//    func buttonTappedInCollectionViewCell(sender: UIButton) {
+//        performSegue(withIdentifier: "ProfileDetails", sender: nil)
+//    }
+//
+//
+    func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.identifier == "ProfileDetails" {
+//            if let backgroundViewCell = sender as? ProfileMyPostCell {
+                if let playerVC = segue.destination as? Home2 {
+                    playerVC.postCatId = "backgroundViewCell.dayName"
+//                }
+            }
+        }
+    }
+
+    
+    
+  
     
 }

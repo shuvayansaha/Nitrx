@@ -8,15 +8,22 @@
 
 import UIKit
 
+protocol ProfilePostClick {
+    func imageClickFunction(indexPath: IndexPath)
+}
+
 class MyProfileChildPostCell: UICollectionViewCell {
    
     @IBOutlet weak var image: CustomImageView!
     @IBOutlet weak var label: UILabel!
     
-    
+    var profileDel: ProfilePostClick?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
         
     }
+    
+  
 }

@@ -141,11 +141,31 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             }
             
         } else {
-//            print(filterPostArray[indexPath.row])
+            print(filterPostArray[indexPath.row])
+            
+            if let postCatId = filterPostArray[indexPath.row].post_cat_id {
+                
+                performSegue(withIdentifier: "SearchDetails", sender: postCatId)
+
+            }
+            
         }
         
         collectionView.reloadData()
     }
+    
+    
+ 
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if (segue.identifier == "SearchDetails") {
+            let vc = segue.destination as! Home2
+            vc.postCatId = sender as! String
+
+        }
+    }
+    
     
     // tableview scroll event
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

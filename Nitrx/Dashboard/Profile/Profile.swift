@@ -124,7 +124,7 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
             // top rated  cell
             
             var totalHeight = CGFloat()
-            let eachCellHeight = collectionView.frame.size.width / 3 - 2
+            let eachCellHeight = collectionView.frame.size.width / 3 + 30
 
             if posts.count > 3 {
                 
@@ -213,6 +213,25 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "ProfileDetails" {
+//            if let backgroundViewCell = sender as? ProfileMyPostCell {
+//                if let playerVC = segue.destination as? Home2 {
+//                    playerVC.postCatId = "backgroundViewCell.dayName"
+//                }
+//            }
+//        }
+        
+        if (segue.identifier == "EditProfile") {
+            let vc = segue.destination as! EditProfile
+            
+            vc.getProfileImage = profileDetails?.image_path
+            vc.getName = profileDetails?.first_name
+            vc.getUsername = profileDetails?.username
+            vc.getAbout = profileDetails?.about
+            
+        }
+    }
     
     
     
@@ -225,7 +244,7 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
 
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
+//            print(stringData)
             
             do {
                 
@@ -255,17 +274,5 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
 
    
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if (segue.identifier == "EditProfile") {
-            let vc = segue.destination as! EditProfile
-            
-            vc.getProfileImage = profileDetails?.image_path
-            vc.getName = profileDetails?.first_name
-            vc.getUsername = profileDetails?.username
-            vc.getAbout = profileDetails?.about
-            
-        }
-    }
 
 }

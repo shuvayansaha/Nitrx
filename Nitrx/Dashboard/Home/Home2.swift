@@ -13,6 +13,7 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
 
     let user_id = UserDefaults.standard.string(forKey: "user_id")
     let imagePath = UserDefaults.standard.string(forKey: "Image-Path")
+    var postCatId = String()
 
     var postArray = [PostsClass]()
 
@@ -24,7 +25,8 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("id ***",postCatId)
+
         hideKeyboardWhenTappedAround()
         
         homeTableView.delegate = self
@@ -316,7 +318,14 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
     //load home data
     func loadHome(completed: @escaping () -> ()) {
         
-        let url = baseURL + post_details
+        var url = String()
+        
+        if postCatId != "" {
+            url = baseURL + post_details + "?post_cat_id=\(postCatId)"
+
+        } else {
+            url = baseURL + post_details
+        }
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             

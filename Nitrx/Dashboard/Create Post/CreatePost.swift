@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -33,6 +34,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     var alertController: UIAlertController!
 //    let genderArray = ["Male", "Female"]
     var interestCategory = [SelectInterestClass]()
+    var photoData: Data?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -200,6 +202,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             
             imageView.image = image
+            photoData = image.jpegData(compressionQuality: 1)!
         }
     
         dismiss(animated: true, completion: nil)
@@ -246,14 +249,18 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
            textView.text = ""
         }
         
-        var urlComponents = URLComponents(string: baseURL + postUrl)!
+        var urlComponents = URLComponents(string: baseURL + add_post)!
+        
+        let file = UIImage(named: "Music")
         
         urlComponents.queryItems = [
             URLQueryItem(name: "user_id", value: user_id),
             URLQueryItem(name: "post_cat_id", value: "2"),
             URLQueryItem(name: "website_url", value: url.text),
             URLQueryItem(name: "postText", value: postTitle.text),
-            URLQueryItem(name: "description", value: textView.text)
+            URLQueryItem(name: "description", value: textView.text),
+            URLQueryItem(name: "postPhotos", value: "")
+
         ]
         
         let req = "\((urlComponents.url)!)"
@@ -274,6 +281,11 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
                         
 //                        snackBarFunction(message: i.success!)
                     }
+                    
+                    if i.errors != nil {
+                        
+                        snackBarFunction(message: (i.errors?.error_text!)!)
+                    }
                 }
              
             } catch {
@@ -285,6 +297,74 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         }
     }
     
+    
+    // image upload alamofire
+    func imageUpload(data: Data, key: String, fileName: String) {
+        
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .whiteLarge
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        var urlComponents = URLComponents(string: baseURL + add_post)!
+        
+        let file = UIImage(named: "Music")
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: "user_id", value: user_id),
+            URLQueryItem(name: "post_cat_id", value: "2"),
+            URLQueryItem(name: "website_url", value: url.text),
+            URLQueryItem(name: "postText", value: postTitle.text),
+            URLQueryItem(name: "description", value: textView.text),
+//            URLQueryItem(name: "postPhotos", value: "")
+            
+        ]
+        
+        let req = "\((urlComponents.url)!)"
+        
+        print("req", req)
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            
+            multipartFormData.append(data, withName: key, fileName: fileName, mimeType: "image/jpeg")
+            
+        },
+                         
+                         to: baseURL + update_kyc_documents
+            ,
+                         headers:["Authorization": "Bearer" + " " + token!]) { (encodingResult) in
+                            
+                            switch encodingResult {
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    
+                                    activityIndicator.stopAnimating()
+                                    UIApplication.shared.endIgnoringInteractionEvents()
+                                    
+                                    let statusCode = (response.response?.statusCode)!
+                                    
+                                    if 200 ... 299 ~= statusCode {
+                                        
+
+                                        
+
+                                        
+                                    } else {
+                                        
+
+                                        
+                                    }
+                                    
+                                }
+                            case .failure(let encodingError):
+                                print(encodingError)
+                            }
+        }
+        
+    }
     
     
     //get user data
