@@ -311,21 +311,25 @@ class CustomImageView: UIImageView {
             self.image = imageFromCache
             return
         }
-        URLSession.shared.dataTask(with: url!) { data, response, error in
-            if error != nil {
-                print(error!)
-                return
-            }
-            DispatchQueue.main.async {
-                let imageToCache =  UIImage(data: data!)
-                if self.imageUrlString == urlString {
-                    self.image = imageToCache
+        if url != nil {
+            
+            URLSession.shared.dataTask(with: url!) { data, response, error in
+                if error != nil {
+                    print(error!)
+                    return
                 }
-                if (imageToCache != nil) {
-                    imageCache.setObject(imageToCache!, forKey: urlString as AnyObject)
+                DispatchQueue.main.async {
+                    let imageToCache =  UIImage(data: data!)
+                    if self.imageUrlString == urlString {
+                        self.image = imageToCache
+                    }
+                    if (imageToCache != nil) {
+                        imageCache.setObject(imageToCache!, forKey: urlString as AnyObject)
+                    }
                 }
-            }
-            }.resume()
+                }.resume()
+            
+        }
     }
 }
 

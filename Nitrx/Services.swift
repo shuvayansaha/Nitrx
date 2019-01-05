@@ -13,7 +13,8 @@ import UIKit
 // MARK : - HTTP LINK
 
 // live
-let baseURL = "http://json.nitrx.com/"
+//let baseURL = "http://json.nitrx.com/"
+let baseURL = "http://nitrx.com/api/"
 
 let loginUrl = "login.php/"
 let registerUrl = "register.php/"
@@ -32,6 +33,9 @@ let change_password = "change_password.php/"
 let postUrl = "post.php/"
 let update_profile_setting = "update_profile_setting.php/"
 let add_post = "add_post.php/"
+let edit_post = "edit_post.php/"
+let delete_post = "delete_post.php/"
+let single_post = "single_post.php/"
 
 
 
@@ -196,7 +200,8 @@ struct PostsClass: Codable {
     let website_url: String?
     let errors: ErrorsClass?
     let api_status: String?
-
+    
+    let success: String?
 }
 
 

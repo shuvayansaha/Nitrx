@@ -13,7 +13,9 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     let user_id = UserDefaults.standard.string(forKey: "user_id")
     let post_cat_id = UserDefaults.standard.string(forKey: "post_cat_id")
+    var id = String()
 
+    @IBOutlet weak var postTitleText: UILabel!
     @IBOutlet weak var postTitle: UITextField!
     @IBOutlet weak var url: UITextField!
     @IBOutlet weak var category: UITextField!
@@ -32,12 +34,17 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     var selectedPicker: String?
 
     var alertController: UIAlertController!
-//    let genderArray = ["Male", "Female"]
+    
     var interestCategory = [SelectInterestClass]()
     var photoData: Data?
+    var photoName: String?
+    var select_post_cat_id: String?
+    var postArray = [PostsClass]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("ID ***", id, post_cat_id)
         
         hideKeyboardWhenTappedAround()
         
@@ -57,9 +64,6 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         
         upload.layer.cornerRadius = 4
         
-//        save.layer.borderColor = blueColor2.cgColor
-//        save.layer.borderWidth = 1
-//        save.layer.cornerRadius = 4
         
         imageView.layer.borderColor = UIColor.lightGray.cgColor
         imageView.layer.borderWidth = 0.5
@@ -70,7 +74,47 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         imagePicker()
         picker()
 
+
+        
+//        editPostFunc(postID: id) {
+//
+//        }
+        
+        
         selectInterest {
+            self.category.text = self.interestCategory[0].post_cat_name
+            self.select_post_cat_id = self.interestCategory[0].post_cat_id
+        }
+        
+        
+        if id != "" {
+            
+            title = "Edit Your Post"
+            postTitleText.text = "Edit Your Post"
+            
+            loadPost(postID: id) {
+                
+                for i in self.postArray {
+                    
+                    self.postTitle.text = i.postText
+                    self.url.text = i.website_url
+                    self.textView.text = i.description
+                    self.imageView.loadImageUsingUrlString(urlString: i.image!)
+                    
+//                    let catId = Int(i.post_cat_id!)
+                    
+//                    if let cat = self.interestCategory[catId!].post_cat_id {
+//                        self.postTitle.text = cat
+//                    }
+                    
+       
+
+                }
+                
+            }
+          
+        } else {
+         
             
         }
     }
@@ -128,8 +172,11 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         
         if selectedPicker == nil {
             self.category.text = interestCategory[0].post_cat_name
+            select_post_cat_id = interestCategory[0].post_cat_id
+
         } else {
             self.category.text = selectedPicker
+
         }
         self.view.endEditing(true)
     }
@@ -150,6 +197,8 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         
         self.category.text = interestCategory[row].post_cat_name
         selectedPicker = interestCategory[row].post_cat_name
+        select_post_cat_id = interestCategory[row].post_cat_id
+
     }
     
     func imageUpload() {
@@ -203,6 +252,9 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
             
             imageView.image = image
             photoData = image.jpegData(compressionQuality: 1)!
+            if let fileUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL {
+                photoName = fileUrl.lastPathComponent
+            }
         }
     
         dismiss(animated: true, completion: nil)
@@ -213,7 +265,11 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     
     @IBAction func uploadAction(_ sender: UIButton) {
-        post()
+        
+        if photoData != nil {
+            
+            postCreateFunc()
+        }
     }
     
     @IBAction func uploadImage(_ sender: UIButton) {
@@ -228,6 +284,13 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         
         print("cancel")
         
+        clearData()
+
+
+    }
+    
+    func clearData() {
+        
         postTitle.text = nil
         url.text = nil
         category.text = nil
@@ -235,72 +298,21 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         textView.text = "Describe additional information about this post..."
         textView.textColor = UIColor.lightGray
         imageView.image = nil
-
+        photoName = nil
+        photoData = nil
+        
+        self.category.text = self.interestCategory[0].post_cat_name
+        self.select_post_cat_id = self.interestCategory[0].post_cat_id
 
     }
     
     
-    
-    //load search data
-    func post() {
-        
-        if textView.text == "Describe additional information about this post..." {
-            
-           textView.text = ""
-        }
-        
-        var urlComponents = URLComponents(string: baseURL + add_post)!
-        
-        let file = UIImage(named: "Music")
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "user_id", value: user_id),
-            URLQueryItem(name: "post_cat_id", value: "2"),
-            URLQueryItem(name: "website_url", value: url.text),
-            URLQueryItem(name: "postText", value: postTitle.text),
-            URLQueryItem(name: "description", value: textView.text),
-            URLQueryItem(name: "postPhotos", value: "")
 
-        ]
-        
-        let req = "\((urlComponents.url)!)"
-        
-        print(req)
-
-        httpGet(controller: self, url: req, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
-            
-            print(stringData)
-            
-            do {
-                
-                let getData = try JSONDecoder().decode([CreatePostClass].self, from: data)
-                
-                for i in getData {
-                    
-                    if i.status == "1" {
-                        
-//                        snackBarFunction(message: i.success!)
-                    }
-                    
-                    if i.errors != nil {
-                        
-                        snackBarFunction(message: (i.errors?.error_text!)!)
-                    }
-                }
-             
-            } catch {
-                print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
-            }
-        }
-    }
     
     
     // image upload alamofire
-    func imageUpload(data: Data, key: String, fileName: String) {
-        
+    func postCreateFunc() {
+
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.center = view.center
         activityIndicator.hidesWhenStopped = true
@@ -308,62 +320,83 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
+
+//        var urlComponents = URLComponents(string: baseURL + add_post)!
         
-        var urlComponents = URLComponents(string: baseURL + add_post)!
+//        urlComponents.queryItems = [
+//            URLQueryItem(name: "user_id", value: user_id),
+//            URLQueryItem(name: "post_cat_id", value: select_post_cat_id),
+//            URLQueryItem(name: "website_url", value: url.text),
+//            URLQueryItem(name: "postText", value: postTitle.text),
+//            URLQueryItem(name: "description", value: textView.text),
+//        ]
         
-        let file = UIImage(named: "Music")
+        let link = baseURL + add_post
         
-        urlComponents.queryItems = [
-            URLQueryItem(name: "user_id", value: user_id),
-            URLQueryItem(name: "post_cat_id", value: "2"),
-            URLQueryItem(name: "website_url", value: url.text),
-            URLQueryItem(name: "postText", value: postTitle.text),
-            URLQueryItem(name: "description", value: textView.text),
-//            URLQueryItem(name: "postPhotos", value: "")
-            
-        ]
-        
-        let req = "\((urlComponents.url)!)"
-        
-        print("req", req)
-        
+        let parameters = ["user_id":user_id,
+                      "post_cat_id":select_post_cat_id,
+                      "website_url":url.text,
+                      "postText":postTitle.text,
+                      "description":textView.text]
+
+
         Alamofire.upload(multipartFormData: { (multipartFormData) in
+
+            multipartFormData.append(self.photoData!, withName: "postPhotos", fileName: self.photoName!, mimeType: "image/jpg")
             
-            multipartFormData.append(data, withName: key, fileName: fileName, mimeType: "image/jpeg")
-            
+            for (key, value) in parameters {
+                
+                multipartFormData.append((value?.data(using: String.Encoding.utf8))!, withName: key)
+            }
+
         },
-                         
-                         to: baseURL + update_kyc_documents
+
+                         to: link
             ,
-                         headers:["Authorization": "Bearer" + " " + token!]) { (encodingResult) in
-                            
+                         headers:["Content-type": "multipart/form-data"]) { (encodingResult) in
+
                             switch encodingResult {
                             case .success(let upload, _, _):
                                 upload.responseJSON { response in
-                                    
+
                                     activityIndicator.stopAnimating()
                                     UIApplication.shared.endIgnoringInteractionEvents()
+
+                                    let result = response.result.value as? NSArray
                                     
-                                    let statusCode = (response.response?.statusCode)!
+                                    print(result)
                                     
-                                    if 200 ... 299 ~= statusCode {
+                                    for i in result! {
                                         
-
+                                        if let data = i as? NSDictionary {
+                                            
+                                            if let success = data["success"] as? String {
+                                                
+                                                snackBarFunction(message: success)
+                                            }
+                                            
+                                            if data["status"] as? String == "1" {
+                                                
+                                                self.clearData()
+                                            }
+                                            
+                                            if let err = data["errors"] as? NSDictionary {
+                                                
+                                                snackBarFunction(message: err["error_text"] as! String)
+                                            }
                                         
-
-                                        
-                                    } else {
-                                        
-
-                                        
+                                        }
                                     }
                                     
+
+
+
                                 }
                             case .failure(let encodingError):
                                 print(encodingError)
                             }
         }
-        
+
     }
     
     
@@ -396,6 +429,67 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         }
     }
     
+    //load post
+    func loadPost(postID: String, completed: @escaping () -> ()) {
+        
+        let url = baseURL + single_post + "?post_id=\(postID)"
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode([PostsClass].self, from: data)
+                
+                self.postArray = getData
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                
+            }
+        }
+    }
+    
+    
+    
+    // load comments
+    func editPostFunc(postID: String, completed: @escaping () -> ()) {
+        
+        let url = baseURL + edit_post + "?"
+            + "post_id=" + "\(postID)"
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+//            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
+                
+//                for i in getData.posts! {
+//                    
+//                    if i.api_status != "400" {
+//                        
+//                        self.posts = getData.posts!
+//                        
+//                    }
+//                }
+//                
+//                self.profileDetails = getData.profile
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {

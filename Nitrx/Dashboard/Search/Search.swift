@@ -14,7 +14,8 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     @IBOutlet weak var selectedCatCollectionView: UICollectionView!
 
     let post_cat_id = UserDefaults.standard.string(forKey: "post_cat_id")
-    
+    let user_id = UserDefaults.standard.string(forKey: "user_id")
+
     var interestCategory = [SelectInterestClass]()
     var postArray = [PostsClass]()
     var filterPostArray = [PostsClass]()
@@ -232,6 +233,8 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             
             + "post_cat_id="
             + "\(post_cat_id)"
+            + "&user_id="
+            + "\(user_id!)"
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
@@ -241,8 +244,20 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
                 
                 let getData = try JSONDecoder().decode([PostsClass].self, from: data)
                 
-                self.postArray = getData
-                self.filterPostArray = getData
+                for i in getData {
+                    
+                    if i.api_status != "400" {
+                        
+                        self.postArray = getData
+                        self.filterPostArray = getData
+                        
+                    } else {
+                        
+                        self.postArray = [PostsClass]()
+                        self.filterPostArray = [PostsClass]()
+                    }
+                    
+                }
                 
                 DispatchQueue.main.async { completed() }
                 

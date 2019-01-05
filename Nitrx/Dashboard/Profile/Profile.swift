@@ -2,29 +2,26 @@
 //  Profile.swift
 //  Nitrx
 //
-//  Created by Shuvayan Saha on 17/09/18.
-//  Copyright © 2018 Nitrx. All rights reserved.
+//  Created by Shuvayan Saha on 05/01/19.
+//  Copyright © 2019 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+class Profile: UIViewController, PostDelEditDelegate {
 
+    @IBOutlet weak var profileCollection: UICollectionView!
+    
     let user_id = UserDefaults.standard.string(forKey: "user_id")
-
-    @IBOutlet weak var homeCol: UICollectionView!
-
     var posts = [PostsClass]()
     var profileDetails: ProfileDetailsClass?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
-        homeCol.delegate = self
-        homeCol.dataSource = self
-
+        
+        profileCollection.delegate = self
+        profileCollection.dataSource = self
+        
         let searchBtn: UIButton = UIButton(type: UIButton.ButtonType.custom)
         searchBtn.setImage(UIImage(named: "wallet-white"), for: [])
         searchBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
@@ -36,27 +33,25 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         clipBtn.addTarget(self, action: #selector(searchBtnPressed), for: UIControl.Event.touchUpInside)
         clipBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let clipButton = UIBarButtonItem(customView: clipBtn)
-      
-        self.navigationItem.rightBarButtonItems = [clipButton, searchButton]
         
-          // navigation bar logo centre
-//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
-//        imageView.contentMode = .scaleAspectFit
-//        let image = UIImage(named: "logo")
-//        imageView.image = image
-//        navigationItem.titleView = imageView
+        self.navigationItem.rightBarButtonItems = [clipButton, searchButton]
+     
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
         if user_id != nil {
             loadProfileDetails(user_id: user_id!) {
-                self.homeCol.reloadData()
+                self.profileCollection.reloadData()
             }
         }
-        
     }
-
+    
+    
     @objc func wallet() {
         print("wallet")
-    
+        
     }
     
     @objc func notification() {
@@ -67,9 +62,9 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
     @objc func searchBtnPressed() {
         print("logout")
         
-
-//        UserDefaults.standard.removeObject(forKey: "Key")
-
+        
+        //        UserDefaults.standard.removeObject(forKey: "Key")
+        
         // Remove all Keys
         if let appDomain = Bundle.main.bundleIdentifier {
             UserDefaults.standard.removePersistentDomain(forName: appDomain)
@@ -93,74 +88,105 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
         colors.append(UIColor(red: 5/255, green: 183/255, blue: 218/255, alpha: 1))
         navigationController?.navigationBar.setGradientBackground(colors: colors)
     }
-
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+   
+    // load comments
+    func loadProfileDetails(user_id: String, completed: @escaping () -> ()) {
         
-        return 1
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let url = baseURL + profile + "?"
+            + "user_id=" + "\(user_id)"
+            + "&action=" + "\("user_profile")"
         
-        return 3
-        
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if indexPath.row == 0 {
-            return CGSize(width: collectionView.frame.size.width, height: 650)
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-//            return UICollectionViewFlowLayout.automaticSize
-
+            print(stringData)
             
-        } else if indexPath.row == 1 {
-            return CGSize(width: collectionView.frame.size.width, height: 60)
-            
-        } else if indexPath.row == 2 {
-            // top rated  cell
-            
-            var totalHeight = CGFloat()
-            let eachCellHeight = collectionView.frame.size.width / 3 + 30
-
-            if posts.count > 3 {
+            do {
                 
-                let postCount = posts.count / 3
-                let rem = posts.count % 3
-
-                if rem == 0 {
+                let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
+                
+                for i in getData.posts! {
                     
-                    totalHeight = eachCellHeight * CGFloat(postCount)
-                    
-                } else {
-                    
-                    totalHeight = (eachCellHeight * CGFloat(postCount)) + 1
+                    if i.api_status != "400" {
+                        
+                        self.posts = getData.posts!
+                        
+                    } else {
+                        self.posts = [PostsClass]()
+                    }
                 }
                 
-            } else {
+                self.profileDetails = getData.profile
                 
-                totalHeight = eachCellHeight
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   
+        if (segue.identifier == "EditProfile") {
+            let vc = segue.destination as! EditProfile
             
-            return CGSize(width: collectionView.frame.size.width, height: totalHeight)
+            vc.getProfileImage = profileDetails?.image_path
+            vc.getName = profileDetails?.first_name
+            vc.getUsername = profileDetails?.username
+            vc.getAbout = profileDetails?.about
             
-        }  else {
-            return UICollectionViewFlowLayout.automaticSize
         }
         
+        
+        if segue.identifier == "profilePost" {
+            if let vc = segue.destination as? Home2 {
+                vc.postCatId = sender as! String
+            }
+        }
+        
+        if segue.identifier == "editPost" {
+            if let vc = segue.destination as? CreatePost {
+                vc.id = sender as! String
+            }
+        }
     }
     
     
+}
+
+
+
+
+
+
+
+
+
+extension Profile: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else if section == 1 {
+            return 1
+        } else {
+            return posts.count
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-   
-        if indexPath.row == 0 {
-
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileColCell", for: indexPath) as! ProfileColCell
+        
+        if indexPath.section == 0 {
             
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileDetailsCell", for: indexPath) as! ProfileDetailsCell
             
             if let img = profileDetails?.image_path {
                 cell.userImage.imageLoadingUsingUrlString(urlString: img)
@@ -175,92 +201,159 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
                 if let last_name = profileDetails?.last_name {
                     
                     cell.username.text = first_name + " " + last_name
-
+                    
                 }
                 
             }
             
             cell.count1.text = profileDetails?.countFollowing
             cell.count2.text = profileDetails?.countFollowers
-            cell.count3.text = profileDetails?.points
-            cell.count4.text = profileDetails?.countUserPosts
+            cell.count3.text = profileDetails?.countUserPosts
+            //            cell.count4.text = profileDetails?.countUserPosts
             cell.des.text = profileDetails?.about
+            
+            if let score = profileDetails?.user_score {
+                
+                cell.score.text = String(score)
+                
+                switch score {
+                case 0 ... 100:
+                    cell.score.textColor = UIColor.red
+                    cell.scoreImage.image = UIImage(named: "1")
+                case 101 ... 200:
+                    cell.score.textColor = UIColor.red
+                    cell.scoreImage.image = UIImage(named: "2")
+                    
+                case 201 ... 300:
+                    cell.score.textColor = UIColor.brown
+                    cell.scoreImage.image = UIImage(named: "3")
+                    
+                case 301 ... 400:
+                    cell.score.textColor = UIColor.green
+                    cell.scoreImage.image = UIImage(named: "4")
+                    
+                case 401 ... 500:
+                    cell.score.textColor = UIColor.green
+                    cell.scoreImage.image = UIImage(named: "5")
+                    
+                default:
+                    cell.score.textColor = UIColor.red
+                    
+                }
+            }
+            
+            return cell
+            
+        } else if indexPath.section == 1 {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostHeaderCell", for: indexPath) as! PostHeaderCell
+            
+            return cell
+            
+        } else {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfilePostCell", for: indexPath) as! ProfilePostCell
+            
+            if let img = posts[indexPath.row].image {
+                cell.image.imageLoadingUsingUrlString(urlString: img)
+            }
+            
+            if let postText = posts[indexPath.row].postText {
+                cell.label.text = "  " + postText
+            }
+            
+            cell.postDelEditDel = self
+            cell.editPostButton.tag = indexPath.row
+            cell.deletePostButton.tag = indexPath.row
+            
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if indexPath.section == 0 {
+            
+            return CGSize(width: view.frame.width , height: 571)
 
-            return cell
+//            return UICollectionViewFlowLayout.automaticSize
             
-        } else if indexPath.row == 1 {
-
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyPostHeaderCell", for: indexPath)
+        } else if indexPath.section == 1 {
             
-            return cell
-
-        } else if indexPath.row == 2 {
+            return CGSize(width: view.frame.width , height: 60)
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostCell", for: indexPath) as! ProfileMyPostCell
+        } else {
             
-            cell.posts = posts
-            cell.colView.reloadData()
+            return CGSize(width: view.frame.width / 3 - 2, height: view.frame.width / 3 - 2)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.section == 2 {
             
-            return cell
+            let data = posts[indexPath.row].post_cat_id
             
-        }  else {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileMyPostCell", for: indexPath) as! ProfileMyPostCell
-            
-            return cell
+            performSegue(withIdentifier: "profilePost", sender: data)
             
         }
+
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "ProfileDetails" {
-//            if let backgroundViewCell = sender as? ProfileMyPostCell {
-//                if let playerVC = segue.destination as? Home2 {
-//                    playerVC.postCatId = "backgroundViewCell.dayName"
-//                }
-//            }
-//        }
+  
+    
+    
+    func postEdit(row: Int) {
+        let post_id = posts[row].post_id
         
-        if (segue.identifier == "EditProfile") {
-            let vc = segue.destination as! EditProfile
-            
-            vc.getProfileImage = profileDetails?.image_path
-            vc.getName = profileDetails?.first_name
-            vc.getUsername = profileDetails?.username
-            vc.getAbout = profileDetails?.about
-            
-        }
+        print(post_id)
+        performSegue(withIdentifier: "editPost", sender: post_id)
     }
     
-    
-    
+    func postDel(row: Int) {
+        let post_id = posts[row].post_id
+        
+        presentAlertWithAction(title: "Delete Post", message: "Want to delete this post", buttonText: "Delete") {
+            print(post_id)
+            
+            self.deletePostFunc(postID: post_id!, completed: {
+                
+                self.loadProfileDetails(user_id: self.user_id!) {
+                    self.profileCollection.reloadData()
+                }
+            })
+
+        }
+    }
+
     // load comments
-    func loadProfileDetails(user_id: String, completed: @escaping () -> ()) {
+    func deletePostFunc(postID: String, completed: @escaping () -> ()) {
         
-        let url = baseURL + profile + "?"
-            + "user_id=" + "\(user_id)"
-            + "&action=" + "\("user_profile")"
-
+        let url = baseURL + delete_post + "?"
+            + "post_id=" + "\(postID)"
+        
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
 //            print(stringData)
             
             do {
                 
-                let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
+                let getData = try JSONDecoder().decode([EditProfileClass].self, from: data)
                 
-                for i in getData.posts! {
+                for i in getData {
                     
-                    if i.api_status != "400" {
+                    if i.status == "1" {
                         
-                        self.posts = getData.posts!
-
+                        snackBarFunction(message: i.success!)
+                    }
+                    
+                    if let err = i.errors?.error_text {
+                        
+                        snackBarFunction(message: err)
                     }
                 }
                 
-                self.profileDetails = getData.profile
-
                 DispatchQueue.main.async { completed() }
                 
             } catch {
@@ -271,8 +364,6 @@ class Profile: UIViewController, UICollectionViewDelegateFlowLayout, UICollectio
             }
         }
     }
-
-   
     
-
+    
 }

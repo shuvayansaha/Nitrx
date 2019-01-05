@@ -251,15 +251,45 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
 
         cell.indexPath = indexPath
 
+        if let firstName = postArray[indexPath.row].first_name {
+            
+            if let lastName = postArray[indexPath.row].last_name {
+                
+                cell.username.text = firstName + " " + lastName
 
-        cell.username.text = postArray[indexPath.row].first_name! + " " + postArray[indexPath.section].last_name!
+            }
+        }
+
         cell.postedDate.text = postArray[indexPath.row].post_date
-        cell.postImage.imageLoadingUsingUrlString(urlString: postArray[indexPath.row].image!)
+        
+        if let postImage = postArray[indexPath.row].image {
+            cell.postImage.imageLoadingUsingUrlString(urlString: postImage)
+        }
+        
+        if let userAvatar = postArray[indexPath.row].user_avatar {
+            cell.userImage.imageLoadingUsingUrlString(urlString: userAvatar)
+        }
 
-        cell.userImage.imageLoadingUsingUrlString(urlString: postArray[indexPath.row].user_avatar!)
-        cell.viewCount.text = "\((postArray[indexPath.row].view_count)!)"
-        cell.commentCount.text = "\((postArray[indexPath.row].comments)!)"
-        cell.qrImage.imageLoadingUsingUrlString(urlString: postArray[indexPath.row].qrimage!)
+        if let viewCount = postArray[indexPath.row].view_count {
+            cell.viewCount.text = "\(viewCount)"
+        }
+        
+        if let commentCount = postArray[indexPath.row].comments {
+            cell.commentCount.text = "\(commentCount)"
+            cell.commentsCount.text = "\(commentCount)"
+            
+            if commentCount < 1 {
+                
+                cell.commentsCount.alpha = 0
+                cell.commentsButton.alpha = 0
+            }
+
+        }
+        
+        if let qrImage = postArray[indexPath.row].qrimage {
+            cell.qrImage.imageLoadingUsingUrlString(urlString: qrImage)
+        }
+        
         cell.postText.text = postArray[indexPath.row].postText
         
         if let webUrl = postArray[indexPath.row].website_url {
@@ -269,14 +299,8 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         }
         
         cell.postDescription.text = postArray[indexPath.row].description
-        cell.commentCount.text = "\((postArray[indexPath.row].comments)!)"
-        cell.commentsCount.text = "\((postArray[indexPath.row].comments)!)"
         
-        if postArray[indexPath.row].comments! < 1 {
-            
-            cell.commentsCount.alpha = 0
-            cell.commentsButton.alpha = 0
-        }
+     
 
         if let img = imagePath {
             cell.userImageInComment.imageLoadingUsingUrlString(urlString: img)
@@ -322,9 +346,13 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
         
         if postCatId != "" {
             url = baseURL + post_details + "?post_cat_id=\(postCatId)"
+                + "&user_id="
+                + "\(user_id!)"
 
         } else {
             url = baseURL + post_details
+                + "?user_id="
+                + "\(user_id!)"
         }
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
