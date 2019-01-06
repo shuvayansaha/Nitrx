@@ -1150,7 +1150,7 @@
                         <outlet property="textView" destination="VMX-sC-EmV" id="mD3-8F-Fes"/>
                         <outlet property="upload" destination="zgX-FZ-IOn" id="qsJ-VX-kgo"/>
                         <outlet property="uploadImageButton" destination="coc-V5-VRJ" id="lge-2C-atG"/>
-                        <outlet property="url" destination="tTC-FK-FQq" id="GOy-tb-pxP"/>
+                        <outlet property="websiteUrl" destination="tTC-FK-FQq" id="tGi-od-OXv"/>
                         <outlet property="whiteView" destination="1Yb-FC-Kfl" id="vXO-qP-hCe"/>
                     </connections>
                 </viewController>
@@ -1839,7 +1839,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Posts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ko-yv-qJY">
-                                                    <rect key="frame" x="122.5" y="23" width="70.5" height="30"/>
+                                                    <rect key="frame" x="122.5" y="15" width="70.5" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="PaT-3E-EYZ"/>
                                                     </constraints>

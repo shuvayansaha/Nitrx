@@ -17,7 +17,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
 
     @IBOutlet weak var postTitleText: UILabel!
     @IBOutlet weak var postTitle: UITextField!
-    @IBOutlet weak var url: UITextField!
+    @IBOutlet weak var websiteUrl: UITextField!
     @IBOutlet weak var category: UITextField!
     @IBOutlet weak var addKeywords: UITextField!
 
@@ -436,7 +436,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
+//            print(stringData)
             
             do {
                 
@@ -456,39 +456,121 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     
     // load comments
+//    func editPostFunc(postID: String, completed: @escaping () -> ()) {
+//
+//        let url = baseURL + edit_post + "?"
+//            + "post_id=" + "\(postID)"
+//
+//        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+//
+////            print(stringData)
+//
+//            do {
+//
+//                let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
+//
+////                for i in getData.posts! {
+////
+////                    if i.api_status != "400" {
+////
+////                        self.posts = getData.posts!
+////
+////                    }
+////                }
+////
+////                self.profileDetails = getData.profile
+//
+//                DispatchQueue.main.async { completed() }
+//
+//            } catch {
+//                print("ERROR")
+//                DispatchQueue.main.async {
+//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+//                }
+//            }
+//        }
+//    }
+    
+    
+    // image upload alamofire
     func editPostFunc(postID: String, completed: @escaping () -> ()) {
         
-        let url = baseURL + edit_post + "?"
-            + "post_id=" + "\(postID)"
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .whiteLarge
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
-        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+        let link = baseURL + add_post
+        
+        let parameters = ["user_id":user_id,
+                          "post_cat_id":select_post_cat_id,
+                          "website_url":url.text,
+                          "postText":postTitle.text,
+                          "description":textView.text,
+                          "post_id":postID]
+        
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
             
-//            print(stringData)
+            multipartFormData.append(self.photoData!, withName: "postPhotos", fileName: self.photoName!, mimeType: "image/jpg")
             
-            do {
+            for (key, value) in parameters {
                 
-                let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
-                
-//                for i in getData.posts! {
-//                    
-//                    if i.api_status != "400" {
-//                        
-//                        self.posts = getData.posts!
-//                        
-//                    }
-//                }
-//                
-//                self.profileDetails = getData.profile
-                
-                DispatchQueue.main.async { completed() }
-                
-            } catch {
-                print("ERROR")
-                DispatchQueue.main.async {
-                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-                }
+                multipartFormData.append((value?.data(using: String.Encoding.utf8))!, withName: key)
             }
+            
+        },
+                         
+                         to: link
+            ,
+                         headers:["Content-type": "multipart/form-data"]) { (encodingResult) in
+                            
+                            switch encodingResult {
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    
+                                    activityIndicator.stopAnimating()
+                                    UIApplication.shared.endIgnoringInteractionEvents()
+                                    
+                                    let result = response.result.value as? NSArray
+                                    
+                                    print(result)
+                                    
+                                    for i in result! {
+                                        
+                                        if let data = i as? NSDictionary {
+                                            
+                                            if let success = data["success"] as? String {
+                                                
+                                                snackBarFunction(message: success)
+                                            }
+                                            
+                                            if data["status"] as? String == "1" {
+                                                
+                                                self.clearData()
+                                            }
+                                            
+                                            if let err = data["errors"] as? NSDictionary {
+                                                
+                                                snackBarFunction(message: err["error_text"] as! String)
+                                            }
+                                            
+                                        }
+                                    }
+                                    
+                                    
+                                    DispatchQueue.main.async { completed() }
+
+                                    
+                                }
+                            case .failure(let encodingError):
+                                print(encodingError)
+                            }
         }
+        
     }
     
     
