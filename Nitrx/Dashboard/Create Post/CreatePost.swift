@@ -48,7 +48,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         
         hideKeyboardWhenTappedAround()
         
-        UITextField.connectFields(fields: [postTitle, url])
+        UITextField.connectFields(fields: [postTitle, websiteUrl])
         
         whiteView.layer.borderColor = UIColor.lightGray.cgColor
         whiteView.layer.borderWidth = 0.5
@@ -75,12 +75,6 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         picker()
 
 
-        
-//        editPostFunc(postID: id) {
-//
-//        }
-        
-        
         selectInterest {
             self.category.text = self.interestCategory[0].post_cat_name
             self.select_post_cat_id = self.interestCategory[0].post_cat_id
@@ -97,10 +91,12 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
                 for i in self.postArray {
                     
                     self.postTitle.text = i.postText
-                    self.url.text = i.website_url
+                    self.websiteUrl.text = i.website_url
                     self.textView.text = i.description
                     self.imageView.loadImageUsingUrlString(urlString: i.image!)
-                    
+//                    self.photoData = self.imageView.image?.jpegData(compressionQuality: 1)
+//                    self.photoName = "editImage)"
+
 //                    let catId = Int(i.post_cat_id!)
                     
 //                    if let cat = self.interestCategory[catId!].post_cat_id {
@@ -266,10 +262,18 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     @IBAction func uploadAction(_ sender: UIButton) {
         
-        if photoData != nil {
+        if id != "" {
             
-            postCreateFunc()
+            editPostFunc(postID: id)
+            
+        } else {
+            if photoData != nil {
+                
+                postCreateFunc()
+            }
         }
+
+      
     }
     
     @IBAction func uploadImage(_ sender: UIButton) {
@@ -282,17 +286,13 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     
     @IBAction func saveAction(_ sender: UIButton) {
         
-        print("cancel")
-        
         clearData()
-
-
     }
     
     func clearData() {
         
         postTitle.text = nil
-        url.text = nil
+        websiteUrl.text = nil
         category.text = nil
         addKeywords.text = nil
         textView.text = "Describe additional information about this post..."
@@ -310,7 +310,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
 
     
     
-    // image upload alamofire
+    // create post alamofire
     func postCreateFunc() {
 
         let activityIndicator = UIActivityIndicatorView()
@@ -335,10 +335,9 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         
         let parameters = ["user_id":user_id,
                       "post_cat_id":select_post_cat_id,
-                      "website_url":url.text,
+                      "website_url":websiteUrl.text,
                       "postText":postTitle.text,
                       "description":textView.text]
-
 
         Alamofire.upload(multipartFormData: { (multipartFormData) in
 
@@ -387,10 +386,6 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
                                         
                                         }
                                     }
-                                    
-
-
-
                                 }
                             case .failure(let encodingError):
                                 print(encodingError)
@@ -399,6 +394,88 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
 
     }
     
+    // edit post
+    func editPostFunc(postID: String) {
+        
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .whiteLarge
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let url = baseURL + edit_post
+        
+        let parameters: [String : String] = ["user_id":user_id!,
+                                             "post_cat_id":select_post_cat_id!,
+                                             "postText":postTitle.text!,
+                                             "description":textView.text,
+                                             "post_id":postID,
+                                             "website_url":websiteUrl.text!]
+        
+        print(parameters)
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            
+            if let photoData = self.photoData {
+                
+                multipartFormData.append(photoData, withName: "postPhotos", fileName: self.photoName!, mimeType: "image/jpg")
+            }
+            
+            for (key, value) in parameters {
+                
+                multipartFormData.append((value.data(using: String.Encoding.utf8))!, withName: key)
+            }
+            
+        },
+                         to: url
+            ,
+                         headers:["Content-type": "multipart/form-data"]) { (encodingResult) in
+                            
+                            switch encodingResult {
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    
+                                    activityIndicator.stopAnimating()
+                                    UIApplication.shared.endIgnoringInteractionEvents()
+                                    
+                                    let result = response.result.value as? NSArray
+                                    
+                                    print(result)
+                                    
+                                    for i in result! {
+                                        
+                                        if let data = i as? NSDictionary {
+                                            
+                                            if let success = data["success"] as? String {
+                                                
+                                                snackBarFunction(message: success)
+                                            }
+                                            
+                                            if data["status"] as? String == "1" {
+                                                
+                                                self.clearData()
+                                                // MOVED POP CONTROLLER
+                                                _ = self.navigationController?.popViewController(animated: true)
+
+                                            }
+                                            
+                                            if let err = data["errors"] as? NSDictionary {
+                                                
+                                                snackBarFunction(message: err["error_text"] as! String)
+                                            }
+                                            
+                                        }
+                                    }
+                                    
+                                }
+                            case .failure(let encodingError):
+                                print(encodingError)
+                            }
+        }
+        
+    }
     
     //get user data
     func selectInterest(completed: @escaping () -> ()) {
@@ -429,6 +506,10 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         }
     }
     
+
+    
+    
+    
     //load post
     func loadPost(postID: String, completed: @escaping () -> ()) {
         
@@ -454,124 +535,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
     }
     
     
-    
-    // load comments
-//    func editPostFunc(postID: String, completed: @escaping () -> ()) {
-//
-//        let url = baseURL + edit_post + "?"
-//            + "post_id=" + "\(postID)"
-//
-//        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
-//
-////            print(stringData)
-//
-//            do {
-//
-//                let getData = try JSONDecoder().decode(ProfileClass.self, from: data)
-//
-////                for i in getData.posts! {
-////
-////                    if i.api_status != "400" {
-////
-////                        self.posts = getData.posts!
-////
-////                    }
-////                }
-////
-////                self.profileDetails = getData.profile
-//
-//                DispatchQueue.main.async { completed() }
-//
-//            } catch {
-//                print("ERROR")
-//                DispatchQueue.main.async {
-//                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
-//                }
-//            }
-//        }
-//    }
-    
-    
-    // image upload alamofire
-    func editPostFunc(postID: String, completed: @escaping () -> ()) {
-        
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.center = view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = .whiteLarge
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        
-        let link = baseURL + add_post
-        
-        let parameters = ["user_id":user_id,
-                          "post_cat_id":select_post_cat_id,
-                          "website_url":url.text,
-                          "postText":postTitle.text,
-                          "description":textView.text,
-                          "post_id":postID]
-        
-        
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
-            
-            multipartFormData.append(self.photoData!, withName: "postPhotos", fileName: self.photoName!, mimeType: "image/jpg")
-            
-            for (key, value) in parameters {
-                
-                multipartFormData.append((value?.data(using: String.Encoding.utf8))!, withName: key)
-            }
-            
-        },
-                         
-                         to: link
-            ,
-                         headers:["Content-type": "multipart/form-data"]) { (encodingResult) in
-                            
-                            switch encodingResult {
-                            case .success(let upload, _, _):
-                                upload.responseJSON { response in
-                                    
-                                    activityIndicator.stopAnimating()
-                                    UIApplication.shared.endIgnoringInteractionEvents()
-                                    
-                                    let result = response.result.value as? NSArray
-                                    
-                                    print(result)
-                                    
-                                    for i in result! {
-                                        
-                                        if let data = i as? NSDictionary {
-                                            
-                                            if let success = data["success"] as? String {
-                                                
-                                                snackBarFunction(message: success)
-                                            }
-                                            
-                                            if data["status"] as? String == "1" {
-                                                
-                                                self.clearData()
-                                            }
-                                            
-                                            if let err = data["errors"] as? NSDictionary {
-                                                
-                                                snackBarFunction(message: err["error_text"] as! String)
-                                            }
-                                            
-                                        }
-                                    }
-                                    
-                                    
-                                    DispatchQueue.main.async { completed() }
-
-                                    
-                                }
-                            case .failure(let encodingError):
-                                print(encodingError)
-                            }
-        }
-        
-    }
+   
     
     
     override func viewWillAppear(_ animated: Bool) {

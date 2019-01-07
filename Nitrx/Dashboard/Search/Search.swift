@@ -8,10 +8,14 @@
 
 import UIKit
 
-class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
-    
+class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, SearchRateDelegate {
+
     @IBOutlet weak var catCollectionView: UICollectionView!
     @IBOutlet weak var selectedCatCollectionView: UICollectionView!
+
+    @IBOutlet var ratePopUp: UIView!
+    var blurView = UIView()
+    var searchBar: UISearchBar!
 
     let post_cat_id = UserDefaults.standard.string(forKey: "post_cat_id")
     let user_id = UserDefaults.standard.string(forKey: "user_id")
@@ -19,10 +23,11 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     var interestCategory = [SelectInterestClass]()
     var postArray = [PostsClass]()
     var filterPostArray = [PostsClass]()
-    var searchBar: UISearchBar!
 
     var selectedIndex = Int()
-    
+    var postRate = Int()
+    var indexRow = Int()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +58,8 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
                 self.selectedCatCollectionView.reloadData()
             }
         }
+        
+//        blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapBlurView)))
         
     }
     
@@ -123,6 +130,9 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
                 
                 cell.label.text = "  " + txt
             }
+            
+            cell.rateDelegate = self
+            cell.rate.tag = indexPath.row
             
             return cell
         }
@@ -195,6 +205,119 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         self.searchBar.endEditing(true)
     }
     
+    func rate(row: Int) {
+
+        indexRow = row
+ 
+        // MARK : - blur popup view
+
+        blurView.frame = self.view.frame
+        blurView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.navigationController?.view.addSubview(blurView)
+        blurView.tag = 853
+        ratePopUp.center = blurView.center
+        ratePopUp.alpha = 1
+
+        blurView.addSubview(ratePopUp)
+
+        ratePopUp.translatesAutoresizingMaskIntoConstraints = false
+
+        //        ratePopUp.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 64).isActive = true
+        //        ratePopUp.bottomAnchor.constraint(equalTo: blurView.bottomAnchor, constant: -84).isActive = true
+        //        ratePopUp.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: 32).isActive = true
+        //        ratePopUp.trailingAnchor.constraint(equalTo: blurView.trailingAnchor, constant: -32).isActive = true
+        ratePopUp.centerXAnchor.constraint(equalTo: blurView.centerXAnchor).isActive = true
+        ratePopUp.centerYAnchor.constraint(equalTo: blurView.centerYAnchor).isActive = true
+        ratePopUp.heightAnchor.constraint(equalToConstant: 406).isActive = true
+        ratePopUp.widthAnchor.constraint(equalToConstant: 240).isActive = true
+
+        UIView.transition(with: self.view, duration: 5, options: .showHideTransitionViews, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+
+    }
+    
+    // close pop up
+    @IBAction func closeRatePopUp(_ sender: UIButton) {
+
+        closeUiView()
+        postRate = Int()
+        indexRow = Int()
+    }
+    
+    func closeUiView() {
+        
+        UIView.transition(with: self.view, duration: 5, options: .showHideTransitionViews, animations: {
+            self.navigationController?.view.viewWithTag(853)?.removeFromSuperview()
+        }, completion: nil)
+    }
+    
+    @IBAction func rateButton(_ sender: UIButton) {
+        
+        postRate = sender.tag
+        
+        if let postId = filterPostArray[indexRow].post_id {
+            
+            print(postId, postRate)
+            
+            ratePostFunc(postRate: String(postRate), postId: postId) {
+                
+                self.closeUiView()
+                
+//                let post_cat_id = self.interestCategory[self.selectedIndex].post_cat_id
+//                
+//                self.loadSearch(post_cat_id: post_cat_id!) {
+//                    
+//                    self.selectedCatCollectionView.reloadData()
+//                }
+            }
+            
+        }
+    }
+    
+    
+//    @objc func tapBlurView() {
+//
+//
+//        print("close uiview")
+//        UIView.transition(with: self.view, duration: 5, options: .showHideTransitionViews, animations: {
+//            self.navigationController?.view.viewWithTag(853)?.removeFromSuperview()
+//        }, completion: nil)
+//
+//    }
+
+    
+
+    //rate post
+    func ratePostFunc(postRate: String, postId: String, completed: @escaping () -> ()) {
+        
+        let url = baseURL + select_interest + "?"
+            
+            + "post_id="
+            + "\(postId)"
+            + "&postRate="
+            + "\(postRate)"
+        
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode([SelectInterestClass].self, from: data)
+                
+//                self.interestCategory = getData
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
     
     
     //get user data
