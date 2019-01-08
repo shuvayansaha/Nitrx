@@ -118,9 +118,7 @@ class YourInterests: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 + "\(selectedCategory[4])"
                 + "&user_id="
                 + "\(user_id!)"
-            
-            print(url)
-            
+                    
             httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
                 
                 print(stringData)

@@ -305,17 +305,18 @@ extension Profile: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     
     
     func postEdit(row: Int) {
-        let post_id = posts[row].post_id
         
-        print(post_id)
-        performSegue(withIdentifier: "editPost", sender: post_id)
+        if let post_id = posts[row].post_id {
+            performSegue(withIdentifier: "editPost", sender: post_id)
+
+        }
+        
     }
     
     func postDel(row: Int) {
         let post_id = posts[row].post_id
         
-        presentAlertWithAction(title: "Delete Post", message: "Want to delete this post", buttonText: "Delete") {
-            print(post_id)
+        presentAlertWithActionCancel(title: "Delete Post", message: "Want to delete this post", buttonText: "Delete") {
             
             self.deletePostFunc(postID: post_id!, completed: {
                 
@@ -323,8 +324,8 @@ extension Profile: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
                     self.profileCollection.reloadData()
                 }
             })
-
         }
+        
     }
 
     // load comments

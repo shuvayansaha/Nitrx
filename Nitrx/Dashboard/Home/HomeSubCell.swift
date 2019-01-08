@@ -28,6 +28,13 @@ protocol OpenWebView {
     func webViewFunction(indexPath: IndexPath)
 }
 
+protocol PostRateFollowDelegate {
+    
+    func ratePostFunction(indexPath: IndexPath)
+    func followPostFunction(indexPath: IndexPath)
+}
+
+
 
 class HomeSubCell: UITableViewCell {
 
@@ -70,10 +77,11 @@ class HomeSubCell: UITableViewCell {
     var rateDelegate: RateDel?
     var showCommentsDelegate: ShowComments?
     var openWebViewDelegate: OpenWebView?
+    var rateFollowDelegate: PostRateFollowDelegate?
 
     var indexPath: IndexPath?
     var rate: Int?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -123,5 +131,14 @@ class HomeSubCell: UITableViewCell {
         
         openWebViewDelegate?.webViewFunction(indexPath: indexPath!)
 
+    }
+    
+    
+    @IBAction func postRateAction(_ sender: UIButton) {
+        rateFollowDelegate?.ratePostFunction(indexPath: indexPath!)
+    }
+    
+    @IBAction func followAction(_ sender: UIButton) {
+        rateFollowDelegate?.followPostFunction(indexPath: indexPath!)
     }
 }

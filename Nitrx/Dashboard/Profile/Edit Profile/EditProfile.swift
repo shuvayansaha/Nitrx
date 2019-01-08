@@ -102,7 +102,7 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         }
         
         // Camera Button
-        let camera = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
+        _ = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
             
             let photoPicker = UIImagePickerController()
             photoPicker.delegate = self
@@ -194,7 +194,7 @@ class EditProfile: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         
         httpGet(controller: self, url: req, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
+//            print(stringData)
             
             do {
                 

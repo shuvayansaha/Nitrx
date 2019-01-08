@@ -36,7 +36,10 @@ let add_post = "add_post.php/"
 let edit_post = "edit_post.php/"
 let delete_post = "delete_post.php/"
 let single_post = "single_post.php/"
-
+let post_coins = "post_coins.php/"
+let notification = "notification.php/"
+let following = "following.php/"
+let follow_user = "follow_user.php/"
 
 
 
@@ -136,7 +139,6 @@ struct CommentsReplyClass: Codable {
     let username: String?
     let user_avater: String?
 
-  
 }
 
 
@@ -187,7 +189,7 @@ struct PostsClass: Codable {
     let first_name: String?
     let image: String?
     let last_name: String?
-//    let ncoins: Int?
+    let ncoins: String?
     let postText: String?
     let post_cat_id: String?
     let post_date: String?
@@ -200,7 +202,8 @@ struct PostsClass: Codable {
     let website_url: String?
     let errors: ErrorsClass?
     let api_status: String?
-    
+    let login_user_rating: String?
+
     let success: String?
 }
 
@@ -251,5 +254,18 @@ struct ForgetPasswordClass: Codable {
     let userid: String?
     let errors: ErrorsClass?
 
+
+}
+
+struct NotificationClass: Codable {
+    
+    let notifier_name: String?
+    let avatar: String?
+    let type: String?
+    let type2: String?
+    let text: String?
+    let time: String?
+
+    let errors: ErrorsClass?
 
 }

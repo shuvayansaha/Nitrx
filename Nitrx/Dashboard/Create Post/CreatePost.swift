@@ -43,9 +43,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("ID ***", id, post_cat_id)
-        
+                
         hideKeyboardWhenTappedAround()
         
         UITextField.connectFields(fields: [postTitle, websiteUrl])
@@ -219,7 +217,7 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
         }
         
         // Camera Button
-        let camera = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
+        _ = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
             
             let photoPicker = UIImagePickerController()
             photoPicker.delegate = self
@@ -361,31 +359,32 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
                                     activityIndicator.stopAnimating()
                                     UIApplication.shared.endIgnoringInteractionEvents()
 
-                                    let result = response.result.value as? NSArray
-                                    
-                                    print(result)
-                                    
-                                    for i in result! {
+                                    if let result = response.result.value as? NSArray {
                                         
-                                        if let data = i as? NSDictionary {
+                                        for i in result {
                                             
-                                            if let success = data["success"] as? String {
+                                            if let data = i as? NSDictionary {
                                                 
-                                                snackBarFunction(message: success)
-                                            }
-                                            
-                                            if data["status"] as? String == "1" {
+                                                if let success = data["success"] as? String {
+                                                    
+                                                    snackBarFunction(message: success)
+                                                }
                                                 
-                                                self.clearData()
-                                            }
-                                            
-                                            if let err = data["errors"] as? NSDictionary {
+                                                if data["status"] as? String == "1" {
+                                                    
+                                                    self.clearData()
+                                                }
                                                 
-                                                snackBarFunction(message: err["error_text"] as! String)
+                                                if let err = data["errors"] as? NSDictionary {
+                                                    
+                                                    snackBarFunction(message: err["error_text"] as! String)
+                                                }
+                                                
                                             }
-                                        
                                         }
+                                        
                                     }
+
                                 }
                             case .failure(let encodingError):
                                 print(encodingError)
@@ -440,34 +439,37 @@ class CreatePost: UIViewController, UITextFieldDelegate, UITextViewDelegate, UII
                                     activityIndicator.stopAnimating()
                                     UIApplication.shared.endIgnoringInteractionEvents()
                                     
-                                    let result = response.result.value as? NSArray
-                                    
-                                    print(result)
-                                    
-                                    for i in result! {
+                                    if let result = response.result.value as? NSArray {
                                         
-                                        if let data = i as? NSDictionary {
+                                        for i in result {
                                             
-                                            if let success = data["success"] as? String {
+                                            if let data = i as? NSDictionary {
                                                 
-                                                snackBarFunction(message: success)
-                                            }
-                                            
-                                            if data["status"] as? String == "1" {
+                                                if let success = data["success"] as? String {
+                                                    
+                                                    snackBarFunction(message: success)
+                                                }
                                                 
-                                                self.clearData()
-                                                // MOVED POP CONTROLLER
-                                                _ = self.navigationController?.popViewController(animated: true)
-
-                                            }
-                                            
-                                            if let err = data["errors"] as? NSDictionary {
+                                                if data["status"] as? String == "1" {
+                                                    
+                                                    self.clearData()
+                                                    // MOVED POP CONTROLLER
+                                                    _ = self.navigationController?.popViewController(animated: true)
+                                                    
+                                                }
                                                 
-                                                snackBarFunction(message: err["error_text"] as! String)
+                                                if let err = data["errors"] as? NSDictionary {
+                                                    
+                                                    snackBarFunction(message: err["error_text"] as! String)
+                                                }
+                                                
                                             }
-                                            
                                         }
+                                        
                                     }
+                                    
+                                    
+
                                     
                                 }
                             case .failure(let encodingError):
