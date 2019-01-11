@@ -203,7 +203,8 @@ struct PostsClass: Codable {
     let errors: ErrorsClass?
     let api_status: String?
     let login_user_rating: String?
-
+    let post_following: Int?
+    
     let success: String?
 }
 

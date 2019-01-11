@@ -69,6 +69,12 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
 //        blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapBlurView)))
         
+        
+        loadUserSearch(param: "") {
+            
+            self.searchUserTableView.reloadData()
+        }
+        
     }
     
     
@@ -215,26 +221,44 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             
             tableUIView()
             
-            loadUserSearch(param: searchText) {
-                
-                guard !searchText.isEmpty else {
-                    self.filterUserArray = self.userArray
-                    self.searchUserTableView.reloadData()
-                    return
-                }
-
-                self.filterUserArray = self.userArray.filter({ (data) -> Bool in
-                    (data.first_name?.lowercased().contains(searchText.lowercased()))!
-                })
-                
+            
+            guard !searchText.isEmpty else {
+                self.filterUserArray = self.userArray
                 self.searchUserTableView.reloadData()
+                return
             }
             
+ 
+            filterPostArray = postArray.filter { (data: PostsClass) -> Bool in
+                
+                (data.first_name?.lowercased().contains(searchText.lowercased()))! || (data.last_name?.lowercased().contains(searchText.lowercased()))! ||
+                
+                (data.last_name?.lowercased().contains(searchText.lowercased()))!
 
+            }
+            
+            self.searchUserTableView.reloadData()
+            
+            
         }
         
-   
     }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        filteredCandies = listdevices.filter( { list -> Bool  in
+            guard let text = searchBar.text else {return false}
+            //Replace .- with ""
+            let searchString = text.replacingOccurrences(of: "-.", with: "", options: .regularExpression, range: nil)
+            return list.devname.contains(searchString)
+            searchBar.text = searchString
+        })
+        tableView.reloadData()
+    }
+    
+    
+    
     
     // close keyboard
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

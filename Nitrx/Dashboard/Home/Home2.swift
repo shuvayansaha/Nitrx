@@ -464,6 +464,12 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
             cell.userImageInComment.imageLoadingUsingUrlString(urlString: img)
         }
         
+        if postArray[indexPath.row].post_following == 1 {
+            cell.followButton.setTitle("Following", for: .normal)
+        } else {
+            cell.followButton.setTitle("Follow", for: .normal)
+        }
+        
         if let commentCount = postArray[indexPath.row].comments {
             
             cell.commentCount.text = "\(commentCount)"
