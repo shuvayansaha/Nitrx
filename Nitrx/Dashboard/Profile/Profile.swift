@@ -15,10 +15,11 @@ class Profile: UIViewController, PostDelEditDelegate {
     let user_id = UserDefaults.standard.string(forKey: "user_id")
     var posts = [PostsClass]()
     var profileDetails: ProfileDetailsClass?
+    var othersUserId = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         profileCollection.delegate = self
         profileCollection.dataSource = self
         
@@ -41,11 +42,23 @@ class Profile: UIViewController, PostDelEditDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        if user_id != nil {
-            loadProfileDetails(user_id: user_id!) {
+        if othersUserId == "" {
+            
+            if user_id != nil {
+                loadProfileDetails(user_id: user_id!) {
+                    self.profileCollection.reloadData()
+                }
+            }
+        } else {
+            
+            title = "Profile"
+            
+            loadProfileDetails(user_id: othersUserId) {
                 self.profileCollection.reloadData()
             }
         }
+        
+      
     }
     
     
@@ -99,7 +112,7 @@ class Profile: UIViewController, PostDelEditDelegate {
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            print(stringData)
+//            print(stringData)
             
             do {
                 

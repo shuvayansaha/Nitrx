@@ -189,6 +189,13 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             vc.postCatId = sender as! String
 
         }
+        
+        
+        if (segue.identifier == "othersUser") {
+            let vc = segue.destination as! Profile
+            vc.othersUserId = sender as! String
+            
+        }
     }
     
     
@@ -229,36 +236,20 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             }
             
  
-            filterPostArray = postArray.filter { (data: PostsClass) -> Bool in
-                
-                (data.first_name?.lowercased().contains(searchText.lowercased()))! || (data.last_name?.lowercased().contains(searchText.lowercased()))! ||
-                
-                (data.last_name?.lowercased().contains(searchText.lowercased()))!
+            let searchString = searchText.replacingOccurrences(of: "@", with: "", options: .regularExpression, range: nil)
+        
+            filterUserArray = userArray.filter({ (data) -> Bool in
+                (data.first_name?.lowercased().contains(searchString.lowercased()))! ||
+                    (data.last_name?.lowercased().contains(searchString.lowercased()))!
 
-            }
+            })
             
             self.searchUserTableView.reloadData()
             
-            
         }
-        
     }
     
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        filteredCandies = listdevices.filter( { list -> Bool  in
-            guard let text = searchBar.text else {return false}
-            //Replace .- with ""
-            let searchString = text.replacingOccurrences(of: "-.", with: "", options: .regularExpression, range: nil)
-            return list.devname.contains(searchString)
-            searchBar.text = searchString
-        })
-        tableView.reloadData()
-    }
-    
-    
-    
+
     
     // close keyboard
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -504,7 +495,16 @@ extension Search: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchUser", for: indexPath) as! SearchUser
         
-        cell.textLabel?.text = filterUserArray[indexPath.row].last_name
+        
+        if let firstName = filterUserArray[indexPath.row].first_name {
+            
+            if let lasttName = filterUserArray[indexPath.row].last_name {
+                
+                cell.textLabel?.text = firstName + " " + lasttName
+
+            }
+            
+        }
         
         return cell
     }
@@ -516,8 +516,14 @@ extension Search: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print(indexPath.row)
+        
+        let profile_id = filterUserArray[indexPath.row].profile_id
+        
+        performSegue(withIdentifier: "othersUser", sender: profile_id)
+
     }
+    
+    
     
     
     //load search data

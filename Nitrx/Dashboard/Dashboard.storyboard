@@ -942,6 +942,7 @@
                         <outlet property="selectedCatCollectionView" destination="SEE-NL-lSB" id="jGg-8L-imn"/>
                         <outlet property="userSearchTable" destination="aft-Vm-fFH" id="yY8-7e-OdT"/>
                         <segue destination="xWS-PM-lgn" kind="show" identifier="SearchDetails" id="fAD-oy-DWi"/>
+                        <segue destination="ZnV-N1-4nS" kind="show" identifier="othersUser" id="PiE-y1-Dec"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g9e-iQ-htP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3323,6 +3324,7 @@
         <image name="user-grey2" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="PiE-y1-Dec"/>
         <segue reference="CGO-Xj-BK7"/>
         <segue reference="fAD-oy-DWi"/>
     </inferredMetricsTieBreakers>
