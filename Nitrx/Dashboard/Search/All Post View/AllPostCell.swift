@@ -1,20 +1,14 @@
 //
-//  SearchPostCatCell.swift
+//  AllPostCell.swift
 //  Nitrx
 //
-//  Created by Rplanx on 24/12/18.
-//  Copyright © 2018 Nitrx. All rights reserved.
+//  Created by Shuvayan Saha on 12/01/19.
+//  Copyright © 2019 Nitrx. All rights reserved.
 //
 
 import UIKit
 
-protocol SearchRateDelegate {
-    func rate(row: Int)
-    func allPostRate(row: Int)
-
-}
-
-class SearchPostCatCell: UICollectionViewCell {
+class AllPostCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var image: CustomImageView!
@@ -25,7 +19,6 @@ class SearchPostCatCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
         rate.layer.cornerRadius = 0.5 * rate.bounds.size.width
         rate.clipsToBounds = true
     }
@@ -34,6 +27,6 @@ class SearchPostCatCell: UICollectionViewCell {
     
     @IBAction func rateAction(_ sender: UIButton) {
         
-        rateDelegate?.rate(row: sender.tag)
+        rateDelegate?.allPostRate(row: sender.tag)
     }
 }

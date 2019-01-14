@@ -13,9 +13,13 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     @IBOutlet weak var catCollectionView: UICollectionView!
     @IBOutlet weak var selectedCatCollectionView: UICollectionView!
     @IBOutlet var userSearchTable: UIView!
+    @IBOutlet var allPostUiview: UIView!
     @IBOutlet weak var searchUserTableView: UITableView!
+    @IBOutlet weak var allPostCollectionView: UICollectionView!
     
     @IBOutlet var ratePopUp: UIView!
+    @IBOutlet var allPostRatePopUp: UIView!
+
     var blurView = UIView()
     var searchBar: UISearchBar!
 
@@ -24,10 +28,9 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
 
     var interestCategory = [SelectInterestClass]()
     var postArray = [PostsClass]()
-    var filterPostArray = [PostsClass]()
     
-    var userArray = [PostsClass]()
-    var filterUserArray = [PostsClass]()
+    var userArray = [ProfileDetailsClass]()
+    var allPostArray = [ProfileDetailsClass]()
     
     var selectedIndex = Int()
     var postRate = Int()
@@ -56,6 +59,9 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         searchUserTableView.delegate = self
         searchUserTableView.dataSource = self
         
+        allPostCollectionView.delegate = self
+        allPostCollectionView.dataSource = self
+
         selectInterest {
             self.catCollectionView.reloadData()
 
@@ -70,10 +76,10 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
 //        blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapBlurView)))
         
         
-        loadUserSearch(param: "") {
-            
-            self.searchUserTableView.reloadData()
-        }
+//        loadUserSearch(param: "") {
+//
+//            self.searchUserTableView.reloadData()
+//        }
         
     }
     
@@ -92,8 +98,12 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
         if collectionView == catCollectionView {
             return interestCategory.count
+        } else if collectionView == selectedCatCollectionView {
+            return postArray.count
+        } else if collectionView == allPostCollectionView {
+            return allPostArray.count
         } else {
-            return filterPostArray.count
+            return 0
         }
     }
     
@@ -131,16 +141,16 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             
             return cell
             
-        } else {
+        } else if collectionView == selectedCatCollectionView {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchPostCatCell", for: indexPath) as! SearchPostCatCell
             
-            if let img = filterPostArray[indexPath.row].image {
+            if let img = postArray[indexPath.row].image {
                 
                 cell.image.imageLoadingUsingUrlString(urlString: img)
             }
             
-            if let txt = filterPostArray[indexPath.row].postText {
+            if let txt = postArray[indexPath.row].postText {
                 
                 cell.label.text = "  " + txt
             }
@@ -149,6 +159,27 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             cell.rate.tag = indexPath.row
             
             return cell
+        
+        } else {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AllPostCell", for: indexPath) as! AllPostCell
+            
+            if let img = allPostArray[indexPath.row].image {
+                
+                cell.image.imageLoadingUsingUrlString(urlString: img)
+            }
+            
+            if let txt = allPostArray[indexPath.row].postText {
+                
+                cell.label.text = "  " + txt
+            }
+            
+            
+            cell.rateDelegate = self
+            cell.rate.tag = indexPath.row
+            
+            return cell
+            
         }
     }
     
@@ -165,15 +196,26 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
                 self.selectedCatCollectionView.reloadData()
             }
             
-        } else {
+        } else if collectionView == selectedCatCollectionView {
 //            print(filterPostArray[indexPath.row])
             
-            if let postCatId = filterPostArray[indexPath.row].post_cat_id {
+            if let postCatId = postArray[indexPath.row].post_cat_id {
+                
+                print(postCatId)
                 
                 performSegue(withIdentifier: "SearchDetails", sender: postCatId)
 
             }
             
+        } else {
+            
+            if let postCatId = allPostArray[indexPath.row].post_cat_id {
+                
+                print(postCatId)
+                
+                performSegue(withIdentifier: "SearchDetails", sender: postCatId)
+                
+            }
         }
         
         collectionView.reloadData()
@@ -205,55 +247,110 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         self.searchBar.endEditing(true)
     }
     
+//    var timer = Timer()
+
     // search bar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if searchText.range(of: "@") == nil {
-           
-            closeTableUIView()
+        //        if searchText.range(of: "@") == nil {
+        //
+        //            closeTableUIView()
+        //
+        //            guard !searchText.isEmpty else {
+        //                filterPostArray = postArray
+        //                selectedCatCollectionView.reloadData()
+        //                return
+        //            }
+        //
+        //            filterPostArray = postArray.filter({ (data) -> Bool in
+        //                (data.postText?.lowercased().contains(searchText.lowercased()))!
+        //            })
+        //
+        //            selectedCatCollectionView.reloadData()
+        //
+        //        }
+        
+        
+        if searchText.range(of: "@") != nil {
+            
+            if searchText.count > 0 {
+                
+                let searchString = searchText.replacingOccurrences(of: " ", with: "", options: .regularExpression, range: nil)
 
-            guard !searchText.isEmpty else {
-                filterPostArray = postArray
-                selectedCatCollectionView.reloadData()
-                return
+                tableUIView()
+                
+                loadUserSearch(param: searchString) {
+                    self.searchUserTableView.reloadData()
+                    
+                }
             }
-            
-            filterPostArray = postArray.filter({ (data) -> Bool in
-                (data.postText?.lowercased().contains(searchText.lowercased()))!
-            })
-            
-            selectedCatCollectionView.reloadData()
             
         } else {
             
-            tableUIView()
-            
-            
-            guard !searchText.isEmpty else {
-                self.filterUserArray = self.userArray
-                self.searchUserTableView.reloadData()
-                return
+            if searchText.count > 0 {
+                
+                
+                //                print("after every text gets changed")
+                //                timer.invalidate()
+                
+                //                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (timer) in
+                
+                let searchString = searchText.replacingOccurrences(of: " ", with: "", options: .regularExpression, range: nil)
+                
+                self.allPostUIView()
+                
+                self.loadUserSearch(param: searchString) {
+                    self.allPostCollectionView.reloadData()
+                }
+                //                })
+                
+                //                let searchString = searchText.replacingOccurrences(of: " ", with: "", options: .regularExpression, range: nil)
+                
+                
+                
+            } else {
+                
+                closeAllPostUiview()
+                self.allPostCollectionView.reloadData()
+
             }
             
- 
-            let searchString = searchText.replacingOccurrences(of: "@", with: "", options: .regularExpression, range: nil)
-        
-            filterUserArray = userArray.filter({ (data) -> Bool in
-                (data.first_name?.lowercased().contains(searchString.lowercased()))! ||
-                    (data.last_name?.lowercased().contains(searchString.lowercased()))!
-
-            })
-            
-            self.searchUserTableView.reloadData()
-            
+           
         }
+        
+        
+ 
+
+        
+        
+        
+        guard !searchText.isEmpty else {
+//            self.filterUserArray = self.userArray
+
+            closeTableUIView()
+            closeAllPostUiview()
+
+            self.searchUserTableView.reloadData()
+            self.allPostCollectionView.reloadData()
+
+            return
+        }
+        
+
+        
     }
-    
+
 
     
     // close keyboard
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.endEditing(true)
+        
+        loadUserSearch(param: searchBar.text!) {
+            self.searchUserTableView.reloadData()
+            self.allPostCollectionView.reloadData()
+
+        }
     }
     
     func rate(row: Int) {
@@ -288,6 +385,36 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
 
     }
     
+    func allPostRate(row: Int) {
+        indexRow = row
+        
+        // MARK : - blur popup view
+        
+        blurView.frame = self.view.frame
+        blurView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.navigationController?.view.addSubview(blurView)
+        blurView.tag = 853
+        allPostRatePopUp.center = blurView.center
+        allPostRatePopUp.alpha = 1
+        
+        blurView.addSubview(allPostRatePopUp)
+        
+        allPostRatePopUp.translatesAutoresizingMaskIntoConstraints = false
+        
+        //        ratePopUp.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 64).isActive = true
+        //        ratePopUp.bottomAnchor.constraint(equalTo: blurView.bottomAnchor, constant: -84).isActive = true
+        //        ratePopUp.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: 32).isActive = true
+        //        ratePopUp.trailingAnchor.constraint(equalTo: blurView.trailingAnchor, constant: -32).isActive = true
+        allPostRatePopUp.centerXAnchor.constraint(equalTo: blurView.centerXAnchor).isActive = true
+        allPostRatePopUp.centerYAnchor.constraint(equalTo: blurView.centerYAnchor).isActive = true
+        allPostRatePopUp.heightAnchor.constraint(equalToConstant: 406).isActive = true
+        allPostRatePopUp.widthAnchor.constraint(equalToConstant: 240).isActive = true
+        
+        UIView.transition(with: self.view, duration: 5, options: .showHideTransitionViews, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
     // close pop up
     @IBAction func closeRatePopUp(_ sender: UIButton) {
 
@@ -295,6 +422,8 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         postRate = Int()
         indexRow = Int()
     }
+    
+
     
     func closeUiView() {
         
@@ -307,7 +436,7 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
         postRate = sender.tag
         
-        if let postId = filterPostArray[indexRow].post_id {
+        if let postId = postArray[indexRow].post_id {
             
 //            print(postId, postRate)
             
@@ -331,6 +460,39 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             
         }
     }
+    
+    
+    @IBAction func allPostRateAction(_ sender: UIButton) {
+        
+        postRate = sender.tag
+        
+        if let postId = allPostArray[indexRow].post_id {
+            
+            //            print(postId, postRate)
+            
+            self.closeUiView()
+            
+            
+            ratePostFunc(postRate: String(postRate), postId: postId) {
+                
+                self.presentAlertWithAction(title: "Success", message: "Successfully rated this post", buttonText: "Done", completion: {
+                    
+                    //                let post_cat_id = self.interestCategory[self.selectedIndex].post_cat_id
+                    //
+                    //                self.loadSearch(post_cat_id: post_cat_id!) {
+                    //
+                    //                    self.selectedCatCollectionView.reloadData()
+                    //                }
+                })
+                
+                
+            }
+            
+        }
+    }
+    
+
+    
     
     
 //    @objc func tapBlurView() {
@@ -437,12 +599,11 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
                     if i.api_status != "400" {
                         
                         self.postArray = getData
-                        self.filterPostArray = getData
-                        
+
                     } else {
                         
                         self.postArray = [PostsClass]()
-                        self.filterPostArray = [PostsClass]()
+
                     }
                     
                 }
@@ -475,10 +636,33 @@ class Search: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
+    func allPostUIView() {
+        
+        view.addSubview(allPostUiview)
+        
+        allPostUiview.translatesAutoresizingMaskIntoConstraints = false
+        
+        allPostUiview.topAnchor.constraint(equalTo: view.topAnchor, constant: 64).isActive = true
+        allPostUiview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        allPostUiview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        allPostUiview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        
+        UIView.animate(withDuration: 0.1) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     func closeTableUIView() {
         
         UIView.transition(with: self.view, duration: 0.1, options: .showHideTransitionViews, animations: {
             self.userSearchTable.removeFromSuperview()
+        }, completion: nil)
+    }
+    
+    func closeAllPostUiview() {
+        
+        UIView.transition(with: self.view, duration: 0.1, options: .showHideTransitionViews, animations: {
+            self.allPostUiview.removeFromSuperview()
         }, completion: nil)
     }
     
@@ -489,18 +673,30 @@ extension Search: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return filterUserArray.count
+        return userArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchUser", for: indexPath) as! SearchUser
         
         
-        if let firstName = filterUserArray[indexPath.row].first_name {
+        if let firstName = userArray[indexPath.row].first_name {
             
-            if let lasttName = filterUserArray[indexPath.row].last_name {
+            if let lasttName = userArray[indexPath.row].last_name {
                 
-                cell.textLabel?.text = firstName + " " + lasttName
+                cell.name.text = firstName + " " + lasttName
+                
+                if let img = userArray[indexPath.row].image_path {
+                    
+                    cell.userImage.imageLoadingUsingUrlString(urlString: img)
+
+                }
+
+                
+                if let username = userArray[indexPath.row].username {
+
+                    cell.username.text = username
+                }
 
             }
             
@@ -511,13 +707,12 @@ extension Search: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 30
+        return 40 + 8 + 8
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
-        let profile_id = filterUserArray[indexPath.row].profile_id
+        let profile_id = userArray[indexPath.row].user_id
         
         performSegue(withIdentifier: "othersUser", sender: profile_id)
 
@@ -529,7 +724,7 @@ extension Search: UITableViewDataSource, UITableViewDelegate {
     //load search data
     func loadUserSearch(param: String, completed: @escaping () -> ()) {
         
-        let url = baseURL + post_details + "?"
+        let url = baseURL + search + "?"
             
             + "param="
             + "\(param)"
@@ -538,28 +733,15 @@ extension Search: UITableViewDataSource, UITableViewDelegate {
         
         httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
             
-            
             print(stringData)
             
             do {
                 
-                let getData = try JSONDecoder().decode([PostsClass].self, from: data)
+                let getData = try JSONDecoder().decode([ProfileDetailsClass].self, from: data)
                 
-                for i in getData {
-                    
-                    if i.api_status != "400" {
-                        
-                        self.filterUserArray = getData
-                        self.userArray = getData
-                        
-                    } else {
-                        
-                        self.postArray = [PostsClass]()
-                        self.filterPostArray = [PostsClass]()
-                    }
-                    
-                }
-                
+                self.userArray = getData
+                self.allPostArray = getData
+
                 DispatchQueue.main.async { completed() }
                 
             } catch {
@@ -570,5 +752,8 @@ extension Search: UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
+    
+    
+    
     
 }

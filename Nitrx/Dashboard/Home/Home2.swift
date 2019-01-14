@@ -212,7 +212,7 @@ class Home2: UIViewController, UITableViewDelegate, UITableViewDataSource, CellD
     //rate post
     func followPostFunc(userId: String, followId: String, completed: @escaping () -> ()) {
         
-        let url = baseURL + follow_user + "?"
+        let url = baseURL + following_action + "?"
             
             + "user_id="
             + "\(userId)"

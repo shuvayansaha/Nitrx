@@ -57,24 +57,20 @@ class Profile: UIViewController, PostDelEditDelegate {
                 self.profileCollection.reloadData()
             }
         }
-        
       
     }
     
     
     @objc func wallet() {
         print("wallet")
-        
     }
     
     @objc func notification() {
         print("wallet")
-        
     }
     
     @objc func searchBtnPressed() {
         print("logout")
-        
         
         //        UserDefaults.standard.removeObject(forKey: "Key")
         
@@ -255,6 +251,21 @@ extension Profile: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
                 }
             }
             
+            if othersUserId != "" {
+                
+                if let follow = profileDetails?.follow_privacy {
+                    
+                    cell.edit.setTitle("Follow", for: .normal)
+
+                } else {
+                    
+                    cell.edit.setTitle("Following", for: .normal)
+
+                }
+            }
+            
+            cell.edit.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapEditProfile)))
+            
             return cell
             
         } else if indexPath.section == 1 {
@@ -303,18 +314,33 @@ extension Profile: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if indexPath.section == 2 {
+            if indexPath.section == 2 {
             
             let data = posts[indexPath.row].post_cat_id
             
             performSegue(withIdentifier: "profilePost", sender: data)
             
         }
-
         
     }
     
   
+    @objc func tapEditProfile() {
+        
+        if othersUserId == "" {
+            
+            performSegue(withIdentifier: "EditProfile", sender: nil)
+            
+        } else {
+            
+            print("call follow service")
+            
+            followUnfollowFunc {
+                
+                
+            }
+        }
+    }
     
     
     func postEdit(row: Int) {
@@ -378,6 +404,48 @@ extension Profile: UICollectionViewDelegate, UICollectionViewDataSource, UIColle
             }
         }
     }
+    
+    
+    // follow and unfollow function
+    func followUnfollowFunc(completed: @escaping () -> ()) {
+        
+        let url = baseURL + following_action + "?"
+            + "user_id=" + "\(user_id!)"
+            + "&following_id=" + "\(othersUserId)"
+            + "&f=" + "\("follow_user")"
+
+        httpGet(controller: self, url: url, headerValue: "application/json", headerField: "Content-Type") { (data, statusCode, stringData) in
+            
+            print(stringData)
+            
+            do {
+                
+                let getData = try JSONDecoder().decode([EditProfileClass].self, from: data)
+                
+                for i in getData {
+                    
+                    if i.status == "1" {
+                        
+//                        snackBarFunction(message: i.success!)
+                    }
+                    
+                    if let err = i.errors?.error_text {
+                        
+                        snackBarFunction(message: err)
+                    }
+                }
+                
+                DispatchQueue.main.async { completed() }
+                
+            } catch {
+                print("ERROR")
+                DispatchQueue.main.async {
+                    snackBarFunction(message: "Internal Server Error:" + " \(statusCode)")
+                }
+            }
+        }
+    }
+    
     
     
 }

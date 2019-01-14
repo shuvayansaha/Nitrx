@@ -38,9 +38,8 @@ let delete_post = "delete_post.php/"
 let single_post = "single_post.php/"
 let post_coins = "post_coins.php/"
 let notification = "notification.php/"
-let following = "following.php/"
-let follow_user = "follow_user.php/"
-
+let following_action = "following_action.php/"
+let search = "search.php/"
 
 
 
@@ -176,6 +175,10 @@ struct ProfileDetailsClass: Codable {
     let user_id: String?
     let user_score: Int?
     let verified: String?
+    let image: String?
+    let postText: String?
+    let post_id: String?
+
 }
 
 

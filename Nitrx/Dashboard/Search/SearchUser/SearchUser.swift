@@ -10,6 +10,10 @@ import UIKit
 
 class SearchUser: UITableViewCell {
 
+    @IBOutlet weak var userImage: CustomImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var username: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
