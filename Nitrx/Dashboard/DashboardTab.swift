@@ -7,6 +7,7 @@
 //
 
 import UIKit
+let token = UserDefaults.standard.string(forKey: "token")
 
 class DashboardTab: UITabBarController {
 

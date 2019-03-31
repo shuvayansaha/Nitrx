@@ -20,22 +20,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-//        print("udid ****", UIDevice.current.identifierForVendor!.uuidString)
-
-//        print("First launch, setting UserDefault.")
-//        UserDefaults.standard.set(true, forKey: "launchedBefore")
+        var storyboardName = String()
+        var withIdentifier = String()
         
-        let storyboardName = "Dashboard"
-        let withIdentifier = "DashboardTab"
-
+        if token != nil {
+            
+            storyboardName = "Dashboard" // Dashboard
+            withIdentifier = "DashboardTab" // TabBarVC
+            
+        } else {
+            
+            storyboardName = "Home" // Home
+            withIdentifier = "Splash" // Splash
+        }
+        
+        
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: withIdentifier)
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         
-        
+  
         // status bar text color change
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        
         return true
     }
 

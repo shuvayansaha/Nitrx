@@ -127,7 +127,8 @@ class Login: UIViewController, UITextFieldDelegate {
                                     //            controller.email = self.email.text!
                                     //            controller.password = self.password.text!
                                     self.present(controller, animated: true, completion: nil)
-                                    
+                                    UserDefaults.standard.set("loggedIn", forKey: "token")
+
                                 } else {
                                     
                                     // MOVED CONTROLLER

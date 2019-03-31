@@ -73,19 +73,26 @@ class Profile: UIViewController, PostDelEditDelegate {
         print("logout")
         
         //        UserDefaults.standard.removeObject(forKey: "Key")
+//
+//        // Remove all Keys
+//        if let appDomain = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: appDomain)
+//        }
         
-        // Remove all Keys
-        if let appDomain = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: appDomain)
-        }
+//        // MOVED CONTROLLER
+//        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//        let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
+//        //            controller.email = self.email.text!
+//        //            controller.password = self.password.text!
+//
+//        self.present(controller, animated: true, completion: nil)
         
-        // MOVED CONTROLLER
+        
+        // MOVE CONTROLLER
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "HomeNav") as! HomeNav
-        //            controller.email = self.email.text!
-        //            controller.password = self.password.text!
-        
         self.present(controller, animated: true, completion: nil)
+        UserDefaults.standard.set(nil, forKey: "token")
         
     }
     

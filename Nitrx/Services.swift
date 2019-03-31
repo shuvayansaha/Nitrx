@@ -14,7 +14,8 @@ import UIKit
 
 // live
 //let baseURL = "http://json.nitrx.com/"
-let baseURL = "http://nitrx.com/api/"
+//let baseURL = "http://nitrx.com/api/"
+let baseURL = "http://earnrelief.com/api/"
 
 let loginUrl = "login.php/"
 let registerUrl = "register.php/"
